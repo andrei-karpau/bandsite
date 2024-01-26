@@ -3,3 +3,174 @@
 @use 'sass:math';
 @use './partials/variables' as *;
 @use './partials/mixin' as *;
+
+:root {
+    @each $size in map.keys($columns) {
+      --layout-grid-margin-#{$size}: #{map.get(
+          $default-margin,
+          $size
+        )};
+      --layout-grid-gutter-#{$size}: #{map.get(
+          $default-gutter,
+          $size
+        )};
+      --layout-grid-column-width-#{$size}: #{map.get(
+          $column-width,
+          $size
+        )};
+    }
+}
+
+@font-face {
+    font-family: 'AvenirNextRegular';
+    src: url('../assets/Font/AvenirNextLTPro-Regular.otf') format('OpenType');
+    src: url('../assets/Font/Alternative_files/AvenirNextLTPro.ttf') format('TrueType');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'AvenirNextDemi';
+    src: url('../assets/Font/AvenirNextLTPro-Demi.otf') format('OpenType');
+    src: url('../assets/Font/Alternative_files/AvenirNextLTProDemi.ttf') format('TrueType');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'AvenirNextBold';
+    src: url('../assets/Font/AvenirNextLTPro-Bold.otf') format('OpenType');
+    src: url('../assets/Font/Alternative_files/AvenirNextLTProBold.ttf') format('TrueType');
+    font-weight: 700;
+    font-style: normal;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+#logo {
+    height: 20px;
+    width: 120px;
+    
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    margin: 0
+}
+
+.nav-bar {
+    display: flex;
+    max-width: 100%;
+    background-color: $bandsite-black;
+    justify-content: center;
+    @each $size in map.keys($columns) {
+        @include media-query_($size) {
+            $margin: map.get($default-margin, $size);
+            $gutter: map.get($default-gutter, $size);
+            @include layout-grid($size, $margin, $max-width);
+            @if $size == tablet {
+                justify-content: flex-start;
+            }
+            @if $size == mobile {
+                @include text-styles('body-copy', true);
+                text-transform: capitalize;
+                padding: 0;
+            } @else {
+                @include text-styles('body-copy');
+                text-transform: capitalize;
+            }
+        }
+    }
+
+
+    &__container {
+        @each $size in map.keys($columns) {
+            @include media-query_($size) {
+                width: map.get($default-content-width, $size);
+                $margin: map.get($default-margin, $size);
+                $gutter: map.get($default-gutter, $size);
+                @include to-rem(height, 24, 36, 24);
+                @if $size == mobile {
+                    width: 100%;
+                    $gutter: 0;
+                    @include inner($size, $margin, $gutter);
+                } @else {
+                    @include inner($size, $margin, $gutter);
+                }
+            }
+        }
+    }
+
+    &__link {
+        color: $mercury;
+        &--active {
+            display: flex;
+            align-items: center;
+            color: $white;
+            height: 100%;
+        }
+    }
+
+
+    &__cell {
+        @each $size in map.keys($columns) {
+            @include media-query_($size) {
+                $gutter: map.get($default-gutter, $size);
+                @if $size == desktop {
+                    $default-column-span: 1;
+                    display: grid;
+                    justify-items: center;
+                    align-items: center;
+                    @include cell($size, $default-column-span, $gutter);
+                } @else if $size == tablet{
+                    $default-column-span: 2;
+                    display: grid;
+                    justify-items: end;
+                    align-items: center;
+                    @include cell($size, $default-column-span, $gutter);
+                } @else {
+                    $default-column-span: 3;
+                    display: grid;
+                    justify-content: center;
+                    align-items: center;
+                    @include cell($size, $default-column-span, $gutter);
+                }
+            }
+        }
+        &--active {
+            border-top: 3px solid $bandsite-black;
+            border-bottom: 3px solid $white;
+        }
+    }
+
+
+    &__cell--logo {
+        @each $size in map.keys($columns) {
+            @include media-query_($size) {
+                $gutter: map.get($default-gutter, $size);
+                @if $size == desktop {
+                    $default-column-span: 2;
+                    display: grid;
+                    align-items: center;
+                    @include cell($size, $default-column-span, $gutter);
+                } @else if $size == tablet{
+                    $default-column-span: 4;
+                    display: grid;
+                    align-items: center;
+                    @include cell($size, $default-column-span, $gutter);
+                } @else {
+                    $default-column-span: 6;
+                    display: grid;
+                    justify-content: center;
+                    align-items: end;
+                    @include cell($size, $default-column-span, $gutter);
+                }
+            }
+        }
+    }
+}
