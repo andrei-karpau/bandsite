@@ -174,3 +174,69 @@ body {
         }
     }
 }
+
+.hero {
+    background: rgba($bandsite-black, 0.5);
+
+    &__biography {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        max-width: 100%;
+        &-image {
+            display: block;
+            max-width:100%;
+            max-height:100%;
+            width: auto;
+            height: auto;
+            position: relative;
+            z-index: -1;
+            
+        }
+
+        &-title {
+            position: absolute;
+            justify-content: center;
+            text-transform: capitalize;
+            color: $white;
+            @include text-styles('page-header');
+            @each $size in map.keys($columns) {
+                @include media-query_($size) {
+                    width: map.get($default-content-width, $size);
+                    $margin: map.get($default-margin, $size);
+                    $gutter: map.get($default-gutter, $size);
+                    @include layout-grid($size, $margin, $max-width);
+                    @if $size == mobile {
+                        width: 100%;
+                        @include inner($size, $margin, $gutter);
+                        @include text-styles('page-header', true);
+                    } @else if $size == tablet{
+                        align-self: start;
+                        @include inner($size, $margin, $gutter);
+                    } @else {
+                        @include inner($size, $margin, $gutter);
+                    }
+                }
+            }
+            
+            span {
+                display: inline-grid;
+                z-index: 3;
+                @each $size in map.keys($columns) {
+                    @include media-query_($size) {
+                        $gutter: map.get($default-gutter, $size);
+                        @if $size == tablet {
+                            $default-column-span: 8;
+                            @include cell($size, $default-column-span, $gutter);
+                        } @else {
+                            $default-column-span: 6;
+                            @include cell($size, $default-column-span, $gutter);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
