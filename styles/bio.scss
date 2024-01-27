@@ -436,4 +436,65 @@ body {
             }
         }
     }
+
+    &__article--photo-gallery {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        background-color: $alabaster;
+        @each $size in map.keys($columns) {
+            @include media-query_($size) {
+                @if $size == mobile {
+                    @include to-rem('padding-bottom', 16);
+                } @else {
+                    @include to-rem('padding-bottom', 36);
+                }
+            }
+        }
+    }
+
+    &__photo-gallery {
+        @extend .biography__title;
+ 
+        &-section-header {
+            display: inline-grid;
+            text-transform: capitalize;
+            @include text-styles('section-header');
+            @include to-rem('padding-bottom', 12);
+            @each $size in map.keys($columns) {
+                @include media-query_($size) {
+                    $gutter: map.get($default-gutter, $size);
+                    $default-column-span: 12;
+                    @include cell($size, $default-column-span, $gutter);
+                    @if $size == mobile {
+                        $default-column-span: 6;
+                        @include text-styles('section-header', true);
+                    }
+                }
+            }
+        }
+
+        &-image-container {
+            display: flex;
+            @each $size in map.keys($columns) {
+                @include media-query_($size) {
+                    $gutter: map.get($default-gutter, $size);
+                    @if $size == mobile {
+                        $default-column-span: 6;
+                        @include cell($size, $default-column-span, $gutter);
+                    } @else {
+                        $default-column-span: 4;
+                        @include cell($size, $default-column-span, $gutter);
+                    }
+                }
+            }
+        }
+
+        &-image {
+            max-width:100%;
+            max-height:100%;
+            width: auto;
+            height: auto;
+        }
+    }
 }
