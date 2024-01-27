@@ -68,6 +68,8 @@ body {
     max-width: 100%;
     background-color: $bandsite-black;
     justify-content: center;
+    @include text-styles('body-copy');
+    text-transform: capitalize;
     @each $size in map.keys($columns) {
         @include media-query_($size) {
             $margin: map.get($default-margin, $size);
@@ -78,11 +80,7 @@ body {
             }
             @if $size == mobile {
                 @include text-styles('body-copy', true);
-                text-transform: capitalize;
                 padding: 0;
-            } @else {
-                @include text-styles('body-copy');
-                text-transform: capitalize;
             }
         }
     }
@@ -94,13 +92,17 @@ body {
                 width: map.get($default-content-width, $size);
                 $margin: map.get($default-margin, $size);
                 $gutter: map.get($default-gutter, $size);
-                @include to-rem(height, 24, 36, 24);
                 @if $size == mobile {
                     width: 100%;
                     $gutter: 0;
                     @include inner($size, $margin, $gutter);
-                } @else {
+                    @include to-rem(height, 30, 20, 30);
+                } @else if $size == tablet {
                     @include inner($size, $margin, $gutter);
+                    @include to-rem(height, 24, 20, 24);
+                } @else if $size == desktop {
+                    @include inner($size, $margin, $gutter);
+                    @include to-rem(height, 24, 36, 24);
                 }
             }
         }
@@ -142,6 +144,7 @@ body {
                 }
             }
         }
+
         &--active {
             border-top: 3px solid $bandsite-black;
             border-bottom: 3px solid $white;
@@ -180,15 +183,16 @@ body {
 
     &__biography {
         display: flex;
+        max-width: 100%;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         position: relative;
-        max-width: 100%;
+
         &-image {
             display: block;
-            max-width:100%;
-            max-height:100%;
+            max-width: 100%;
+            max-height: auto;
             width: auto;
             height: auto;
             position: relative;
@@ -236,6 +240,199 @@ body {
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+.biography {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    &__title {
+        width: 100%;
+        justify-content: center;
+        @each $size in map.keys($columns) {
+            @include media-query_($size) {
+                width: map.get($default-content-width, $size);
+                $margin: map.get($default-margin, $size);
+                $gutter: map.get($default-gutter, $size);
+                @include layout-grid($size, $margin, $max-width);
+                @if $size == mobile {
+                    @include inner($size, $margin, $gutter);
+                } @else if $size == tablet{ 
+                    @include inner($size, $margin, $gutter);
+                } @else {
+                    @include inner($size, $margin, $gutter);
+                }
+            }
+        }
+
+        &-section-header {
+            display: inline-grid;
+            text-transform: capitalize;
+            @include text-styles('section-header');
+            @each $size in map.keys($columns) {
+                @include media-query_($size) {
+                    $gutter: map.get($default-gutter, $size);
+                    @if $size == tablet {
+                        $default-column-span: 8;
+                        @include cell($size, $default-column-span, $gutter);
+                    } @else {
+                        $default-column-span: 6;
+                        @include cell($size, $default-column-span, $gutter);
+                    }
+                    @if $size == mobile {
+                        @include text-styles('section-header', true);
+                    }
+                }
+            }
+        }
+    }
+
+    &__image {
+        display: block;
+        max-width:100%;
+        max-height:100%;
+        width: auto;
+        height: auto;
+        position: relative;
+        @each $size in map.keys($columns) {
+            @include media-query_($size) {
+                $gutter: map.get($default-gutter, $size);
+                @if $size == mobile {
+                    $default-column-span: 6;
+                    @include cell($size, $default-column-span, $gutter);
+                } @else {
+                    grid-column-start: 2;
+                    $default-column-span: 10;
+                    @include cell($size, $default-column-span, $gutter);
+                }
+            }
+        }
+
+        &-annotation {
+            display: inline-grid;
+            @include text-styles('subheader');
+            @each $size in map.keys($columns) {
+                @include media-query_($size) {
+                    $gutter: map.get($default-gutter, $size);
+                    @if $size == mobile {
+                        @include text-styles('subheader', true);
+                        $default-column-span: 6;
+                        @include cell($size, $default-column-span, $gutter);
+                    } @else if $size == desktop{
+                        grid-column-start: 2;
+                        $default-column-span: 8;
+                        @include cell($size, $default-column-span, $gutter);
+                    } @else {
+                        grid-column-start: 2;
+                        $default-column-span: 10;
+                        @include cell($size, $default-column-span, $gutter);
+                    }
+                }
+            }
+
+            &--quote {
+                display: inline-grid;
+                @each $size in map.keys($columns) {
+                    @include media-query_($size) {
+                        @if $size == mobile {
+                            @include text-styles('subheader', true);
+                            @include to-rem('padding-top', 8);
+                        } @else {
+                            @include text-styles('body-copy--quotes');
+                            font-family: 'AvenirNextDemi';
+                        }
+                    }
+                }
+                
+            }
+        }
+    }
+
+    &__article {
+        width: 100%;
+        justify-content: center;
+        @each $size in map.keys($columns) {
+            @include media-query_($size) {
+                width: map.get($default-content-width, $size);
+                $margin: map.get($default-margin, $size);
+                $gutter: map.get($default-gutter, $size);
+                @include layout-grid($size, $margin, $max-width);
+                @if $size == mobile {
+                    @include inner($size, $margin, $gutter);
+                    @include to-rem('padding-top', 16);
+                    @include to-rem('padding-bottom', 16);
+                } @else if $size == tablet{
+                    @include inner($size, $margin, $gutter);
+                    @include to-rem('padding-top', 36);
+                    @include to-rem('padding-bottom', 36);
+                } @else {
+                    @include inner($size, $margin, $gutter);
+                    @include to-rem('padding-top', 36);
+                    @include to-rem('padding-bottom', 36);
+                }
+            }
+        }
+
+        &-header {
+            display: inline-grid;
+            text-transform: capitalize;
+            @include text-styles('subheader');
+            @each $size in map.keys($columns) {
+                @include media-query_($size) {
+                    $gutter: map.get($default-gutter, $size);
+                    $default-column-span: 6;
+                    @include cell($size, $default-column-span, $gutter);
+                    @if $size == mobile {
+                        @include text-styles('subheader', true);
+                        @include to-rem('padding-top', 8);
+                    } @else {
+                        grid-column-start: 2;
+                    }
+                }
+            }
+        }
+        
+        &-column-left {
+            display: flex;
+            width: auto;
+            @include text-styles('body-copy');
+            @each $size in map.keys($columns) { 
+                @include media-query_($size) {
+                    $gutter: map.get($default-gutter, $size);
+                    @if $size == mobile {
+                        $default-column-span: 6;
+                        @include cell($size, $default-column-span, $gutter);
+                        @include text-styles('body-copy', true);
+                    } @else {
+                        grid-column-start: 2;
+                        $default-column-span: 5;
+                        @include cell($size, $default-column-span, $gutter);
+                    }
+                }         
+            }
+        }
+
+        &-column-right {
+            display: flex;
+            width: auto;
+            @include text-styles('body-copy');
+            @each $size in map.keys($columns) { 
+                @include media-query_($size) {
+                    $gutter: map.get($default-gutter, $size);
+                    @if $size == mobile {
+                        $default-column-span: 6;
+                        @include cell($size, $default-column-span, $gutter);
+                        @include text-styles('body-copy', true);
+                    } @else {
+                        $default-column-span: 5;
+                        @include cell($size, $default-column-span, $gutter);
+                    }
+                }         
             }
         }
     }

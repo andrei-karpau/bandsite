@@ -14,15 +14,15 @@
 @mixin text-styles($mockup-text-style-name, $mobile: false) {
   @if $mobile {
       @if $mockup-text-style-name == 'page-header' {
-        @include text-styles-config(24, 32, 'AvenirNextBold', 24, 16);
+        @include text-styles-config(24, 32, 'AvenirNextBold', 24);
       } @else if $mockup-text-style-name == 'section-header' {
-        @include text-styles-config(24, 32, 'AvenirNextDemi', 24, 16);
+        @include text-styles-config(24, 32, 'AvenirNextDemi', 24);
       } @else if $mockup-text-style-name == 'subheader' {
-        @include text-styles-config(14, 22, 'AvenirNextDemi', 16, 10);
+        @include text-styles-config(14, 22, 'AvenirNextDemi');
       } @else if $mockup-text-style-name == 'body-copy' {
         @include text-styles-config(13, 18, 'AvenirNextRegular');
       } @else if $mockup-text-style-name == 'body-copy--quotes' {
-        @include text-styles-config(13, 18, 'AvenirNextDemi', 12);
+        @include text-styles-config(13, 18, 'AvenirNextDemi', 8);
       } @else if $mockup-text-style-name == 'footer-copy' {
         @include text-styles-config(11.5, 18, 'AvenirNextRegular');
       } @else if $mockup-text-style-name == 'labels-and-buttons' {
@@ -30,11 +30,11 @@
       }
   } @else {
       @if $mockup-text-style-name == 'page-header' {
-        @include text-styles-config(60, 68, 'AvenirNextBold', 48, 36);
+        @include text-styles-config(60, 68, 'AvenirNextBold', 48, 12);
       } @else if $mockup-text-style-name == 'section-header' {
-        @include text-styles-config(36, 44, 'AvenirNextDemi', 48, 36);
+        @include text-styles-config(36, 44, 'AvenirNextDemi', 48, 12);
       } @else if $mockup-text-style-name == 'subheader' {
-        @include text-styles-config(21, 29, 'AvenirNextDemi', 36, 20);
+        @include text-styles-config(21, 29, 'AvenirNextDemi', 12);
       } @else if $mockup-text-style-name == 'body-copy' {
         @include text-styles-config(14, 22, 'AvenirNextRegular');
       } @else if $mockup-text-style-name == 'body-copy--quotes' {
@@ -133,7 +133,7 @@
     display: grid;
     margin: 0;
     column-gap: $gutter;
-    row-gap: 0;
+    row-gap: $gutter;
     grid-template-columns: repeat(
       map.get($columns, $size),
       minmax(0, 1fr)
