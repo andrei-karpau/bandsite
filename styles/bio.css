@@ -36,8 +36,8 @@
 }
 
 #logo {
-  height: 20px;
-  width: 120px;
+  height: 1.25rem;
+  width: 7.5rem;
 }
 
 a {
@@ -157,12 +157,18 @@ body {
 }
 .nav-bar__link {
   color: #E1E1E1;
-}
-.nav-bar__link--active {
+  height: 100%;
   display: flex;
   align-items: center;
+}
+.nav-bar__link:hover {
   color: #FFFFFF;
-  height: 100%;
+}
+.nav-bar__link--active {
+  color: #FFFFFF;
+}
+.nav-bar__cell {
+  position: relative;
 }
 @media (min-width: 1280px) {
   .nav-bar__cell {
@@ -236,6 +242,25 @@ body {
 .nav-bar__cell--active {
   border-top: 3px solid #323232;
   border-bottom: 3px solid #FFFFFF;
+}
+.nav-bar__cell--inactive::before {
+  display: block;
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-bottom: solid 3px rgba(213, 216, 217, 0.5);
+  transform: scaleX(0);
+  transition: transform 500ms ease-in-out;
+  transform-origin: 0% 50%;
+}
+@media (min-width: 768px) and (max-width: 1279px) {
+  .nav-bar__cell--inactive::before {
+    left: 20%;
+  }
+}
+.nav-bar__cell--inactive:hover::before {
+  transform: scaleX(1);
 }
 @media (min-width: 1280px) {
   .nav-bar__cell--logo {
@@ -1288,6 +1313,16 @@ body {
   max-height: 100%;
   width: auto;
   height: auto;
+  transition: 1s;
+}
+@media (min-width: 1280px) {
+  .biography__photo-gallery-image {
+    filter: grayscale(1);
+  }
+}
+.biography__photo-gallery-image:hover {
+  filter: grayscale(0);
+  transform: scale(1.14);
 }
 
 .footer {

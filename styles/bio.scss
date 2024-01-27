@@ -50,8 +50,8 @@
 }
 
 #logo {
-    height: 20px;
-    width: 120px;
+    @include to-rem('height', 20);
+    @include to-rem('width', 120);
     
 }
 
@@ -110,16 +110,22 @@ body {
 
     &__link {
         color: $mercury;
-        &--active {
-            display: flex;
-            align-items: center;
+        height: 100%;
+        display: flex;
+        align-items: center;
+
+        &:hover {
             color: $white;
-            height: 100%;
+        }
+
+        &--active {
+            color: $white;
         }
     }
 
 
     &__cell {
+        position: relative;
         @each $size in map.keys($columns) {
             @include media-query_($size) {
                 $gutter: map.get($default-gutter, $size);
@@ -148,6 +154,33 @@ body {
         &--active {
             border-top: 3px solid $bandsite-black;
             border-bottom: 3px solid $white;
+        }
+
+        &--inactive {
+
+            &::before {
+                display: block;
+                content: "";
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                border-bottom: solid 3px rgba(213, 216, 217, 0.5);
+                transform: scaleX(0);
+                transition: transform 500ms ease-in-out;
+                transform-origin: 0% 50%;
+                @each $size in map.keys($columns) {
+                    @include media-query_($size) {
+                        @if $size == tablet {
+                            left: 20%
+                        }
+                    }
+                }    
+            }
+
+            &:hover::before {
+                transform: scaleX(1);
+            }
+
         }
     }
 
@@ -496,6 +529,20 @@ body {
             max-height:100%;
             width: auto;
             height: auto;
+            @each $size in map.keys($columns) {
+                @include media-query_($size) {
+                    @if $size == desktop {
+                        filter: grayscale(1);
+                    }
+                }
+            }
+
+            transition: 1s;
+
+            &:hover{
+                filter: grayscale(0);
+                transform: scale(1.14);
+            }
         }
     }
 }
@@ -581,7 +628,7 @@ body {
                 }
             }
         }
-        
+
         &-contacts{
             @include text-styles('footer-copy');
             @each $size in map.keys($columns) {
