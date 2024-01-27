@@ -252,7 +252,6 @@ body {
     justify-content: center;
     
     &__title {
-        width: 100%;
         justify-content: center;
         @each $size in map.keys($columns) {
             @include media-query_($size) {
@@ -261,9 +260,11 @@ body {
                 $gutter: map.get($default-gutter, $size);
                 @include layout-grid($size, $margin, $max-width);
                 @if $size == mobile {
+                    width: 100%;
                     @include inner($size, $margin, $gutter);
                 } @else if $size == tablet{ 
                     @include inner($size, $margin, $gutter);
+                    width: 100%;
                 } @else {
                     @include inner($size, $margin, $gutter);
                 }
@@ -495,6 +496,158 @@ body {
             max-height:100%;
             width: auto;
             height: auto;
+        }
+    }
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background-color: $bandsite-black;
+    color: $white;
+    @each $size in map.keys($columns) {
+        @include media-query_($size) {
+            @if $size == mobile {
+                @include to-rem('padding-top', 24);
+                @include to-rem('padding-bottom', 16);
+            } @else {
+                @include to-rem('padding-top', 48);
+                @include to-rem('padding-bottom', 36);
+            }
+        }
+    }
+
+    &__menu{
+        @extend .biography__photo-gallery;
+        
+        &-section-header {
+            display: inline-grid;
+            text-transform: capitalize;
+            align-items: center;
+            @include text-styles('section-header');
+            @include to-rem('padding', 0);
+            @each $size in map.keys($columns) {
+                @include media-query_($size) {
+                    $gutter: map.get($default-gutter, $size);
+                    $default-column-span: 3;
+                    @include cell($size, $default-column-span, $gutter);
+                    @if $size == mobile {
+                        $default-column-span: 6;
+                        @include text-styles('section-header', true);
+                        @include to-rem('padding-top', 0);
+                        @include cell($size, $default-column-span, $gutter);
+                    } @else if $size == tablet {
+                        $default-column-span: 4;
+                        @include cell($size, $default-column-span, $gutter);
+                    }
+                }
+            }
+        }
+        
+        &-social {
+            @extend .footer__menu-section-header;
+            display: flex;
+            align-items: center;
+            @include to-rem('gap', 30);
+            @include to-rem('padding', 0);
+            &-icon {
+                width: 110%;
+            }
+        }
+
+        &-logo {
+            display: grid;
+            justify-items: end;
+            align-items: center;
+            @each $size in map.keys($columns) {
+                @include media-query_($size) {
+                    $gutter: map.get($default-gutter, $size);
+                    @if $size == desktop {
+                        $default-column-span: 6;
+                        @include cell($size, $default-column-span, $gutter);
+                    } @else if $size == tablet{
+                        $default-column-span: 4;
+                        @include cell($size, $default-column-span, $gutter);
+                    } @else {
+                        $default-column-span: 6;
+                        display: grid;
+                        justify-items: start;
+                        grid-row-start: 6;
+                        @include to-rem('padding-top',48);
+                        @include to-rem('padding-bottom', 0);
+                        @include cell($size, $default-column-span, $gutter);
+                    }
+                }
+            }
+        }
+        
+        &-contacts{
+            @include text-styles('footer-copy');
+            @each $size in map.keys($columns) {
+                @include media-query_($size) {
+                    $gutter: map.get($default-gutter, $size);
+                    @if $size == desktop {
+                        $default-column-span: 3;
+                        display: grid;
+                        align-items: center;
+                        @include cell($size, $default-column-span, $gutter);
+                    } @else if $size == tablet{
+                        $default-column-span: 4;
+                        display: grid;
+                        align-items: center;
+                        @include cell($size, $default-column-span, $gutter);
+                    } @else {
+                        $default-column-span: 6;
+                        display: grid;
+                        @include text-styles('footer-copy', true);
+                        @include cell($size, $default-column-span, $gutter);
+                    }
+                }
+            }
+            div:not(:first-child) {
+                @each $size in map.keys($columns) {
+                    @include media-query_($size) {
+                        @if $size == mobile {
+                            @include to-rem('padding-top', 16);
+                        } @else {
+                            @include to-rem('padding-top', 24);
+                        }
+                    }
+                }    
+            }
+            div:first-child {
+                @each $size in map.keys($columns) {
+                    @include media-query_($size) {
+                        @if $size == mobile {
+                            @include to-rem('padding-top', 0);
+                        } @else {
+                            @include to-rem('padding-top', 16);
+                        }
+                    }
+                }    
+            }
+            span {
+                display: block;
+            }
+            a {
+                color: $white;
+            }
+        }
+
+        &-copyright{
+            @extend .footer__menu-contacts;
+            @each $size in map.keys($columns) {
+                @include media-query_($size) {
+                    @if $size == mobile {
+                        @include to-rem('padding', 0);
+                        grid-column-end: span 6;
+                    } @else {
+                        @include to-rem('padding-top', 24);
+                        grid-column-end: span 12;
+                    }
+                }    
+            }
         }
     }
 }
