@@ -109,20 +109,46 @@ body {
     }
 
     &__link {
+        position: relative;
         color: $mercury;
         height: 100%;
         display: flex;
         align-items: center;
-
-        &:hover {
-            color: $white;
-        }
+        border-color: $white;
 
         &--active {
+            @each $size in map.keys($columns) {
+                @include media-query_($size) {
+                    @if $size != mobile {
+                        border-top: solid 3px transparent;
+                        border-bottom: solid 3px;
+                    }
+                }
+            }
             color: $white;
         }
-    }
 
+        &--inactive {
+
+            &::before {
+                display: flex;
+                content: "";
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                border-bottom: solid 3px;
+                transform: scaleX(0);
+                transition: transform 500ms ease-in-out;
+                transform-origin: 0% 50%;  
+            }
+
+            &:hover::before {
+                transform: scaleX(1);
+            }
+        }
+
+    }
 
     &__cell {
         position: relative;
@@ -152,35 +178,14 @@ body {
         }
 
         &--active {
-            border-top: 3px solid $bandsite-black;
-            border-bottom: 3px solid $white;
-        }
-
-        &--inactive {
-
-            &::before {
-                display: block;
-                content: "";
-                position: absolute;
-                bottom: 0;
-                width: 100%;
-                border-bottom: solid 3px rgba(213, 216, 217, 0.5);
-                transform: scaleX(0);
-                transition: transform 500ms ease-in-out;
-                transform-origin: 0% 50%;
-                @each $size in map.keys($columns) {
-                    @include media-query_($size) {
-                        @if $size == tablet {
-                            left: 20%
-                        }
+            @each $size in map.keys($columns) {
+                @include media-query_($size) {
+                    @if $size == mobile {
+                        border-top: solid 3px transparent;
+                        border-bottom: solid 3px $white;
                     }
-                }    
+                }
             }
-
-            &:hover::before {
-                transform: scaleX(1);
-            }
-
         }
     }
 
