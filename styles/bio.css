@@ -344,9 +344,11 @@ body {
 .hero__biography-image {
   display: block;
   max-width: 100%;
-  max-height: auto;
+  min-width: 100%;
+  max-height: calc(100vh - 5.25rem);
   width: auto;
-  height: auto;
+  -o-object-fit: cover;
+     object-fit: cover;
   position: relative;
   z-index: -1;
 }
