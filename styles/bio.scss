@@ -98,6 +98,7 @@ body {
                     @include inner($size, $margin, $gutter);
                     @include to-rem(height, 30, 20, 30);
                 } @else if $size == tablet {
+                    width: 100%;
                     @include inner($size, $margin, $gutter);
                     @include to-rem(height, 24, 20, 24);
                 } @else if $size == desktop {
@@ -115,6 +116,7 @@ body {
         display: flex;
         align-items: center;
         border-color: $white;
+        width: fit-content;
 
         &--active {
             @each $size in map.keys($columns) {
@@ -164,7 +166,6 @@ body {
                 } @else if $size == tablet{
                     $default-column-span: 2;
                     display: grid;
-                    justify-items: end;
                     align-items: center;
                     @include cell($size, $default-column-span, $gutter);
                 } @else {
@@ -200,7 +201,7 @@ body {
                     align-items: center;
                     @include cell($size, $default-column-span, $gutter);
                 } @else if $size == tablet{
-                    $default-column-span: 4;
+                    $default-column-span: 3;
                     display: grid;
                     align-items: center;
                     @include cell($size, $default-column-span, $gutter);

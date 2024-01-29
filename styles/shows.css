@@ -115,6 +115,7 @@ body {
 @media (min-width: 768px) and (max-width: 1279px) {
   .nav-bar__container {
     width: auto;
+    width: 100%;
     display: flex;
     flex-flow: row wrap;
     align-items: stretch;
@@ -162,6 +163,8 @@ body {
   display: flex;
   align-items: center;
   border-color: #FFFFFF;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 .nav-bar__link--active {
   color: #FFFFFF;
@@ -222,7 +225,6 @@ body {
 @media (min-width: 768px) and (max-width: 1279px) {
   .nav-bar__cell {
     display: grid;
-    justify-items: end;
     align-items: center;
     width: calc(16.6666666667% - 24px);
     width: calc(16.6666666667% - var(--layout-grid-gutter-tablet, 24px));
@@ -297,8 +299,8 @@ body {
   .nav-bar__cell--logo {
     display: grid;
     align-items: center;
-    width: calc(33.3333333333% - 24px);
-    width: calc(33.3333333333% - var(--layout-grid-gutter-tablet, 24px));
+    width: calc(25% - 24px);
+    width: calc(25% - var(--layout-grid-gutter-tablet, 24px));
     box-sizing: border-box;
     margin: 12px;
     margin: calc(var(--layout-grid-gutter-tablet, 24px) / 2);
@@ -306,7 +308,7 @@ body {
   @supports (display: grid) {
     .nav-bar__cell--logo {
       width: auto;
-      grid-column-end: span 4;
+      grid-column-end: span 3;
     }
   }
   @supports (display: grid) {
