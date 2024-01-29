@@ -31,21 +31,21 @@ function addPageLayout(elementTag, parent = 'body', idOrClassName = null, id = f
     addPageLayout('div', '.nav-bar__container', 'nav-bar__cell--logo');
 
     const logoLink = addPageLayout('a', '.nav-bar__cell--logo', 'nav-bar__link');
-    logoLink.href = '../index.html';
+        logoLink.href = '../index.html';
 
     const logo = addPageLayout('img', '.nav-bar__cell--logo > a', 'logo', true);
-    logo.src = '/assets/Logo/Logo-bandsite.svg';
+        logo.src = '/assets/Logo/Logo-bandsite.svg';
 
     addPageLayout('div', '.nav-bar__container', 'nav-bar__cell');
     const inactiveNavLink = addPageLayout('a', '.nav-bar__cell:nth-child(2)', 'nav-bar__link');
-    inactiveNavLink.href = '/index.html';
-    inactiveNavLink.classList.add('nav-bar__link--inactive')
+        inactiveNavLink.href = '/index.html';
+        inactiveNavLink.classList.add('nav-bar__link--inactive')
     addPageLayout('span', '.nav-bar__cell:nth-child(2) > a', 'nav-bar___item', false, 'biography');
 
     const activeNavCell = addPageLayout('div', '.nav-bar__container', 'nav-bar__cell');
-    activeNavCell.classList.add('nav-bar__cell--active')
+        activeNavCell.classList.add('nav-bar__cell--active')
     const activeNavLink = addPageLayout('a', '.nav-bar__cell:nth-child(3)', 'nav-bar__link');
-    activeNavLink.classList.add('nav-bar__link--active');
+        activeNavLink.classList.add('nav-bar__link--active');
     addPageLayout('span', '.nav-bar__cell:nth-child(3) > a', 'nav-bar___item', false, 'shows');
 
 

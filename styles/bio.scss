@@ -50,8 +50,8 @@
 }
 
 #logo {
-    @include to-rem('height', 20);
-    @include to-rem('width', 120);
+    @include to-rem('max-height', 20);
+    @include to-rem('max-width', 120);
     
 }
 
@@ -117,7 +117,7 @@ body {
         align-items: center;
         border-color: $white;
         width: fit-content;
-
+        
         &--active {
             @each $size in map.keys($columns) {
                 @include media-query_($size) {

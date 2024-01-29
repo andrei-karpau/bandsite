@@ -36,8 +36,8 @@
 }
 
 #logo {
-  height: 1.25rem;
-  width: 7.5rem;
+  max-height: 1.25rem;
+  max-width: 7.5rem;
 }
 
 a {
