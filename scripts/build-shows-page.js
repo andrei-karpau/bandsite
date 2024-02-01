@@ -120,8 +120,10 @@ createShow(
 );
 
 let showFinder = () => {
+
+    const propertyName = Object.getOwnPropertyNames(shows[1]);
+
     for (let i = 0; i < shows.length; i++) {
-        const propertyName = Object.getOwnPropertyNames(shows[i]);
 
         addPageLayout(
             'div',
@@ -140,7 +142,7 @@ let showFinder = () => {
         addPageLayout(
             'span', 
             `.shows__section-container:nth-child(${i+2}) .shows__section-container-wrapper1`, 
-            'shows__container-info--type', 
+            'shows__section-container-info--type', 
             false,
             `${propertyName[0]}`
         );
@@ -148,7 +150,7 @@ let showFinder = () => {
         addPageLayout(
             'span',
             `.shows__section-container:nth-child(${i+2}) .shows__section-container-wrapper1`,
-            'shows__container-info',
+            'shows__section-container-info',
             false,
             `${shows[i].date}`
         );
@@ -156,7 +158,7 @@ let showFinder = () => {
         addPageLayout(
             'span',
             `.shows__section-container:nth-child(${i+2}) .shows__section-container-wrapper2`,
-            'shows__container-info--type',
+            'shows__section-container-info--type',
             false,
             `${propertyName[1]}`
         );
@@ -164,7 +166,7 @@ let showFinder = () => {
         addPageLayout(
             'span',
             `.shows__section-container:nth-child(${i+2}) .shows__section-container-wrapper2`,
-            'shows__container-info',
+            'shows__section-container-info',
             false,
             `${shows[i].venue}`
         );
@@ -172,7 +174,7 @@ let showFinder = () => {
         addPageLayout(
             'span',
             `.shows__section-container:nth-child(${i+2}) .shows__section-container-wrapper3`,
-            'shows__container-info--type',
+            'shows__section-container-info--type',
             false,
             `${propertyName[2]}`
         );
@@ -180,7 +182,7 @@ let showFinder = () => {
         addPageLayout(
             'span',
             `.shows__section-container:nth-child(${i+2}) .shows__section-container-wrapper3`,
-            'shows__container-info',
+            'shows__section-container-info',
             false,
             `${shows[i].location}, ${shows[i].country}`
         );
@@ -188,7 +190,7 @@ let showFinder = () => {
         addPageLayout(
             'button',
             `.shows__section-container:nth-child(${i+2}) .shows__section-container-wrapper4`,
-            'shows__container-info--button',
+            'shows__section-container-info--button',
             false,
             'buy tickets'
         );

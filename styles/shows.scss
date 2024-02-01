@@ -62,12 +62,90 @@
         @extend .biography__title;
 
         &-header {
-            @extend .biography__title-section-header;
-
+            display: inline-grid;
+            text-transform: capitalize;
+            @include text-styles('section-header');
+            @each $size in map.keys($columns) {
+                @include media-query_($size) {
+                    $gutter: map.get($default-gutter, $size);
+                    @if $size == mobile {
+                        @include text-styles('section-header', true);
+                        $default-column-span: 6;
+                        @include cell($size, $default-column-span, $gutter);
+                    } @else if $size == tablet {
+                        $default-column-span: 12;
+                        @include cell($size, $default-column-span, $gutter);
+                    } @else if $size == desktop {
+                        $default-column-span: 3;
+                        @include cell($size, $default-column-span, $gutter);
+                    }
+                }
+            }
         }
 
         &-container {
-            @extend .footer__menu-contacts;
+            @include text-styles('footer-copy');
+            @each $size in map.keys($columns) {
+                @include media-query_($size) {
+                    $gutter: map.get($default-gutter, $size);
+                    @if $size == desktop {
+                        $default-column-span: 9;
+                        grid-column-start: 4;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        @include cell($size, $default-column-span, $gutter);
+                    } @else if $size == tablet{
+                        $default-column-span: 12;
+                        display: flex;
+                        justify-content: space-between;
+                        text-align: left;
+                        align-items: center;
+                        @include cell($size, $default-column-span, $gutter);
+                    } @else {
+                        $default-column-span: 6;
+                        display: grid;
+                        @include text-styles('footer-copy', true);
+                        @include cell($size, $default-column-span, $gutter);
+                    }
+                }
+            }
+
+            div:not(:first-child) {
+                @each $size in map.keys($columns) {
+                    @include media-query_($size) {
+                        @if $size == mobile {
+                            @include to-rem('padding-top', 16);
+                        }
+                    }
+                }    
+            }
+
+            div:first-child {
+                @each $size in map.keys($columns) {
+                    @include media-query_($size) {
+                        @if $size == mobile {
+                            @include to-rem('padding-top', 0);
+                        }
+                    }
+                }    
+            }
+            
+            &-info {
+                display: block;
+                &--type {
+                    @each $size in map.keys($columns) {
+                        @include media-query_($size) {
+                            @if $size == mobile {
+                                text-transform: uppercase;
+                                color: $silver;
+                            } @else {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
