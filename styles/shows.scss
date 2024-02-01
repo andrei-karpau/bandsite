@@ -5,3 +5,69 @@
 @use './partials/mixin' as *;
 @use './bio.scss' as *;
 
+.hero {
+    &__shows {
+        @extend .hero__biography;
+
+        &-image {
+            @extend .hero__biography-image;
+        }
+
+        &-title {
+            @extend .hero__biography-title;
+
+            &--album {
+                @include text-styles('body-copy');
+            }
+
+            &--song {
+
+            }
+
+            &--delimiter {
+                text-transform: lowercase;
+            }
+        }
+
+        &--sound-cloud {
+            @each $size in map.keys($columns) {
+                @include media-query_($size) {
+                    $gutter: map.get($default-gutter, $size);
+                    @if $size == desktop {
+                        $default-column-span: 3;
+                        display: grid;
+                        align-items: center;
+                        @include cell($size, $default-column-span, $gutter);
+                    } @else if $size == tablet{
+                        $default-column-span: 4;
+                        display: grid;
+                        align-items: center;
+                        @include cell($size, $default-column-span, $gutter);
+                    } @else {
+                        $default-column-span: 6;
+                        display: grid;
+                        @include text-styles('footer-copy', true);
+                        @include cell($size, $default-column-span, $gutter);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.shows {
+    @extend .biography;
+
+    &__section{
+        @extend .biography__title;
+
+        &-header {
+            @extend .biography__title-section-header;
+
+        }
+
+        &-container {
+            @extend .footer__menu-contacts;
+        }
+    }
+}

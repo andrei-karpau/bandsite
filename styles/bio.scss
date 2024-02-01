@@ -24,7 +24,7 @@
 @font-face {
     font-family: 'AvenirNextRegular';
     src: url('../assets/Font/AvenirNextLTPro-Regular.otf') format('OpenType');
-    src: url('../assets/Font/Alternative_files/AvenirNextLTPro.ttf') format('TrueType');
+    src: url('../assets/Font/Alternative files/AvenirNextLTPro.ttf') format('TrueType');
     font-weight: 400;
     font-style: normal;
 }
@@ -32,7 +32,7 @@
 @font-face {
     font-family: 'AvenirNextDemi';
     src: url('../assets/Font/AvenirNextLTPro-Demi.otf') format('OpenType');
-    src: url('../assets/Font/Alternative_files/AvenirNextLTProDemi.ttf') format('TrueType');
+    src: url('../assets/Font/Alternative files/AvenirNextLTProDemi.ttf') format('TrueType');
     font-weight: 600;
     font-style: normal;
 }
@@ -40,7 +40,7 @@
 @font-face {
     font-family: 'AvenirNextBold';
     src: url('../assets/Font/AvenirNextLTPro-Bold.otf') format('OpenType');
-    src: url('../assets/Font/Alternative_files/AvenirNextLTProBold.ttf') format('TrueType');
+    src: url('../assets/Font/Alternative files/AvenirNextLTProBold.ttf') format('TrueType');
     font-weight: 700;
     font-style: normal;
 }
@@ -116,14 +116,24 @@ body {
         display: flex;
         align-items: center;
         border-color: $white;
-        width: fit-content;
+        @each $size in map.keys($columns) {
+            @include media-query_($size) {
+                @if $size == mobile {
+                    justify-content: center;
+                }
+            }
+        }
         
         &--active {
+            border-top: solid 3px transparent;
+            border-bottom: solid 3px;
             @each $size in map.keys($columns) {
                 @include media-query_($size) {
-                    @if $size != mobile {
-                        border-top: solid 3px transparent;
-                        border-bottom: solid 3px;
+                    @if $size == mobile {
+                        width: 100%;
+                        justify-content: center;
+                    } @else {
+                        width: fit-content;
                     }
                 }
             }
@@ -131,6 +141,17 @@ body {
         }
 
         &--inactive {
+
+            @each $size in map.keys($columns) {
+                @include media-query_($size) {
+                    @if $size == mobile {
+                        width: 100%;
+                        justify-content: center;
+                    } @else {
+                        width: fit-content;
+                    }
+                }
+            }
 
             &::before {
                 display: flex;
@@ -172,19 +193,9 @@ body {
                     $default-column-span: 3;
                     display: grid;
                     justify-content: center;
-                    align-items: center;
+                    align-items: stretch;
+                    justify-content: stretch;
                     @include cell($size, $default-column-span, $gutter);
-                }
-            }
-        }
-
-        &--active {
-            @each $size in map.keys($columns) {
-                @include media-query_($size) {
-                    @if $size == mobile {
-                        border-top: solid 3px transparent;
-                        border-bottom: solid 3px $white;
-                    }
                 }
             }
         }
