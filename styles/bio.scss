@@ -267,6 +267,7 @@ body {
                         width: 100%;
                         @include inner($size, $margin, $gutter);
                         @include text-styles('page-header', true);
+                        @include to-rem('padding-top', 0);
                     } @else if $size == tablet{
                         align-self: start;
                         @include inner($size, $margin, $gutter);
@@ -276,7 +277,7 @@ body {
                 }
             }
             
-            span {
+            &--text {
                 display: inline-grid;
                 z-index: 3;
                 @each $size in map.keys($columns) {
@@ -400,7 +401,6 @@ body {
                         }
                     }
                 }
-                
             }
         }
     }

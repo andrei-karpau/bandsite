@@ -34,7 +34,7 @@
       } @else if $mockup-text-style-name == 'section-header' {
         @include text-styles-config(36, 44, 'AvenirNextDemi', 48, 12);
       } @else if $mockup-text-style-name == 'subheader' {
-        @include text-styles-config(21, 29, 'AvenirNextDemi', 12);
+        @include text-styles-config(24, 32, 'AvenirNextDemi', 12);
       } @else if $mockup-text-style-name == 'body-copy' {
         @include text-styles-config(14, 22, 'AvenirNextRegular');
       } @else if $mockup-text-style-name == 'body-copy--quotes' {

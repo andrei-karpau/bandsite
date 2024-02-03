@@ -5,6 +5,22 @@
 @use './partials/mixin' as *;
 @use './bio.scss' as *;
 
+#divider {
+    grid-column-end: span 12;
+    // border-bottom: 1px solid black;
+    position: relative;
+    &::before {
+        content: "";
+        position: absolute;
+        left: -1.125rem;
+        bottom: 0;
+        width: calc(100% + 2.25rem);
+        border-bottom: 1px solid $mercury;
+        transform: scaleX(1);
+    }
+}
+
+
 .hero {
     &__shows {
         @extend .hero__biography;
@@ -17,15 +33,53 @@
             @extend .hero__biography-title;
 
             &--album {
-                @include text-styles('body-copy');
+                @each $size in map.keys($columns) {
+                    @include media-query_($size) {
+                        $gutter: map.get($default-gutter, $size);
+                        @if $size == mobile {
+                            @include text-styles('body-copy', true);
+                            grid-column-end: span 6;
+                        } @else {
+                            @include text-styles('subheader');
+                            grid-column-end: span 12;
+                        }
+                    }
+                }
             }
 
             &--song {
-
+                display: flex;
+                flex-wrap: wrap;
+                
+                
+                @each $size in map.keys($columns) {
+                    @include media-query_($size) {
+                        $gutter: map.get($default-gutter, $size);
+                        @if $size == mobile {
+                            @include text-styles('section-header', true);
+                            @include to-rem('padding', 0);
+                            @include to-rem('gap', 6);
+                            grid-column-end: span 6;
+                        } @else if $size == tablet {
+                            @include text-styles('page-header');
+                            @include to-rem('padding', 0);
+                            @include to-rem('gap', 12);
+                            grid-column-end: span 10;
+                        } @else {
+                            @include text-styles('page-header');
+                            @include to-rem('padding', 0);
+                            @include to-rem('gap', 12);
+                            grid-column-end: span 6;
+                        }
+                    }
+                }
+                
             }
 
             &--delimiter {
+                @extend .hero__shows-title--song;
                 text-transform: lowercase;
+                grid-column-end: span 1;
             }
         }
 
@@ -60,16 +114,29 @@
 
     &__section{
         @extend .biography__title;
+        align-items: baseline;
+
+        &:not(:first-child)::before {
+            content: '';
+            background-color: black;
+            height: 100%;
+            width: 1px;
+            position: absolute;
+            left: 0;
+            transform: translateX(-6px);
+        }
 
         &-header {
             display: inline-grid;
             text-transform: capitalize;
             @include text-styles('section-header');
+            @include to-rem('padding', 0);
             @each $size in map.keys($columns) {
                 @include media-query_($size) {
                     $gutter: map.get($default-gutter, $size);
                     @if $size == mobile {
                         @include text-styles('section-header', true);
+                        @include to-rem('padding', 0);
                         $default-column-span: 6;
                         @include cell($size, $default-column-span, $gutter);
                     } @else if $size == tablet {
@@ -84,55 +151,89 @@
         }
 
         &-container {
-            @include text-styles('footer-copy');
-            @each $size in map.keys($columns) {
-                @include media-query_($size) {
-                    $gutter: map.get($default-gutter, $size);
-                    @if $size == desktop {
-                        $default-column-span: 9;
-                        grid-column-start: 4;
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        @include cell($size, $default-column-span, $gutter);
-                    } @else if $size == tablet{
-                        $default-column-span: 12;
-                        display: flex;
-                        justify-content: space-between;
-                        text-align: left;
-                        align-items: center;
-                        @include cell($size, $default-column-span, $gutter);
-                    } @else {
-                        $default-column-span: 6;
-                        display: grid;
-                        @include text-styles('footer-copy', true);
-                        @include cell($size, $default-column-span, $gutter);
+            display: contents;
+            // @include text-styles('footer-copy');
+            // @each $size in map.keys($columns) {
+            //     @include media-query_($size) {
+            //         $gutter: map.get($default-gutter, $size);
+            //         @if $size == desktop {
+            //             $default-column-span: 9;
+            //             display: contents;
+            //             align-items: center;
+            //             @include cell($size, $default-column-span, $gutter);
+            //         } @else if $size == tablet{
+            //             $default-column-span: 12;
+            //             display: contents;
+            //             align-items: center;
+            //             @include cell($size, $default-column-span, $gutter);
+            //         } @else {
+            //             $default-column-span: 6;
+            //             display: contents;
+            //             @include text-styles('footer-copy', true);
+            //             @include cell($size, $default-column-span, $gutter);
+            //         }
+            //     }
+            // }
+
+            &--heading {
+                @extend .shows__section-container;
+                @each $size in map.keys($columns) {
+                    @include media-query_($size) {
+                        $gutter: map.get($default-gutter, $size);
+                        @if $size == mobile {
+                            display: none;
+                        } @else {
+                            text-transform: uppercase;
+                            color: $silver;
+                        }
                     }
                 }
             }
 
-            div:not(:first-child) {
+            &-wrapper1 {
+                display: grid;
                 @each $size in map.keys($columns) {
                     @include media-query_($size) {
+                        $gutter: map.get($default-gutter, $size);
                         @if $size == mobile {
-                            @include to-rem('padding-top', 16);
+                            grid-column-end: span 6;
+                        } @else if $size == tablet {
+                            grid-column-end: span 3;
+                            grid-column-start: 1;
+                        } @else if $size == desktop {
+                            grid-column-end: span 3;
+                            grid-column-start: 4;
                         }
                     }
-                }    
+                }   
             }
 
-            div:first-child {
+            &-wrapper2 {
                 @each $size in map.keys($columns) {
                     @include media-query_($size) {
+                        $gutter: map.get($default-gutter, $size);
                         @if $size == mobile {
-                            @include to-rem('padding-top', 0);
+                            grid-column-end: span 6;
+                        } @else if $size == tablet {
+                            grid-column-end: span 3;
+                        } @else if $size == desktop {
+                            grid-column-end: span 2;
                         }
                     }
-                }    
+                }   
+            }
+
+            &-wrapper3 {
+                @extend .shows__section-container-wrapper2;
+            }
+
+            &-wrapper4 {
+                @extend .shows__section-container-wrapper2;
             }
             
             &-info {
                 display: block;
+
                 &--type {
                     @each $size in map.keys($columns) {
                         @include media-query_($size) {
@@ -143,6 +244,32 @@
                                 display: none;
                             }
                         }
+                    }
+                }
+
+                &--button {
+                    @include to-rem('height', 40);
+                    @include to-rem('min-width', 150);
+                    width: 100%;
+                    @include to-rem('padding-left', 32);
+                    @include to-rem('padding-right', 32);
+                    text-transform: uppercase;
+                    color: $white;
+                    background-color: $bandsite-black;
+                    border: none;
+                    border-radius: 4px;
+                    @each $size in map.keys($columns) {
+                        @include media-query_($size) {
+                            @if $size == mobile {
+                                @include text-styles('labels-and-buttons', true);
+                            } @else {
+                                @include text-styles('labels-and-buttons');
+                            }   
+                        }
+                    }
+
+                    &:hover {
+                        background-color: $bandsite-dark-black;
                     }
                 }
             }
