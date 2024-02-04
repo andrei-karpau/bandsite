@@ -96,7 +96,6 @@ body {
     width: 1056px;
     display: flex;
     flex-flow: row wrap;
-    align-items: stretch;
     margin: -12px;
     margin: calc(var(--layout-grid-gutter-desktop, 24px) / 2 * -1);
     height: 5.25rem;
@@ -118,7 +117,6 @@ body {
     width: 100%;
     display: flex;
     flex-flow: row wrap;
-    align-items: stretch;
     margin: -12px;
     margin: calc(var(--layout-grid-gutter-tablet, 24px) / 2 * -1);
     height: 4.25rem;
@@ -140,7 +138,6 @@ body {
     width: 100%;
     display: flex;
     flex-flow: row wrap;
-    align-items: stretch;
     margin: 0;
     margin: calc(var(--layout-grid-gutter-mobile, 0) / 2 * -1);
     height: 5rem;
@@ -168,6 +165,9 @@ body {
   .nav-bar__link {
     justify-content: center;
   }
+}
+.nav-bar__link--logo {
+  align-items: flex-end;
 }
 .nav-bar__link--active {
   border-top: solid 3px transparent;
@@ -407,7 +407,6 @@ body {
     padding: var(--layout-grid-margin-desktop, auto);
     display: flex;
     flex-flow: row wrap;
-    align-items: stretch;
     margin: -12px;
     margin: calc(var(--layout-grid-gutter-desktop, 24px) / 2 * -1);
   }
@@ -432,7 +431,6 @@ body {
     align-self: start;
     display: flex;
     flex-flow: row wrap;
-    align-items: stretch;
     margin: -12px;
     margin: calc(var(--layout-grid-gutter-tablet, 24px) / 2 * -1);
   }
@@ -457,7 +455,6 @@ body {
     width: 100%;
     display: flex;
     flex-flow: row wrap;
-    align-items: stretch;
     margin: -8px;
     margin: calc(var(--layout-grid-gutter-mobile, 16px) / 2 * -1);
     font-size: 1.5rem;
@@ -561,7 +558,6 @@ body {
     padding: var(--layout-grid-margin-desktop, auto);
     display: flex;
     flex-flow: row wrap;
-    align-items: stretch;
     margin: -12px;
     margin: calc(var(--layout-grid-gutter-desktop, 24px) / 2 * -1);
   }
@@ -585,10 +581,8 @@ body {
     padding: var(--layout-grid-margin-tablet, 0 36px);
     display: flex;
     flex-flow: row wrap;
-    align-items: stretch;
     margin: -12px;
     margin: calc(var(--layout-grid-gutter-tablet, 24px) / 2 * -1);
-    width: 100%;
   }
   @supports (display: grid) {
     .biography__title, .biography__photo-gallery, .footer__menu {
@@ -608,10 +602,8 @@ body {
     margin: 0 auto;
     padding: 0 16px;
     padding: var(--layout-grid-margin-mobile, 0 16px);
-    width: 100%;
     display: flex;
     flex-flow: row wrap;
-    align-items: stretch;
     margin: -8px;
     margin: calc(var(--layout-grid-gutter-mobile, 16px) / 2 * -1);
   }
@@ -891,7 +883,6 @@ body {
     padding: var(--layout-grid-margin-desktop, auto);
     display: flex;
     flex-flow: row wrap;
-    align-items: stretch;
     margin: -12px;
     margin: calc(var(--layout-grid-gutter-desktop, 24px) / 2 * -1);
     padding-top: 2.25rem;
@@ -917,7 +908,6 @@ body {
     padding: var(--layout-grid-margin-tablet, 0 36px);
     display: flex;
     flex-flow: row wrap;
-    align-items: stretch;
     margin: -12px;
     margin: calc(var(--layout-grid-gutter-tablet, 24px) / 2 * -1);
     padding-top: 2.25rem;
@@ -943,7 +933,6 @@ body {
     padding: var(--layout-grid-margin-mobile, 0 16px);
     display: flex;
     flex-flow: row wrap;
-    align-items: stretch;
     margin: -8px;
     margin: calc(var(--layout-grid-gutter-mobile, 16px) / 2 * -1);
     padding-top: 1rem;
@@ -1386,6 +1375,16 @@ body {
   .footer {
     padding-top: 1.5rem;
     padding-bottom: 1rem;
+  }
+}
+@media (min-width: 768px) and (max-width: 1279px) {
+  .footer__menu {
+    width: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .footer__menu {
+    width: 100%;
   }
 }
 .footer__menu-section-header, .footer__menu-social {

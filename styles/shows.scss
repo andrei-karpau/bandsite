@@ -5,18 +5,32 @@
 @use './partials/mixin' as *;
 @use './bio.scss' as *;
 
-#divider {
-    grid-column-end: span 12;
-    // border-bottom: 1px solid black;
-    position: relative;
-    &::before {
-        content: "";
-        position: absolute;
-        left: -1.125rem;
-        bottom: 0;
-        width: calc(100% + 2.25rem);
-        border-bottom: 1px solid $mercury;
-        transform: scaleX(1);
+
+.divider {
+    position: absolute;
+    display: grid;
+    border-bottom: 1px solid $mercury;
+    @each $size in map.keys($columns) {
+        @include media-query_($size) {
+            $gutter: map.get($default-gutter, $size);
+            @if $size == mobile {
+                grid-column-end: span 6;
+                @include to-rem('bottom', -10);
+                @include to-rem('left', -16);
+                width: calc(100% + 2rem);
+            } @else if $size == tablet {
+                grid-column-end: span 12;
+                left: -1.125rem;
+                width: calc(100% + 2.25rem);
+                @include to-rem('height', 40, 18, 18);
+            } @else if $size == desktop {
+                grid-column-start: 4;
+                grid-column-end: span 9;
+                left: -1.125rem;
+                width: calc(100% + 2.25rem);
+                @include to-rem('height', 40, 18, 18);
+            }
+        }
     }
 }
 
@@ -111,19 +125,37 @@
 
 .shows {
     @extend .biography;
+    @each $size in map.keys($columns) {
+        @include media-query_($size) {
+            @if $size == mobile {
+                @include to-rem('padding-top', 32);
+                @include to-rem('padding-bottom', 24);
+            } @else {
+                @include to-rem('padding-top', 36);
+                @include to-rem('padding-bottom', 36);
+            }
+        }
+    }
 
     &__section{
-        @extend .biography__title;
         align-items: baseline;
-
-        &:not(:first-child)::before {
-            content: '';
-            background-color: black;
-            height: 100%;
-            width: 1px;
-            position: absolute;
-            left: 0;
-            transform: translateX(-6px);
+        justify-content: center;
+        @each $size in map.keys($columns) {
+            @include media-query_($size) {
+                width: map.get($default-content-width, $size);
+                $margin: map.get($default-margin, $size);
+                $gutter: map.get($default-gutter, $size);
+                @include layout-grid($size, $margin, $max-width);
+                @if $size == mobile {
+                    width: 100%;
+                    @include inner($size, $margin, $gutter);
+                } @else if $size == tablet{ 
+                    width: 100%;
+                    @include inner($size, $margin, $gutter, 0);
+                } @else {
+                    @include inner($size, $margin, $gutter, 0);
+                }
+            }
         }
 
         &-header {
@@ -151,73 +183,107 @@
         }
 
         &-container {
-            display: contents;
-            // @include text-styles('footer-copy');
-            // @each $size in map.keys($columns) {
-            //     @include media-query_($size) {
-            //         $gutter: map.get($default-gutter, $size);
-            //         @if $size == desktop {
-            //             $default-column-span: 9;
-            //             display: contents;
-            //             align-items: center;
-            //             @include cell($size, $default-column-span, $gutter);
-            //         } @else if $size == tablet{
-            //             $default-column-span: 12;
-            //             display: contents;
-            //             align-items: center;
-            //             @include cell($size, $default-column-span, $gutter);
-            //         } @else {
-            //             $default-column-span: 6;
-            //             display: contents;
-            //             @include text-styles('footer-copy', true);
-            //             @include cell($size, $default-column-span, $gutter);
-            //         }
-            //     }
-            // }
+            position: relative;
+            align-items: center;
+            @each $size in map.keys($columns) {
+                @include media-query_($size) {
+                    width: map.get($default-content-width, $size);
+                    $margin: map.get($default-margin, $size);
+                    $gutter: map.get($default-gutter, $size);
+                    @if $size == mobile {
+                        grid-column-end: span 6;
+                        @include to-rem('padding-top', 6);
+                        @include to-rem('padding-bottom', 6);
+                        @include inner($size, $margin, $gutter);
+                    } @else if $size == tablet {
+                        grid-column-end: span 12;
+                        @include to-rem('padding-top', 18);
+                        @include to-rem('padding-bottom', 18);
+                        @include inner($size, $margin, $gutter, 0);
+                    } @else if $size == desktop {
+                        grid-column-end: span 9;
+                        @include to-rem('padding-top', 18);
+                        @include to-rem('padding-bottom', 18);
+                        @include inner($size, $margin, $gutter, 0);
+                    }
+                }
+            }
+
+            &--active {
+                background-color: $mercury;
+            }
 
             &--heading {
                 @extend .shows__section-container;
-                @each $size in map.keys($columns) {
-                    @include media-query_($size) {
-                        $gutter: map.get($default-gutter, $size);
-                        @if $size == mobile {
-                            display: none;
-                        } @else {
-                            text-transform: uppercase;
-                            color: $silver;
+                text-transform: uppercase;
+                color: $silver;
+                
+                &-text {
+                    color: $silver;
+                    text-transform: uppercase;
+                    @include text-styles-config(12, 18, 'AvenirNextDemi');
+                    @each $size in map.keys($columns) {
+                        @include media-query_($size){
+                            @if $size == mobile {
+                                display: none;
+                            } @else if $size == tablet {
+                                grid-column-end: span 3;
+                                @include to-rem('padding-top', 36);
+                            } @else {
+                                grid-column-end: span 2;
+                                @include to-rem('padding-top', 36);
+                            } 
                         }
+                    }
+
+                    &:nth-child(2){
+                        grid-column-end: span 3;
                     }
                 }
             }
 
             &-wrapper1 {
-                display: grid;
+                z-index: 10;
+                pointer-events:none;
                 @each $size in map.keys($columns) {
                     @include media-query_($size) {
                         $gutter: map.get($default-gutter, $size);
                         @if $size == mobile {
                             grid-column-end: span 6;
+                            text-transform: capitalize;
+                            @include text-styles-config(13, 18, 'AvenirNextDemi');
                         } @else if $size == tablet {
                             grid-column-end: span 3;
-                            grid-column-start: 1;
+                            text-transform: capitalize;
+                            @include text-styles-config(13, 18, 'AvenirNextDemi');
                         } @else if $size == desktop {
                             grid-column-end: span 3;
                             grid-column-start: 4;
+                            text-transform: capitalize;
+                            @include text-styles-config(13, 18, 'AvenirNextDemi');
                         }
                     }
                 }   
             }
 
             &-wrapper2 {
+                z-index: 10;
+                pointer-events:none;
                 @each $size in map.keys($columns) {
                     @include media-query_($size) {
                         $gutter: map.get($default-gutter, $size);
                         @if $size == mobile {
                             grid-column-end: span 6;
+                            text-transform: capitalize;
+                            @include text-styles-config(13, 18, 'AvenirNextRegular');
                         } @else if $size == tablet {
                             grid-column-end: span 3;
+                            @include text-styles-config(13, 18, 'AvenirNextRegular');
+                            text-transform: capitalize;
                         } @else if $size == desktop {
                             grid-column-end: span 2;
+                            @include text-styles-config(13, 18, 'AvenirNextRegular');
+                            text-transform: capitalize;
                         }
                     }
                 }   
@@ -228,7 +294,9 @@
             }
 
             &-wrapper4 {
+                text-transform: uppercase;
                 @extend .shows__section-container-wrapper2;
+                
             }
             
             &-info {
@@ -240,6 +308,7 @@
                             @if $size == mobile {
                                 text-transform: uppercase;
                                 color: $silver;
+                                @include text-styles('labels-and-buttons', true);
                             } @else {
                                 display: none;
                             }
@@ -261,7 +330,7 @@
                     @each $size in map.keys($columns) {
                         @include media-query_($size) {
                             @if $size == mobile {
-                                @include text-styles('labels-and-buttons', true);
+                                @include text-styles-config(14, 22, 'AvenirNextDemi');
                             } @else {
                                 @include text-styles('labels-and-buttons');
                             }   

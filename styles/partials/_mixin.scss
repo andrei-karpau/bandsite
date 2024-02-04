@@ -26,7 +26,7 @@
       } @else if $mockup-text-style-name == 'footer-copy' {
         @include text-styles-config(11.5, 18, 'AvenirNextRegular');
       } @else if $mockup-text-style-name == 'labels-and-buttons' {
-        @include text-styles-config(10, 20, 'AvenirNextBold');
+        @include text-styles-config(10, 20, 'AvenirNextDemi');
       }
   } @else {
       @if $mockup-text-style-name == 'page-header' {
@@ -121,11 +121,11 @@
   }
 }
 
-@mixin inner($size, $margin, $gutter) {
+@mixin inner($size, $margin, $gutter, $gutter-show: $gutter) {
 
   display: flex;
   flex-flow: row wrap;
-  align-items: stretch;
+  // align-items: stretch;
   margin: math.div(-$gutter, 2);
   margin: calc(var(--layout-grid-gutter-#{$size}, #{$gutter}) / 2 * -1);
 
@@ -133,7 +133,7 @@
     display: grid;
     margin: 0;
     column-gap: $gutter;
-    row-gap: $gutter;
+    row-gap: $gutter-show;
     grid-template-columns: repeat(
       map.get($columns, $size),
       minmax(0, 1fr)

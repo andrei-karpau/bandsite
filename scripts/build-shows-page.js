@@ -86,68 +86,53 @@ createShow(
     '2021-09-06T00:00:00',
     'ronald lane',
     'san francisco',
-    'ca'
+    'CA'
 );
 
 createShow(
     '2021-09-21T00:00:00',
     'pier 3 east',
     'san francisco',
-    'ca'
+    'CA'
 );
 
 createShow(
     '2021-10-15T00:00:00',
     'view lounge',
     'san francisco',
-    'ca'
+    'CA'
 );
 
 createShow(
     '2021-11-06T00:00:00',
     'hyatt agency',
     'san francisco',
-    'ca'
+    'CA'
 );
 
 createShow(
     '2021-11-26T00:00:00',
     'moscow center',
     'san francisco',
-    'ca'
+    'CA'
 );
 
 createShow(
     '2021-12-15T00:00:00',
     'press club',
     'san francisco',
-    'ca'
+    'CA'
 );
 
 let showFinder = () => {
 
-// consider Table instead https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table
-
-// more about dividers
-
     const propertyName = Object.getOwnPropertyNames(shows[1]);
 
-    addPageLayout(
-        'div',
-        '.shows__section',
-        'shows__section-container--heading'
-    );
-
     for (let i = 0; i < propertyName.length - 1; i++) {
-        addPageLayout(
-            'div',
-            '.shows__section-container--heading',
-            `shows__section-container-wrapper${i+1}`,
-        );
-        
+
         addPageLayout(
             'span',
-            `.shows__section-container--heading .shows__section-container-wrapper${i+1}`,
+            '.shows__section',
             `shows__section-container--heading-text`,
             false,
             `${propertyName[i]}`
@@ -166,14 +151,14 @@ let showFinder = () => {
         for (j=0; j<4; j++) {
             addPageLayout(
                 'div',
-                `.shows__section-container:nth-child(${i+3})`,
+                `.shows__section-container:nth-child(${i+5})`,
                 `shows__section-container-wrapper${j+1}`
             );
         }
 
         addPageLayout(
             'span', 
-            `.shows__section-container:nth-child(${i+3}) .shows__section-container-wrapper1`, 
+            `.shows__section-container:nth-child(${i+5}) .shows__section-container-wrapper1`, 
             'shows__section-container-info--type', 
             false,
             `${propertyName[0]}`
@@ -181,7 +166,7 @@ let showFinder = () => {
 
         addPageLayout(
             'span',
-            `.shows__section-container:nth-child(${i+3}) .shows__section-container-wrapper1`,
+            `.shows__section-container:nth-child(${i+5}) .shows__section-container-wrapper1`,
             'shows__section-container-info',
             false,
             `${shows[i].date}`
@@ -189,7 +174,7 @@ let showFinder = () => {
 
         addPageLayout(
             'span',
-            `.shows__section-container:nth-child(${i+3}) .shows__section-container-wrapper2`,
+            `.shows__section-container:nth-child(${i+5}) .shows__section-container-wrapper2`,
             'shows__section-container-info--type',
             false,
             `${propertyName[1]}`
@@ -197,7 +182,7 @@ let showFinder = () => {
 
         addPageLayout(
             'span',
-            `.shows__section-container:nth-child(${i+3}) .shows__section-container-wrapper2`,
+            `.shows__section-container:nth-child(${i+5}) .shows__section-container-wrapper2`,
             'shows__section-container-info',
             false,
             `${shows[i].venue}`
@@ -205,7 +190,7 @@ let showFinder = () => {
 
         addPageLayout(
             'span',
-            `.shows__section-container:nth-child(${i+3}) .shows__section-container-wrapper3`,
+            `.shows__section-container:nth-child(${i+5}) .shows__section-container-wrapper3`,
             'shows__section-container-info--type',
             false,
             `${propertyName[2]}`
@@ -213,7 +198,7 @@ let showFinder = () => {
 
         addPageLayout(
             'span',
-            `.shows__section-container:nth-child(${i+3}) .shows__section-container-wrapper3`,
+            `.shows__section-container:nth-child(${i+5}) .shows__section-container-wrapper3`,
             'shows__section-container-info',
             false,
             `${shows[i].location}, ${shows[i].country}`
@@ -221,7 +206,7 @@ let showFinder = () => {
     
         addPageLayout(
             'button',
-            `.shows__section-container:nth-child(${i+3}) .shows__section-container-wrapper4`,
+            `.shows__section-container:nth-child(${i+5}) .shows__section-container-wrapper4`,
             'shows__section-container-info--button',
             false,
             'buy tickets'
@@ -229,13 +214,36 @@ let showFinder = () => {
 
         addPageLayout(
             'div',
-            `.shows__section-container:nth-child(${i+3})`,
-            'divider',
-            true
+            `.shows__section-container:nth-child(${i+5})`,
+            'divider'
         )
     }
 }
 
 showFinder();
 
-//document.getElementsByTagName('div')[0].style.backgroundColor = 'RED';
+const dividers = document.querySelectorAll('.divider');
+
+dividers.forEach(each => {
+    each.onclick = (event) => {
+        dividers.forEach(ss => ss.classList.remove('shows__section-container--active'));
+        each.classList.add('shows__section-container--active');
+        event.target.style.backgroundColor = 'rgb(225, 225, 225)';
+    }
+
+    each.onmouseenter = (event) => {
+        if (!each.classList.contains('shows__section-container--active')) {
+
+            event.target.style.backgroundColor = 'rgb(250, 250, 250)';
+
+            each.onmouseleave = (event) => {
+                event.target.style.backgroundColor = '';
+            }
+        } 
+    }
+});
+
+
+
+
+

@@ -60,7 +60,7 @@ a {
 }
 
 body {
-    margin: 0
+    margin: 0;
 }
 
 .nav-bar {
@@ -122,6 +122,10 @@ body {
                     justify-content: center;
                 }
             }
+        }
+
+        &--logo {
+            align-items: flex-end;
         }
         
         &--active {
@@ -312,11 +316,9 @@ body {
                 $gutter: map.get($default-gutter, $size);
                 @include layout-grid($size, $margin, $max-width);
                 @if $size == mobile {
-                    width: 100%;
                     @include inner($size, $margin, $gutter);
                 } @else if $size == tablet{ 
                     @include inner($size, $margin, $gutter);
-                    width: 100%;
                 } @else {
                     @include inner($size, $margin, $gutter);
                 }
@@ -585,6 +587,15 @@ body {
 
     &__menu{
         @extend .biography__photo-gallery;
+        @each $size in map.keys($columns) {
+            @include media-query_($size) {
+                @if $size == mobile {
+                    width: 100%;
+                }  @else if $size == tablet {
+                    width: 100%;
+                }
+            }
+        }
         
         &-section-header {
             display: inline-grid;
