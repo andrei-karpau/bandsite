@@ -80,7 +80,7 @@ body {
             }
             @if $size == mobile {
                 @include text-styles('body-copy', true);
-                padding: 0;
+                @include to-rem('padding', 0);
             }
         }
     }
@@ -316,6 +316,7 @@ body {
                 $gutter: map.get($default-gutter, $size);
                 @include layout-grid($size, $margin, $max-width);
                 @if $size == mobile {
+                    width: 100%;
                     @include inner($size, $margin, $gutter);
                 } @else if $size == tablet{ 
                     @include inner($size, $margin, $gutter);
@@ -350,7 +351,6 @@ body {
     &__image {
         display: block;
         max-width:100%;
-        max-height:100%;
         width: auto;
         height: auto;
         position: relative;

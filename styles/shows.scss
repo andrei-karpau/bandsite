@@ -18,6 +18,7 @@
                 @include to-rem('bottom', -10);
                 @include to-rem('left', -16);
                 width: calc(100% + 2rem);
+                @include to-rem('height', 230);
             } @else if $size == tablet {
                 grid-column-end: span 12;
                 left: -1.125rem;
@@ -38,9 +39,21 @@
 .hero {
     &__shows {
         @extend .hero__biography;
+        overflow: hidden;
 
         &-image {
             @extend .hero__biography-image;
+            @each $size in map.keys($columns) {
+                @include media-query_($size) {
+                    $gutter: map.get($default-gutter, $size);
+                    @if $size == mobile {
+                        // @include to-rem('min-height', 436);
+                    } @else if $size == tablet {
+                        height: fit-content;
+                        @include to-rem('min-height', 436);
+                    }
+                }
+            }    
         }
 
         &-title {
@@ -64,8 +77,6 @@
             &--song {
                 display: flex;
                 flex-wrap: wrap;
-                
-                
                 @each $size in map.keys($columns) {
                     @include media-query_($size) {
                         $gutter: map.get($default-gutter, $size);
@@ -95,29 +106,32 @@
                 text-transform: lowercase;
                 grid-column-end: span 1;
             }
-        }
 
-        &--sound-cloud {
-            @each $size in map.keys($columns) {
-                @include media-query_($size) {
-                    $gutter: map.get($default-gutter, $size);
-                    @if $size == desktop {
-                        $default-column-span: 3;
-                        display: grid;
-                        align-items: center;
-                        @include cell($size, $default-column-span, $gutter);
-                    } @else if $size == tablet{
-                        $default-column-span: 4;
-                        display: grid;
-                        align-items: center;
-                        @include cell($size, $default-column-span, $gutter);
-                    } @else {
-                        $default-column-span: 6;
-                        display: grid;
-                        @include text-styles('footer-copy', true);
-                        @include cell($size, $default-column-span, $gutter);
-                    }
-                }
+            &--soundcloud {
+                grid-column-end: span 6;
+                width: 100%;
+                height: auto;
+                // @each $size in map.keys($columns) {
+                //     @include media-query_($size) {
+                //         $gutter: map.get($default-gutter, $size);
+                //         @if $size == desktop {
+                //             $default-column-span: 3;
+                //             display: grid;
+                //             align-items: center;
+                //             @include cell($size, $default-column-span, $gutter);
+                //         } @else if $size == tablet{
+                //             $default-column-span: 4;
+                //             display: grid;
+                //             align-items: center;
+                //             @include cell($size, $default-column-span, $gutter);
+                //         } @else {
+                //             $default-column-span: 6;
+                //             display: grid;
+                //             @include text-styles('footer-copy', true);
+                //             @include cell($size, $default-column-span, $gutter);
+                //         }
+                //     }
+                // }
             }
         }
     }
@@ -296,7 +310,7 @@
             &-wrapper4 {
                 text-transform: uppercase;
                 @extend .shows__section-container-wrapper2;
-                
+                pointer-events: auto;
             }
             
             &-info {
@@ -332,7 +346,7 @@
                             @if $size == mobile {
                                 @include text-styles-config(14, 22, 'AvenirNextDemi');
                             } @else {
-                                @include text-styles('labels-and-buttons');
+                                @include text-styles-config(14, 22, 'AvenirNextDemi');
                             }   
                         }
                     }

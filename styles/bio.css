@@ -88,7 +88,7 @@ body {
     font-family: "AvenirNextRegular";
     padding-top: 0rem;
     padding-bottom: 0rem;
-    padding: 0;
+    padding: 0rem;
   }
 }
 @media (min-width: 1280px) {
@@ -602,6 +602,7 @@ body {
     margin: 0 auto;
     padding: 0 16px;
     padding: var(--layout-grid-margin-mobile, 0 16px);
+    width: 100%;
     display: flex;
     flex-flow: row wrap;
     margin: -8px;
@@ -695,7 +696,6 @@ body {
 .biography__image {
   display: block;
   max-width: 100%;
-  max-height: 100%;
   width: auto;
   height: auto;
   position: relative;
