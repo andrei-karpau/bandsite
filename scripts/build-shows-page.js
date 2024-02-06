@@ -148,7 +148,7 @@ let showFinder = () => {
             'shows__section-container'
         );
 
-        for (j=0; j<4; j++) {
+        for (j=0; j<3; j++) {
             addPageLayout(
                 'div',
                 `.shows__section-container:nth-child(${i+5})`,
@@ -206,7 +206,7 @@ let showFinder = () => {
     
         addPageLayout(
             'button',
-            `.shows__section-container:nth-child(${i+5}) .shows__section-container-wrapper4`,
+            `.shows__section-container:nth-child(${i+5})`,
             'shows__section-container-info--button',
             false,
             'buy tickets'
@@ -223,25 +223,51 @@ let showFinder = () => {
 showFinder();
 
 const dividers = document.querySelectorAll('.divider');
-
 dividers.forEach(each => {
-    each.onclick = (event) => {
-        dividers.forEach(ss => ss.classList.remove('shows__section-container--active'));
+    each.onclick = () => {
+        dividers.forEach(removeColor => {
+            removeColor.classList.remove('shows__section-container--active');
+            removeColor.style.backgroundColor = 'transparent';
+        });
         each.classList.add('shows__section-container--active');
-        event.target.style.backgroundColor = 'rgb(225, 225, 225)';
+        each.style.backgroundColor = 'rgb(225, 225, 225)';
     }
 
-    each.onmouseenter = (event) => {
+    each.onmouseenter = () => {
         if (!each.classList.contains('shows__section-container--active')) {
 
-            event.target.style.backgroundColor = 'rgb(250, 250, 250)';
+            each.style.backgroundColor = 'rgb(250, 250, 250)';
 
             each.onmouseleave = (event) => {
-                event.target.style.backgroundColor = '';
+                each.style.backgroundColor = '';
             }
         } 
     }
 });
+
+const buttons = document.querySelectorAll('.shows__section-container-info--button');
+buttons.forEach(each => {
+    each.onclick = () => {
+        buttons.forEach(removeColor => {
+            removeColor.nextElementSibling.classList.remove('shows__section-container--active');
+            removeColor.nextElementSibling.style.backgroundColor = 'transparent';
+        });
+        each.nextElementSibling.classList.add('shows__section-container--active');
+        each.nextElementSibling.style.backgroundColor = 'rgb(225, 225, 225)';
+    }
+    
+    each.onmouseenter = () => {
+        if (!each.nextElementSibling.classList.contains('shows__section-container--active')) {
+
+            each.nextElementSibling.style.backgroundColor = 'rgb(250, 250, 250)';
+
+            each.onmouseleave = () => {
+                each.nextElementSibling.style.backgroundColor = '';
+            }
+        } 
+    }
+});
+
 
 
 

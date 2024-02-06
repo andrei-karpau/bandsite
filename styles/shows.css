@@ -2142,12 +2142,12 @@ body {
     padding-bottom: 0rem;
   }
 }
-.shows__section-container-wrapper2, .shows__section-container-wrapper4, .shows__section-container-wrapper3 {
+.shows__section-container-wrapper2, .shows__section-container-wrapper3 {
   z-index: 10;
   pointer-events: none;
 }
 @media (min-width: 1280px) {
-  .shows__section-container-wrapper2, .shows__section-container-wrapper4, .shows__section-container-wrapper3 {
+  .shows__section-container-wrapper2, .shows__section-container-wrapper3 {
     grid-column-end: span 2;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -2158,7 +2158,7 @@ body {
   }
 }
 @media (min-width: 768px) and (max-width: 1279px) {
-  .shows__section-container-wrapper2, .shows__section-container-wrapper4, .shows__section-container-wrapper3 {
+  .shows__section-container-wrapper2, .shows__section-container-wrapper3 {
     grid-column-end: span 3;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -2169,7 +2169,7 @@ body {
   }
 }
 @media (max-width: 767px) {
-  .shows__section-container-wrapper2, .shows__section-container-wrapper4, .shows__section-container-wrapper3 {
+  .shows__section-container-wrapper2, .shows__section-container-wrapper3 {
     grid-column-end: span 6;
     text-transform: capitalize;
     font-size: 0.8125rem;
@@ -2178,10 +2178,6 @@ body {
     padding-top: 0rem;
     padding-bottom: 0rem;
   }
-}
-.shows__section-container-wrapper4 {
-  text-transform: uppercase;
-  pointer-events: auto;
 }
 .shows__section-container-info {
   display: block;
@@ -2208,6 +2204,7 @@ body {
   }
 }
 .shows__section-container-info--button {
+  z-index: 10;
   height: 2.5rem;
   min-width: 9.375rem;
   width: 100%;
@@ -2221,6 +2218,7 @@ body {
 }
 @media (min-width: 1280px) {
   .shows__section-container-info--button {
+    grid-column-end: span 2;
     font-size: 0.875rem;
     line-height: 1.375rem;
     font-family: "AvenirNextDemi";
@@ -2230,6 +2228,7 @@ body {
 }
 @media (min-width: 768px) and (max-width: 1279px) {
   .shows__section-container-info--button {
+    grid-column-end: span 3;
     font-size: 0.875rem;
     line-height: 1.375rem;
     font-family: "AvenirNextDemi";
@@ -2239,6 +2238,7 @@ body {
 }
 @media (max-width: 767px) {
   .shows__section-container-info--button {
+    grid-column-end: span 6;
     font-size: 0.875rem;
     line-height: 1.375rem;
     font-family: "AvenirNextDemi";

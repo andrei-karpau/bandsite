@@ -111,27 +111,6 @@
                 grid-column-end: span 6;
                 width: 100%;
                 height: auto;
-                // @each $size in map.keys($columns) {
-                //     @include media-query_($size) {
-                //         $gutter: map.get($default-gutter, $size);
-                //         @if $size == desktop {
-                //             $default-column-span: 3;
-                //             display: grid;
-                //             align-items: center;
-                //             @include cell($size, $default-column-span, $gutter);
-                //         } @else if $size == tablet{
-                //             $default-column-span: 4;
-                //             display: grid;
-                //             align-items: center;
-                //             @include cell($size, $default-column-span, $gutter);
-                //         } @else {
-                //             $default-column-span: 6;
-                //             display: grid;
-                //             @include text-styles('footer-copy', true);
-                //             @include cell($size, $default-column-span, $gutter);
-                //         }
-                //     }
-                // }
             }
         }
     }
@@ -306,12 +285,6 @@
             &-wrapper3 {
                 @extend .shows__section-container-wrapper2;
             }
-
-            &-wrapper4 {
-                text-transform: uppercase;
-                @extend .shows__section-container-wrapper2;
-                pointer-events: auto;
-            }
             
             &-info {
                 display: block;
@@ -331,6 +304,7 @@
                 }
 
                 &--button {
+                    z-index: 10;
                     @include to-rem('height', 40);
                     @include to-rem('min-width', 150);
                     width: 100%;
@@ -344,10 +318,15 @@
                     @each $size in map.keys($columns) {
                         @include media-query_($size) {
                             @if $size == mobile {
+                                grid-column-end: span 6;
                                 @include text-styles-config(14, 22, 'AvenirNextDemi');
-                            } @else {
+                            } @else if $size == tablet {
+                                grid-column-end: span 3;
                                 @include text-styles-config(14, 22, 'AvenirNextDemi');
-                            }   
+                            } @else if $size == desktop {
+                                grid-column-end: span 2;
+                                @include text-styles-config(14, 22, 'AvenirNextDemi');
+                            }
                         }
                     }
 
