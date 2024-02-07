@@ -86,12 +86,14 @@
                             @include to-rem('gap', 6);
                             grid-column-end: span 6;
                         } @else if $size == tablet {
-                            @include text-styles('page-header');
+                            @include text-styles-config(56, 64, 'AvenirNextDemi');
+                            @include to-rem('letter-spacing', 1.92);
                             @include to-rem('padding', 0);
                             @include to-rem('gap', 12);
                             grid-column-end: span 10;
                         } @else {
-                            @include text-styles('page-header');
+                            @include text-styles-config(60, 68, 'AvenirNextDemi');
+                            @include to-rem('letter-spacing', 1.92);
                             @include to-rem('padding', 0);
                             @include to-rem('gap', 12);
                             grid-column-end: span 6;
@@ -110,7 +112,15 @@
             &--soundcloud {
                 grid-column-end: span 6;
                 width: 100%;
-                height: auto;
+                @each $size in map.keys($columns) {
+                    @include media-query_($size) {
+                        @if $size == mobile {
+                            @include to-rem('height', 114);
+                        } @else if $size == tablet {
+                            grid-column-end: span 7;                            
+                        }
+                    }
+                }  
             }
         }
     }

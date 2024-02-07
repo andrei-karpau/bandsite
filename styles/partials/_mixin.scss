@@ -125,7 +125,6 @@
 
   display: flex;
   flex-flow: row wrap;
-  // align-items: stretch;
   margin: math.div(-$gutter, 2);
   margin: calc(var(--layout-grid-gutter-#{$size}, #{$gutter}) / 2 * -1);
 

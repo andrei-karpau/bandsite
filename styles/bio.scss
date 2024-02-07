@@ -4,6 +4,9 @@
 @use './partials/variables' as *;
 @use './partials/mixin' as *;
 
+//!!! cell and cell_span apears to be useless and overcomplicated in this project.
+//clean this stuff up and replace with "grid-column-end: span X"; 
+
 :root {
     @each $size in map.keys($columns) {
       --layout-grid-margin-#{$size}: #{map.get(
@@ -332,16 +335,19 @@ body {
             @include text-styles('section-header');
             @each $size in map.keys($columns) {
                 @include media-query_($size) {
-                    $gutter: map.get($default-gutter, $size);
-                    @if $size == tablet {
-                        $default-column-span: 8;
-                        @include cell($size, $default-column-span, $gutter);
-                    } @else {
-                        $default-column-span: 6;
-                        @include cell($size, $default-column-span, $gutter);
-                    }
+                    // $gutter: map.get($default-gutter, $size);
+                    // @if $size == tablet {
+                    //     $default-column-span: 8;
+                    //     @include cell($size, $default-column-span, $gutter);
+                    // } @else {
+                    //     $default-column-span: 6;
+                    //     @include cell($size, $default-column-span, $gutter);
+                    // }
                     @if $size == mobile {
+                        grid-column-end: span 6;
                         @include text-styles('section-header', true);
+                    } @else {
+                        grid-column-end: span 12;
                     }
                 }
             }
@@ -566,6 +572,257 @@ body {
         }
     }
 }
+
+.comments {
+    @extend .biography;
+    width: 100%;
+    @each $size in map.keys($columns) {
+        @include media-query_($size) {
+            @if $size == mobile {
+                @include to-rem('padding-bottom', 8);
+            } @else {
+                @include to-rem('padding-bottom', 16);
+            }
+        }
+    }
+
+
+    &__title {
+        @extend .biography__title;
+        @each $size in map.keys($columns) {
+            @include media-query_($size) {
+                @if $size == mobile {
+                    @include to-rem('padding-bottom', 16);
+                } @else if $size == tablet {
+                    @include to-rem('padding-bottom', 24);
+                } @else {
+                    @include to-rem('padding-bottom', 24);
+                }
+            }
+        }
+
+        &-section-header {
+            @extend .biography__title-section-header;
+        }
+
+        &-form {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            justify-content: flex-end;
+            @include to-rem('column-gap', 12);
+            border-bottom: 1px solid $mercury;
+            @each $size in map.keys($columns) {
+                @include media-query_($size) {
+                    @if $size == mobile {
+                        grid-column-end: span 6;
+                        @include to-rem('row-gap', 16);
+                        @include to-rem('padding-bottom', 16);
+                    } @else if $size == tablet {
+                        grid-column-end: span 10;
+                        grid-column-start: 2;
+                        @include to-rem('row-gap', 24);
+                        @include to-rem('padding-bottom', 24);
+                    } @else {
+                        grid-column-end: span 6;
+                        grid-column-start: 4;
+                        @include to-rem('row-gap', 24);
+                        @include to-rem('padding-bottom', 24);
+                    }
+                }
+            }
+
+
+            &-user-image {
+                border-radius: 50%;
+                object-fit: cover;
+                @include to-rem('object-position', -3);
+                background-color: $mercury;
+                @each $size in map.keys($columns) {
+                    @include media-query_($size) {
+                        @if $size == mobile {
+                            width: 100%;
+                            height: 100%;
+                            @include to-rem('max-height', 36);
+                            @include to-rem('max-width', 36);
+                        } @else {
+                            width: 100%;
+                            height: 100%;
+                            @include to-rem('max-height', 48);
+                            @include to-rem('max-width', 48);
+                        }
+                    }
+                }
+            }
+
+            &-name-label {
+                display: flex;
+                gap: 4px;
+                flex-direction: column;
+                flex-wrap: nowrap;
+                flex-grow: 2;
+                color: $silver;
+                text-transform: uppercase;
+                @include text-styles-config(12, 18, 'AvenirNextDemi');
+
+                &-input {
+                    background-color: $alabaster;
+                    border: solid 1px $mercury;
+                    border-radius: 4px;
+                    @include text-styles-config(12, 18, 'AvenirNextRegular');
+                    @each $size in map.keys($columns) {
+                        @include media-query_($size) {
+                            @if $size == mobile {
+                                @include to-rem('height', 36);
+                                @include to-rem('padding', 12);
+                                @include text-styles-config(12, 18, 'AvenirNextRegular', 12, 12);
+                            } @else {
+                                @include to-rem('height', 48);
+                                @include to-rem('padding', 16);
+                                @include text-styles-config(14, 20, 'AvenirNextRegular', 16, 16);
+                            }
+                        }
+                    }
+
+                    &:focus {
+                        outline: none;
+                        border: solid 1px $bandsite-black;
+                    }
+
+                }
+            }
+
+            &-comment-label {
+                    @extend .comments__title-form-name-label;
+                    width: 100%;
+                    @each $size in map.keys($columns) {
+                        @include media-query_($size) {
+                            @if $size == mobile {
+                                @include to-rem('padding-left', 36, 12);
+                            } @else {
+                                @include to-rem('padding-left', 48, 12);
+                            }
+                        }
+                    }
+
+                &-input {
+                    background-color: $alabaster;
+                    border: solid 1px $mercury;
+                    border-radius: 4px;
+                    @include to-rem('height', 96);
+                    @each $size in map.keys($columns) {
+                        @include media-query_($size) {
+                            @if $size == mobile {
+                                @include to-rem('padding', 12);
+                                @include text-styles-config(12, 18, 'AvenirNextRegular', 12, 12);
+                            } @else {
+                                @include to-rem('padding', 16);
+                                @include text-styles-config(14, 20, 'AvenirNextRegular', 16, 16);
+                            }
+                        }
+                    }
+
+                    &:focus {
+                        outline: none;
+                        border: solid 1px $bandsite-black;
+                    }
+                }
+            }
+
+            &-button {
+                @include to-rem('height', 40);
+                @include to-rem('min-width', 150);
+                @include to-rem('padding-left', 32);
+                @include to-rem('padding-right', 32);
+                text-transform: uppercase;
+                color: $white;
+                background-color: $bandsite-black;
+                border: none;
+                border-radius: 4px;
+                @each $size in map.keys($columns) {
+                    @include media-query_($size) {
+                        @if $size == mobile {
+                            width: 100%;
+                            @include to-rem('margin-left', 36, 12);
+                        }
+                    }
+                }
+
+                &:hover {
+                    background-color: $bandsite-dark-black;
+                }
+            }
+        }
+    }
+
+    &__posted {
+        @extend .comments__title;
+
+        &-wrapper {
+            @extend .comments__title-form;
+            flex-wrap: nowrap;
+            align-items: flex-start;
+            justify-content: flex-start;
+
+            &-avatar {
+                @extend .comments__title-form-user-image;
+            }
+
+            &-container {
+                display: flex;
+                flex-wrap: wrap;
+                @include to-rem('row-gap', 12);
+
+                &-name-n-date {
+                    display: flex;
+                    width: 100%;
+                    justify-content: space-between;
+                    flex-grow: 1;
+
+                    &--user-name {
+                        @each $size in map.keys($columns) {
+                            @include media-query_($size) {
+                                @if $size == mobile {
+                                    @include text-styles-config(12, 18, 'AvenirNextDemi');
+                                } @else {
+                                    @include text-styles-config(14, 20, 'AvenirNextDemi');
+                                }
+                            }
+                        }
+                    }
+
+                    &--date {
+                        color: $silver;
+                        @each $size in map.keys($columns) {
+                            @include media-query_($size) {
+                                @if $size == mobile {
+                                    @include text-styles-config(12, 18, 'AvenirNextRegular');
+                                } @else {
+                                    @include text-styles-config(14, 20, 'AvenirNextRegular');
+                                }
+                            }
+                        }
+                    }
+
+                }
+    
+                &-text {
+                    @each $size in map.keys($columns) {
+                        @include media-query_($size) {
+                            @if $size == mobile {
+                                @include text-styles-config(12, 18, 'AvenirNextRegular');
+                            } @else {
+                                @include text-styles-config(14, 20, 'AvenirNextRegular');
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 
 .footer {
     display: flex;
