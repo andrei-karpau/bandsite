@@ -1551,6 +1551,7 @@ body {
 .comments__posted-wrapper-container {
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
   row-gap: 0.75rem;
 }
 .comments__posted-wrapper-container-name-n-date {

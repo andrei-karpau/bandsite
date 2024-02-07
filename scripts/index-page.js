@@ -105,7 +105,7 @@ addPageLayout(
 
 const comments = [];
 
-let createComment = (date, userName, text) => {
+let createComment = (date, userName, text, avatar = '#avatar') => {
     const comment = {};
 
     // ("yyyy-mm-ddThh:mm:ss")
@@ -116,18 +116,12 @@ let createComment = (date, userName, text) => {
     comment.date = newDate;
     comment.userName = userName;
     comment.text = text;
-    // comment.avatar = avatar;
+    comment.avatar = avatar;
 
-    comments.push(comment);
+    comments.unshift(comment);
 
     return comment;
 }
-
-createComment(
-    '2021-02-17T00:00:00',
-    'Connor Walton',
-    'This is art. This is inexplicable magic expressed in the purest way, everything that makes up this majestic work deserves reverence. Let us appreciate this for what it is and what it contains.'
-)
 
 createComment(
     '2021-09-01T00:00:00',
@@ -141,10 +135,16 @@ createComment(
     'I can\'t stop listening. Every time I hear one of their songs - the vocals - it gives me goosebumps. Shivers straight down my spine. What a beautiful expression of creativity. Can\'t get enough.'
 )
 
+createComment(
+    '2021-02-17T00:00:00',
+    'Connor Walton',
+    'This is art. This is inexplicable magic expressed in the purest way, everything that makes up this majestic work deserves reverence. Let us appreciate this for what it is and what it contains.'
+)
+
 let commentComposer = () => {
 
     const postedComments = document.querySelector('.comments__posted');
-    postedComments.innerHTML = '';
+    postedComments.innerHTML = ''; //reset posted comments. what other options? they ask us not to use innerHTML - review if got time
 
     for (i = 0; i < comments.length; i++) {
 
@@ -160,8 +160,8 @@ let commentComposer = () => {
             `comments__posted-wrapper-avatar`
         );
 
-        // let avatar = document.querySelector(`.comments__posted-wrapper${i+1} .comments__posted-wrapper-avatar`);
-        // avatar.src = comment[i].avatar;
+        let avatar = document.querySelector(`.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-avatar`);
+        avatar.src = comments[i].avatar;
         
         addPageLayout(
             'div',
@@ -217,11 +217,13 @@ commentForm.addEventListener('submit', (e) => {
     date = unformatedDate.toISOString();
     userName = document.querySelector('.comments__title-form-name-label-input').value;
     comment = document.querySelector('.comments__title-form-comment-label-input').value;
+    avatar = document.querySelector('.comments__title-form-user-image').src;
     createComment(
         `${date}`,
         `${userName}`,
-        `${comment}`
-    )
+        `${comment}`,
+        `${avatar}`
+    );
     commentComposer();
 });
 
