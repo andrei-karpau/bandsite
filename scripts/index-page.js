@@ -1,5 +1,34 @@
-let  addPageLayout = (elementTag, parent = 'body', idOrClassName = null, id = false, text = null) => {
-    
+let timeDifference = (current, previous) => {
+  let msPerMinute = 60 * 1000;
+  let msPerHour = msPerMinute * 60;
+  let msPerDay = msPerHour * 24;
+  let msPerMonth = msPerDay * 30;
+  let msPerYear = msPerDay * 365;
+
+  let elapsed = current - previous;
+
+  if (elapsed < msPerMinute) {
+    return Math.round(elapsed / 1000) + " seconds ago";
+  } else if (elapsed < msPerHour) {
+    return Math.round(elapsed / msPerMinute) + " minutes ago";
+  } else if (elapsed < msPerDay) {
+    return Math.round(elapsed / msPerHour) + " hours ago";
+  } else if (elapsed < msPerMonth) {
+    return "approximately " + Math.round(elapsed / msPerDay) + " days ago";
+  } else if (elapsed < msPerYear) {
+    return "approximately " + Math.round(elapsed / msPerMonth) + " months ago";
+  } else {
+    return "approximately " + Math.round(elapsed / msPerYear) + " years ago";
+  }
+};
+
+let  addPageLayout = (
+    elementTag,
+    parent = 'body',
+    idOrClassName = null,
+    id = false,
+    text = null
+) => {   
     let newLayoutElement = document.createElement(elementTag);
 
     if (id) {
@@ -42,7 +71,9 @@ addPageLayout(
     'comments__title-form'
 )
 
-document.querySelector('.comments__title-form').name = 'comment';
+const commentForm = document.querySelector(".comments__title-form");
+commentForm.name = "comment";
+commentForm.id = "comment";
 
 addPageLayout(
     'img',
@@ -50,7 +81,8 @@ addPageLayout(
     'comments__title-form-user-image'
 )
 
-document.querySelector('.comments__title-form .comments__title-form-user-image').src = './assets/Images/Mohan-muruge.jpg';
+const userAvatar = document.querySelector('.comments__title-form .comments__title-form-user-image');
+userAvatar.src = './assets/Images/Mohan-muruge.jpg';
 
 addPageLayout(
     'label',
@@ -103,17 +135,17 @@ addPageLayout(
     'comments__posted',
 );
 
+const postedComments = document.querySelector('.comments__posted');
+
 const comments = [];
 
-let createComment = (date, userName, text, avatar = '#avatar') => {
+let createComment = (date, userName, text, avatar = null) => {
     const comment = {};
 
     // ("yyyy-mm-ddThh:mm:ss")
-    const newStamp = new Date(date);
+    const commentStamp = new Date(date);
 
-    const newDate = `${('0' + (newStamp.getMonth() + 1)).slice(-2)}/${('0' + newStamp.getDate()).slice(-2)}/${newStamp.getFullYear()}`
-
-    comment.date = newDate;
+    comment.date = commentStamp;
     comment.userName = userName;
     comment.text = text;
     comment.avatar = avatar;
@@ -143,7 +175,6 @@ createComment(
 
 let commentComposer = () => {
 
-    const postedComments = document.querySelector('.comments__posted');
     postedComments.innerHTML = ''; //reset posted comments. what other options? they ask us not to use innerHTML - review if got time
 
     for (i = 0; i < comments.length; i++) {
@@ -161,8 +192,10 @@ let commentComposer = () => {
         );
 
         let avatar = document.querySelector(`.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-avatar`);
-        avatar.src = comments[i].avatar;
-        
+        if (comments[i].avatar != null) {
+            avatar.src = comments[i].avatar;
+        };
+
         addPageLayout(
             'div',
             `.comments__posted-wrapper:nth-child(${i+1})`,
@@ -188,7 +221,7 @@ let commentComposer = () => {
             `.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-container-name-n-date`,
             `comments__posted-wrapper-container-name-n-date--date`,
             false,
-            `${comments[i].date}`
+            `${timeDifference(Date.now(), comments[i].date)}`
         );
 
         addPageLayout(
@@ -209,21 +242,45 @@ let commentComposer = () => {
 
 commentComposer();
 
-const commentForm = document.querySelector('.comments__title-form');
+commentForm.addEventListener("keyup", (event) => event.target.setAttribute("style", ""));
 
-commentForm.addEventListener('submit', (e) => {
+commentForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    unformatedDate = new Date(Date.now());
-    date = unformatedDate.toISOString();
-    userName = document.querySelector('.comments__title-form-name-label-input').value;
-    comment = document.querySelector('.comments__title-form-comment-label-input').value;
-    avatar = document.querySelector('.comments__title-form-user-image').src;
-    createComment(
-        `${date}`,
+  
+    if (!nameInput.value || !commentTextArea.value) {
+      switch (true) {
+        case !nameInput.value && !commentTextArea.value:
+          nameInput.style.borderColor = "rgb(210, 45, 45)";
+          commentTextArea.style.borderColor = "rgb(210, 45, 45)";
+          break;
+        case !nameInput.value:
+          nameInput.style.borderColor = "rgb(210, 45, 45)";
+          break;
+        case !commentTextArea.value:
+          commentTextArea.style.borderColor = "rgb(210, 45, 45)";
+          break;
+      }
+    } else {
+      nameInput.setAttribute("style", "");
+      commentTextArea.setAttribute("style", "");
+      let unformatedDate = new Date(Date.now());
+      let userName = nameInput.value;
+      let comment = commentTextArea.value;
+      let avatar = userAvatar.src;
+      createComment(
+        `${unformatedDate}`,
         `${userName}`,
         `${comment}`,
         `${avatar}`
-    );
-    commentComposer();
-});
+      );
+  
+      commentComposer();
+  
+      nameInput.setAttribute("style", "");
+      nameInput.value = "";
+  
+      commentTextArea.setAttribute("style", "");
+      commentTextArea.value = "";
+    }
+  });
 

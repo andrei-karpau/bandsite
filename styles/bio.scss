@@ -592,8 +592,10 @@ body {
         @each $size in map.keys($columns) {
             @include media-query_($size) {
                 @if $size == mobile {
+                    width: 100%;
                     @include to-rem('padding-bottom', 16);
                 } @else if $size == tablet {
+                    width: 100%;
                     @include to-rem('padding-bottom', 24);
                 } @else {
                     @include to-rem('padding-bottom', 24);

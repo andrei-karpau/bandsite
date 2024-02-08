@@ -1332,11 +1332,13 @@ body {
 }
 @media (min-width: 768px) and (max-width: 1279px) {
   .comments__title, .comments__posted {
+    width: 100%;
     padding-bottom: 1.5rem;
   }
 }
 @media (max-width: 767px) {
   .comments__title, .comments__posted {
+    width: 100%;
     padding-bottom: 1rem;
   }
 }
