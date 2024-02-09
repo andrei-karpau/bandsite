@@ -156,12 +156,6 @@ let createComment = (date, userName, text, avatar = null) => {
 }
 
 createComment(
-    '2021-09-01T00:00:00',
-    'Emilie Beach',
-    'I feel blessed to have seen them in person. What a show! They were just perfection. If there was one day of my life I could relive, this would be it. What an incredible day.'
-)
-
-createComment(
     '2020-12-20T00:00:00',
     'Miles Acosta',
     'I can\'t stop listening. Every time I hear one of their songs - the vocals - it gives me goosebumps. Shivers straight down my spine. What a beautiful expression of creativity. Can\'t get enough.'
@@ -173,9 +167,15 @@ createComment(
     'This is art. This is inexplicable magic expressed in the purest way, everything that makes up this majestic work deserves reverence. Let us appreciate this for what it is and what it contains.'
 )
 
+createComment(
+    '2021-09-01T00:00:00',
+    'Emilie Beach',
+    'I feel blessed to have seen them in person. What a show! They were just perfection. If there was one day of my life I could relive, this would be it. What an incredible day.'
+)
+
 let commentComposer = () => {
 
-    postedComments.innerHTML = ''; //reset posted comments. what other options? they ask us not to use innerHTML - review if got time
+    postedComments.innerHTML = ''; //reset posted comments. what other options? they ask us not to use innerHTML - review if get a chance
 
     for (i = 0; i < comments.length; i++) {
 
@@ -185,15 +185,20 @@ let commentComposer = () => {
             'comments__posted-wrapper'
         );
 
-        addPageLayout(
-            'img',
-            `.comments__posted-wrapper:nth-child(${i+1})`,
-            `comments__posted-wrapper-avatar`
-        );
-
-        let avatar = document.querySelector(`.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-avatar`);
         if (comments[i].avatar != null) {
+            addPageLayout(
+                'img',
+                `.comments__posted-wrapper:nth-child(${i+1})`,
+                `comments__posted-wrapper-avatar`
+            );
+            let avatar = document.querySelector(`.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-avatar`);
             avatar.src = comments[i].avatar;
+        } else {
+            addPageLayout(
+                'div',
+                `.comments__posted-wrapper:nth-child(${i+1})`,
+                `comments__posted-wrapper-avatar`
+            );
         };
 
         addPageLayout(

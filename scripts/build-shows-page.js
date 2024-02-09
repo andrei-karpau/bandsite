@@ -126,6 +126,8 @@ createShow(
 
 let showFinder = () => {
 
+    // document.querySelector('.shows__section').innerHTML = '';
+
     const propertyName = Object.getOwnPropertyNames(shows[1]);
 
     for (let i = 0; i < propertyName.length - 1; i++) {
@@ -253,7 +255,7 @@ buttons.forEach(each => {
             removeColor.nextElementSibling.style.backgroundColor = 'transparent';
         });
         each.nextElementSibling.classList.add('shows__section-container--active');
-        each.nextElementSibling.style.backgroundColor = 'rgb(225, 225, 225)';
+        each.nextElementSibling.style.backgroundColor = 'rgb(225, 225, 225)'; //#E1E1E1 = rgb(225, 225, 225) 
     }
     
     each.onmouseenter = () => {
