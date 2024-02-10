@@ -175,7 +175,8 @@ createComment(
 
 let commentComposer = () => {
 
-    postedComments.innerHTML = ''; //reset posted comments. what other options? they ask us not to use innerHTML - review if get a chance
+    // postedComments.innerHTML = ''; //reset posted comments. what other options? they ask us not to use innerHTML - review if get a chance
+    postedComments.replaceChildren();
 
     for (i = 0; i < comments.length; i++) {
 

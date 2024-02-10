@@ -736,6 +736,7 @@ body {
                 @include to-rem('min-width', 150);
                 @include to-rem('padding-left', 32);
                 @include to-rem('padding-right', 32);
+                @include text-styles-config(14, 22, 'AvenirNextDemi');
                 text-transform: uppercase;
                 color: $white;
                 background-color: $bandsite-black;

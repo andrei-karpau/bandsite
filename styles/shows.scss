@@ -320,6 +320,7 @@
                     width: 100%;
                     @include to-rem('padding-left', 32);
                     @include to-rem('padding-right', 32);
+                    @include text-styles-config(14, 22, 'AvenirNextDemi');
                     text-transform: uppercase;
                     color: $white;
                     background-color: $bandsite-black;
@@ -328,14 +329,11 @@
                     @each $size in map.keys($columns) {
                         @include media-query_($size) {
                             @if $size == mobile {
-                                grid-column-end: span 6;
-                                @include text-styles-config(14, 22, 'AvenirNextDemi');
+                                grid-column-end: span 6;          
                             } @else if $size == tablet {
                                 grid-column-end: span 3;
-                                @include text-styles-config(14, 22, 'AvenirNextDemi');
                             } @else if $size == desktop {
                                 grid-column-end: span 2;
-                                @include text-styles-config(14, 22, 'AvenirNextDemi');
                             }
                         }
                     }
