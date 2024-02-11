@@ -4,9 +4,6 @@
 @use './partials/variables' as *;
 @use './partials/mixin' as *;
 
-//!!! cell and cell_span apears to be useless and overcomplicated in this project.
-//clean this stuff up and replace with "grid-column-end: span X"; 
-
 :root {
     @each $size in map.keys($columns) {
       --layout-grid-margin-#{$size}: #{map.get(
@@ -50,10 +47,6 @@
 
 * {
     box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
 }
 
 #logo {
@@ -188,25 +181,21 @@ body {
         position: relative;
         @each $size in map.keys($columns) {
             @include media-query_($size) {
-                $gutter: map.get($default-gutter, $size);
                 @if $size == desktop {
-                    $default-column-span: 1;
+                    grid-column-end: span 1;
                     display: grid;
                     justify-items: center;
                     align-items: center;
-                    @include cell($size, $default-column-span, $gutter);
                 } @else if $size == tablet{
-                    $default-column-span: 2;
+                    grid-column-end: span 2;
                     display: grid;
                     align-items: center;
-                    @include cell($size, $default-column-span, $gutter);
                 } @else {
-                    $default-column-span: 3;
+                    grid-column-end: span 3;
                     display: grid;
                     justify-content: center;
                     align-items: stretch;
                     justify-content: stretch;
-                    @include cell($size, $default-column-span, $gutter);
                 }
             }
         }
@@ -216,23 +205,19 @@ body {
     &__cell--logo {
         @each $size in map.keys($columns) {
             @include media-query_($size) {
-                $gutter: map.get($default-gutter, $size);
                 @if $size == desktop {
-                    $default-column-span: 2;
+                    grid-column-end: span 2;
                     display: grid;
                     align-items: center;
-                    @include cell($size, $default-column-span, $gutter);
                 } @else if $size == tablet{
-                    $default-column-span: 3;
+                    grid-column-end: span 3;
                     display: grid;
                     align-items: center;
-                    @include cell($size, $default-column-span, $gutter);
                 } @else {
-                    $default-column-span: 6;
+                    grid-column-end: span 6;
                     display: grid;
                     justify-content: center;
                     align-items: end;
-                    @include cell($size, $default-column-span, $gutter);
                 }
             }
         }
@@ -258,8 +243,7 @@ body {
             width: auto;
             object-fit: cover;
             position: relative;
-            z-index: -1;
-            
+            z-index: -1;  
         }
 
         &-title {
@@ -280,6 +264,7 @@ body {
                         @include text-styles('page-header', true);
                         @include to-rem('padding-top', 0);
                     } @else if $size == tablet{
+                        width: 100%;
                         align-self: start;
                         @include inner($size, $margin, $gutter);
                     } @else {
@@ -293,13 +278,10 @@ body {
                 z-index: 3;
                 @each $size in map.keys($columns) {
                     @include media-query_($size) {
-                        $gutter: map.get($default-gutter, $size);
                         @if $size == tablet {
-                            $default-column-span: 8;
-                            @include cell($size, $default-column-span, $gutter);
+                            grid-column-end: span 8;
                         } @else {
-                            $default-column-span: 6;
-                            @include cell($size, $default-column-span, $gutter);
+                            grid-column-end: span 6;
                         }
                     }
                 }
@@ -326,6 +308,7 @@ body {
                     width: 100%;
                     @include inner($size, $margin, $gutter);
                 } @else if $size == tablet{ 
+                    width: 100%;
                     @include inner($size, $margin, $gutter);
                 } @else {
                     @include inner($size, $margin, $gutter);
@@ -339,14 +322,6 @@ body {
             @include text-styles('section-header');
             @each $size in map.keys($columns) {
                 @include media-query_($size) {
-                    // $gutter: map.get($default-gutter, $size);
-                    // @if $size == tablet {
-                    //     $default-column-span: 8;
-                    //     @include cell($size, $default-column-span, $gutter);
-                    // } @else {
-                    //     $default-column-span: 6;
-                    //     @include cell($size, $default-column-span, $gutter);
-                    // }
                     @if $size == mobile {
                         grid-column-end: span 6;
                         @include text-styles('section-header', true);
@@ -366,14 +341,11 @@ body {
         position: relative;
         @each $size in map.keys($columns) {
             @include media-query_($size) {
-                $gutter: map.get($default-gutter, $size);
                 @if $size == mobile {
-                    $default-column-span: 6;
-                    @include cell($size, $default-column-span, $gutter);
+                    grid-column-end: span 6;
                 } @else {
                     grid-column-start: 2;
-                    $default-column-span: 10;
-                    @include cell($size, $default-column-span, $gutter);
+                    grid-column-end: span 10;
                 }
             }
         }
@@ -383,19 +355,16 @@ body {
             @include text-styles('subheader');
             @each $size in map.keys($columns) {
                 @include media-query_($size) {
-                    $gutter: map.get($default-gutter, $size);
                     @if $size == mobile {
                         @include text-styles('subheader', true);
                         $default-column-span: 6;
-                        @include cell($size, $default-column-span, $gutter);
+                        grid-column-end: span 6;
                     } @else if $size == desktop{
                         grid-column-start: 2;
-                        $default-column-span: 8;
-                        @include cell($size, $default-column-span, $gutter);
+                        grid-column-end: span 8;
                     } @else {
                         grid-column-start: 2;
-                        $default-column-span: 10;
-                        @include cell($size, $default-column-span, $gutter);
+                        grid-column-end: span 10;
                     }
                 }
             }
@@ -442,15 +411,13 @@ body {
             }
         }
 
-        &-header {
+        &-header {     
             display: inline-grid;
             text-transform: capitalize;
+            grid-column-end: span 6;
             @include text-styles('subheader');
             @each $size in map.keys($columns) {
                 @include media-query_($size) {
-                    $gutter: map.get($default-gutter, $size);
-                    $default-column-span: 6;
-                    @include cell($size, $default-column-span, $gutter);
                     @if $size == mobile {
                         @include text-styles('subheader', true);
                         @include to-rem('padding-top', 8);
@@ -467,15 +434,12 @@ body {
             @include text-styles('body-copy');
             @each $size in map.keys($columns) { 
                 @include media-query_($size) {
-                    $gutter: map.get($default-gutter, $size);
                     @if $size == mobile {
-                        $default-column-span: 6;
-                        @include cell($size, $default-column-span, $gutter);
+                        grid-column-end: span 6;
                         @include text-styles('body-copy', true);
                     } @else {
                         grid-column-start: 2;
-                        $default-column-span: 5;
-                        @include cell($size, $default-column-span, $gutter);
+                        grid-column-end: span 5;
                     }
                 }         
             }
@@ -487,14 +451,11 @@ body {
             @include text-styles('body-copy');
             @each $size in map.keys($columns) { 
                 @include media-query_($size) {
-                    $gutter: map.get($default-gutter, $size);
                     @if $size == mobile {
-                        $default-column-span: 6;
-                        @include cell($size, $default-column-span, $gutter);
+                        grid-column-end: span 6;
                         @include text-styles('body-copy', true);
                     } @else {
-                        $default-column-span: 5;
-                        @include cell($size, $default-column-span, $gutter);
+                        grid-column-end: span 5;
                     }
                 }         
             }
@@ -525,13 +486,11 @@ body {
             text-transform: capitalize;
             @include text-styles('section-header');
             @include to-rem('padding-bottom', 12);
+            grid-column-end: span 12;
             @each $size in map.keys($columns) {
                 @include media-query_($size) {
-                    $gutter: map.get($default-gutter, $size);
-                    $default-column-span: 12;
-                    @include cell($size, $default-column-span, $gutter);
                     @if $size == mobile {
-                        $default-column-span: 6;
+                        grid-column-end: span 6;
                         @include text-styles('section-header', true);
                     }
                 }
@@ -542,13 +501,10 @@ body {
             display: flex;
             @each $size in map.keys($columns) {
                 @include media-query_($size) {
-                    $gutter: map.get($default-gutter, $size);
                     @if $size == mobile {
-                        $default-column-span: 6;
-                        @include cell($size, $default-column-span, $gutter);
+                        grid-column-end: span 6;
                     } @else {
-                        $default-column-span: 4;
-                        @include cell($size, $default-column-span, $gutter);
+                        grid-column-end: span 4;
                     }
                 }
             }
@@ -870,21 +826,17 @@ body {
             display: inline-grid;
             text-transform: capitalize;
             align-items: center;
+            grid-column-end: span 3;
             @include text-styles('section-header');
             @include to-rem('padding', 0);
             @each $size in map.keys($columns) {
                 @include media-query_($size) {
-                    $gutter: map.get($default-gutter, $size);
-                    $default-column-span: 3;
-                    @include cell($size, $default-column-span, $gutter);
                     @if $size == mobile {
-                        $default-column-span: 6;
+                        grid-column-end: span 6;
                         @include text-styles('section-header', true);
                         @include to-rem('padding-top', 0);
-                        @include cell($size, $default-column-span, $gutter);
                     } @else if $size == tablet {
-                        $default-column-span: 4;
-                        @include cell($size, $default-column-span, $gutter);
+                        grid-column-end: span 4;
                     }
                 }
             }
@@ -907,21 +859,17 @@ body {
             align-items: center;
             @each $size in map.keys($columns) {
                 @include media-query_($size) {
-                    $gutter: map.get($default-gutter, $size);
                     @if $size == desktop {
-                        $default-column-span: 6;
-                        @include cell($size, $default-column-span, $gutter);
+                        grid-column-end: span 6;
                     } @else if $size == tablet{
-                        $default-column-span: 4;
-                        @include cell($size, $default-column-span, $gutter);
+                        grid-column-end: span 4;
                     } @else {
-                        $default-column-span: 6;
+                        grid-column-end: span 6;
                         display: grid;
                         justify-items: start;
                         grid-row-start: 6;
                         @include to-rem('padding-top',48);
                         @include to-rem('padding-bottom', 0);
-                        @include cell($size, $default-column-span, $gutter);
                     }
                 }
             }
@@ -931,22 +879,18 @@ body {
             @include text-styles('footer-copy');
             @each $size in map.keys($columns) {
                 @include media-query_($size) {
-                    $gutter: map.get($default-gutter, $size);
                     @if $size == desktop {
-                        $default-column-span: 3;
+                        grid-column-end: span 3;
                         display: grid;
                         align-items: center;
-                        @include cell($size, $default-column-span, $gutter);
                     } @else if $size == tablet{
-                        $default-column-span: 4;
+                        grid-column-end: span 4;
                         display: grid;
                         align-items: center;
-                        @include cell($size, $default-column-span, $gutter);
                     } @else {
-                        $default-column-span: 6;
+                        grid-column-end: span 6;
                         display: grid;
                         @include text-styles('footer-copy', true);
-                        @include cell($size, $default-column-span, $gutter);
                     }
                 }
             }

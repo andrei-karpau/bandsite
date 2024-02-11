@@ -90,25 +90,6 @@
   }
 }
 
-@mixin cell-span_($size, $span, $gutter) {
-
-  $percent: math.percentage(
-    math.div($span, map.get($columns, $size))
-  );
-
-  @if $percent > 100% {
-    $percent: 100%;
-  }
-
-  width: calc(#{$percent} - #{$gutter});
-  width: calc(#{$percent} - var(--layout-grid-gutter-#{$size}, #{$gutter}));
-
-  @supports (display: grid) {
-    width: auto;
-    grid-column-end: span math.min($span, map.get($columns, $size));
-  }
-}
-
 @mixin layout-grid($size, $margin, $max-width: null) {
 
   box-sizing: border-box;
@@ -137,19 +118,6 @@
       map.get($columns, $size),
       minmax(0, 1fr)
     );
-  }
-}
-
-@mixin cell($size, $default-span, $gutter) {
-
-  @include cell-span_($size, $default-span, $gutter);
-
-  box-sizing: border-box;
-  margin: math.div($gutter, 2);
-  margin: calc(var(--layout-grid-gutter-#{$size}, #{$gutter}) / 2);
-
-  @supports (display: grid) {
-    margin: 0;
   }
 }
 

@@ -167,18 +167,14 @@
             @include to-rem('padding', 0);
             @each $size in map.keys($columns) {
                 @include media-query_($size) {
-                    $gutter: map.get($default-gutter, $size);
                     @if $size == mobile {
                         @include text-styles('section-header', true);
                         @include to-rem('padding', 0);
-                        $default-column-span: 6;
-                        @include cell($size, $default-column-span, $gutter);
+                        grid-column-end: span 6;
                     } @else if $size == tablet {
-                        $default-column-span: 12;
-                        @include cell($size, $default-column-span, $gutter);
+                        grid-column-end: span 12;
                     } @else if $size == desktop {
-                        $default-column-span: 3;
-                        @include cell($size, $default-column-span, $gutter);
+                        grid-column-end: span 3;
                     }
                 }
             }
