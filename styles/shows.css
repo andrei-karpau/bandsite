@@ -35,10 +35,6 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 #logo {
   max-height: 1.25rem;
   max-width: 7.5rem;
