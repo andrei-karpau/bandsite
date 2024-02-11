@@ -52,6 +52,10 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 #logo {
     @include to-rem('max-height', 20);
     @include to-rem('max-width', 120);
@@ -795,7 +799,7 @@ body {
                         }
                     }
 
-                    &--date {
+                    &--relative-date {
                         color: $silver;
                         @each $size in map.keys($columns) {
                             @include media-query_($size) {
@@ -808,6 +812,10 @@ body {
                         }
                     }
 
+                    &--actual-date {
+                        @extend .comments__posted-wrapper-container-name-n-date--relative-date;
+                        display: none;
+                    }
                 }
     
                 &-text {

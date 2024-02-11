@@ -42,37 +42,10 @@ const shows = [];
 let createShow = (date, venue, location, country) => {
     const show = {};
 
-    // ("yyyy-mm-ddThh:mm:ss")
+    // ('yyyy-mm-ddThh:mm:ss')
     const newStamp = new Date(date);
-    
-    const monthNames = [
-        'jan',
-        'feb',
-        'mar',
-        'apr',
-        'may',
-        'jun',
-        'jul',
-        'aug',
-        'sep',
-        'oct',
-        'nov',
-        'dec'
-    ];
 
-    const dayNames = [
-        'sun',
-        'mon',
-        'tue',
-        'wed',
-        'thu', 
-        'fri',
-        'sat'
-    ];
-
-    const newDate = `${dayNames[newStamp.getDay()]} ${monthNames[newStamp.getMonth()]} ${('0' + newStamp.getDate()).slice(-2)} ${newStamp.getFullYear()}`
-
-    show.date = newDate;
+    show.date = newStamp.toDateString();
     show.venue = venue;
     show.location = location;
     show.country = country;
@@ -125,8 +98,6 @@ createShow(
 );
 
 let showFinder = () => {
-
-    // document.querySelector('.shows__section').innerHTML = '';
 
     const propertyName = Object.getOwnPropertyNames(shows[1]);
 
@@ -255,7 +226,7 @@ buttons.forEach(each => {
             removeColor.nextElementSibling.style.backgroundColor = 'transparent';
         });
         each.nextElementSibling.classList.add('shows__section-container--active');
-        each.nextElementSibling.style.backgroundColor = 'rgb(225, 225, 225)'; //#E1E1E1 = rgb(225, 225, 225) 
+        each.nextElementSibling.style.backgroundColor = 'rgb(225, 225, 225)';
     }
     
     each.onmouseenter = () => {

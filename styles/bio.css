@@ -35,6 +35,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 #logo {
   max-height: 1.25rem;
   max-width: 7.5rem;
@@ -1594,11 +1598,11 @@ body {
     padding-bottom: 0rem;
   }
 }
-.comments__posted-wrapper-container-name-n-date--date {
+.comments__posted-wrapper-container-name-n-date--relative-date, .comments__posted-wrapper-container-name-n-date--actual-date {
   color: #AFAFAF;
 }
 @media (min-width: 1280px) {
-  .comments__posted-wrapper-container-name-n-date--date {
+  .comments__posted-wrapper-container-name-n-date--relative-date, .comments__posted-wrapper-container-name-n-date--actual-date {
     font-size: 0.875rem;
     line-height: 1.25rem;
     font-family: "AvenirNextRegular";
@@ -1607,7 +1611,7 @@ body {
   }
 }
 @media (min-width: 768px) and (max-width: 1279px) {
-  .comments__posted-wrapper-container-name-n-date--date {
+  .comments__posted-wrapper-container-name-n-date--relative-date, .comments__posted-wrapper-container-name-n-date--actual-date {
     font-size: 0.875rem;
     line-height: 1.25rem;
     font-family: "AvenirNextRegular";
@@ -1616,13 +1620,16 @@ body {
   }
 }
 @media (max-width: 767px) {
-  .comments__posted-wrapper-container-name-n-date--date {
+  .comments__posted-wrapper-container-name-n-date--relative-date, .comments__posted-wrapper-container-name-n-date--actual-date {
     font-size: 0.75rem;
     line-height: 1.125rem;
     font-family: "AvenirNextRegular";
     padding-top: 0rem;
     padding-bottom: 0rem;
   }
+}
+.comments__posted-wrapper-container-name-n-date--actual-date {
+  display: none;
 }
 @media (min-width: 1280px) {
   .comments__posted-wrapper-container-text {

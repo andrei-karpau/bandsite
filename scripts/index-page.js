@@ -1,3 +1,20 @@
+let addListenerToDates = ()  => {
+    const relativeDates = document.querySelectorAll('.comments__posted-wrapper-container-name-n-date--relative-date');
+    relativeDates.forEach(each => {
+
+        each.onpointerover = () => {
+            
+            each.style.display = 'none';
+            each.nextElementSibling.style.display = 'block';
+
+            setTimeout(() => {
+                each.style.display = 'block';
+                each.nextElementSibling.style.display = 'none';
+            }, 1000);
+        }
+    });
+}
+
 let timeDifference = (current, previous) => {
   let msPerMinute = 60 * 1000;
   let msPerHour = msPerMinute * 60;
@@ -8,17 +25,17 @@ let timeDifference = (current, previous) => {
   let elapsed = current - previous;
 
   if (elapsed < msPerMinute) {
-    return Math.round(elapsed / 1000) + " seconds ago";
+    return Math.round(elapsed / 1000) + ' seconds ago';
   } else if (elapsed < msPerHour) {
-    return Math.round(elapsed / msPerMinute) + " minutes ago";
+    return Math.round(elapsed / msPerMinute) + ' minutes ago';
   } else if (elapsed < msPerDay) {
-    return Math.round(elapsed / msPerHour) + " hours ago";
+    return Math.round(elapsed / msPerHour) + ' hours ago';
   } else if (elapsed < msPerMonth) {
-    return "approximately " + Math.round(elapsed / msPerDay) + " days ago";
+    return 'approximately ' + Math.round(elapsed / msPerDay) + ' days ago';
   } else if (elapsed < msPerYear) {
-    return "approximately " + Math.round(elapsed / msPerMonth) + " months ago";
+    return 'approximately ' + Math.round(elapsed / msPerMonth) + ' months ago';
   } else {
-    return "approximately " + Math.round(elapsed / msPerYear) + " years ago";
+    return 'approximately ' + Math.round(elapsed / msPerYear) + ' years ago';
   }
 };
 
@@ -71,9 +88,9 @@ addPageLayout(
     'comments__title-form'
 )
 
-const commentForm = document.querySelector(".comments__title-form");
-commentForm.name = "comment";
-commentForm.id = "comment";
+const commentForm = document.querySelector('.comments__title-form');
+commentForm.name = 'comment';
+commentForm.id = 'comment';
 
 addPageLayout(
     'img',
@@ -142,7 +159,7 @@ const comments = [];
 let createComment = (date, userName, text, avatar = null) => {
     const comment = {};
 
-    // ("yyyy-mm-ddThh:mm:ss")
+    // ('yyyy-mm-ddThh:mm:ss')
     const commentStamp = new Date(date);
 
     comment.date = commentStamp;
@@ -175,7 +192,6 @@ createComment(
 
 let commentComposer = () => {
 
-    // postedComments.innerHTML = ''; //reset posted comments. what other options? they ask us not to use innerHTML - review if get a chance
     postedComments.replaceChildren();
 
     for (i = 0; i < comments.length; i++) {
@@ -225,9 +241,17 @@ let commentComposer = () => {
         addPageLayout(
             'span',
             `.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-container-name-n-date`,
-            `comments__posted-wrapper-container-name-n-date--date`,
+            `comments__posted-wrapper-container-name-n-date--relative-date`,
             false,
             `${timeDifference(Date.now(), comments[i].date)}`
+        );
+        
+        addPageLayout(
+            'span',
+            `.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-container-name-n-date`,
+            `comments__posted-wrapper-container-name-n-date--actual-date`,
+            false,
+            `${comments[i].date.toDateString()}`
         );
 
         addPageLayout(
@@ -243,32 +267,34 @@ let commentComposer = () => {
             false,
             `${comments[i].text}`
         );
+    
+        addListenerToDates();
     }
 }
 
 commentComposer();
 
-commentForm.addEventListener("keyup", (event) => event.target.setAttribute("style", ""));
+commentForm.addEventListener('keyup', (e) => e.target.setAttribute('style', ''));
 
-commentForm.addEventListener("submit", (e) => {
+commentForm.addEventListener('submit', (e) => {
     e.preventDefault();
   
     if (!nameInput.value || !commentTextArea.value) {
       switch (true) {
         case !nameInput.value && !commentTextArea.value:
-          nameInput.style.borderColor = "rgb(210, 45, 45)";
-          commentTextArea.style.borderColor = "rgb(210, 45, 45)";
+          nameInput.style.borderColor = 'rgb(210, 45, 45)';
+          commentTextArea.style.borderColor = 'rgb(210, 45, 45)';
           break;
         case !nameInput.value:
-          nameInput.style.borderColor = "rgb(210, 45, 45)";
+          nameInput.style.borderColor = 'rgb(210, 45, 45)';
           break;
         case !commentTextArea.value:
-          commentTextArea.style.borderColor = "rgb(210, 45, 45)";
+          commentTextArea.style.borderColor = 'rgb(210, 45, 45)';
           break;
       }
     } else {
-      nameInput.setAttribute("style", "");
-      commentTextArea.setAttribute("style", "");
+      nameInput.setAttribute('style', '');
+      commentTextArea.setAttribute('style', '');
       let unformatedDate = new Date(Date.now());
       let userName = nameInput.value;
       let comment = commentTextArea.value;
@@ -282,11 +308,12 @@ commentForm.addEventListener("submit", (e) => {
   
       commentComposer();
   
-      nameInput.setAttribute("style", "");
-      nameInput.value = "";
+      nameInput.setAttribute('style', '');
+      nameInput.value = '';
   
-      commentTextArea.setAttribute("style", "");
-      commentTextArea.value = "";
+      commentTextArea.setAttribute('style', '');
+      commentTextArea.value = '';
     }
-  });
+});
+
 
