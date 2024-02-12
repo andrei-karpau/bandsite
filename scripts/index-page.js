@@ -154,45 +154,11 @@ addPageLayout(
 
 const postedComments = document.querySelector('.comments__posted');
 
-const comments = [];
-
-let createComment = (date, userName, text, avatar = null) => {
-    const comment = {};
-
-    // ('yyyy-mm-ddThh:mm:ss')
-    const commentStamp = new Date(date);
-
-    comment.date = commentStamp;
-    comment.userName = userName;
-    comment.text = text;
-    comment.avatar = avatar;
-
-    comments.unshift(comment);
-
-    return comment;
-}
-
-createComment(
-    '2020-12-20T00:00:00',
-    'Miles Acosta',
-    'I can\'t stop listening. Every time I hear one of their songs - the vocals - it gives me goosebumps. Shivers straight down my spine. What a beautiful expression of creativity. Can\'t get enough.'
-)
-
-createComment(
-    '2021-02-17T00:00:00',
-    'Connor Walton',
-    'This is art. This is inexplicable magic expressed in the purest way, everything that makes up this majestic work deserves reverence. Let us appreciate this for what it is and what it contains.'
-)
-
-createComment(
-    '2021-09-01T00:00:00',
-    'Emilie Beach',
-    'I feel blessed to have seen them in person. What a show! They were just perfection. If there was one day of my life I could relive, this would be it. What an incredible day.'
-)
-
-let commentComposer = () => {
+let commentComposer = async () => {
 
     postedComments.replaceChildren();
+    
+    const comments = await commentsJSON.getComments();
 
     for (i = 0; i < comments.length; i++) {
 
@@ -201,6 +167,8 @@ let commentComposer = () => {
             '.comments__posted',
             'comments__posted-wrapper'
         );
+
+        document.querySelector(`.comments__posted-wrapper:nth-child(${i+1})`).setAttribute('id', `${comments[i].id}`);
 
         if (comments[i].avatar != null) {
             addPageLayout(
@@ -225,6 +193,33 @@ let commentComposer = () => {
         );
 
         addPageLayout(
+            'button',
+            `.comments__posted-wrapper:nth-child(${i+1})`,
+            `comments__posted-wrapper-delete-button`
+        );
+
+        // document.querySelector(
+        //     `.comments__posted-wrapper:nth-child(${i+1})
+        //     .comments__posted-wrapper-delete-button`)
+        //     .setAttribute(
+        //         'id', 
+        //         `${comments[i].id}`
+        //     )
+        // ;
+        
+        addPageLayout(
+            'img',
+            `.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-delete-button`,
+            `comments__posted-wrapper-delete-button--image`
+        );
+
+        document.querySelector(
+            `.comments__posted-wrapper:nth-child(${i+1})
+            .comments__posted-wrapper-delete-button--image`)
+            .src = '../assets/Icons/SVG/icon-delete.svg'
+        ;
+
+        addPageLayout(
             'div',
             `.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-container`,
             `comments__posted-wrapper-container-name-n-date`
@@ -235,7 +230,7 @@ let commentComposer = () => {
             `.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-container-name-n-date`,
             `comments__posted-wrapper-container-name-n-date--user-name`,
             false,
-            `${comments[i].userName}`
+            `${comments[i].name}`
         );
 
         addPageLayout(
@@ -243,7 +238,7 @@ let commentComposer = () => {
             `.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-container-name-n-date`,
             `comments__posted-wrapper-container-name-n-date--relative-date`,
             false,
-            `${timeDifference(Date.now(), comments[i].date)}`
+            `${timeDifference(Date.now(), comments[i].timestamp)}`
         );
         
         addPageLayout(
@@ -251,7 +246,7 @@ let commentComposer = () => {
             `.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-container-name-n-date`,
             `comments__posted-wrapper-container-name-n-date--actual-date`,
             false,
-            `${comments[i].date.toDateString()}`
+            `${comments[i].timestamp}`
         );
 
         addPageLayout(
@@ -265,12 +260,24 @@ let commentComposer = () => {
             `.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-container-text`,
             `comments__posted-wrapper-container-text--user-opinion`,
             false,
-            `${comments[i].text}`
+            `${comments[i].comment} comment got ${comments[i].likes} likes`
         );
     
         addListenerToDates();
     }
+
+    const deleteButton = document.querySelectorAll('.comments__posted-wrapper-delete-button');
+
+    deleteButton.forEach(each => {
+        each.onclick = (e) => {
+            console.log(each.id);
+            deleteComment.deleteComment(each.parentNode.id, commentComposer);
+            // deleteComment.likeComment(each.id);
+        }
+    });
 }
+
+
 
 commentComposer();
 
@@ -278,42 +285,33 @@ commentForm.addEventListener('keyup', (e) => e.target.setAttribute('style', ''))
 
 commentForm.addEventListener('submit', (e) => {
     e.preventDefault();
-  
+
     if (!nameInput.value || !commentTextArea.value) {
-      switch (true) {
+        switch (true) {
         case !nameInput.value && !commentTextArea.value:
-          nameInput.style.borderColor = 'rgb(210, 45, 45)';
-          commentTextArea.style.borderColor = 'rgb(210, 45, 45)';
-          break;
+            nameInput.style.borderColor = 'rgb(210, 45, 45)';
+            commentTextArea.style.borderColor = 'rgb(210, 45, 45)';
+            break;
         case !nameInput.value:
-          nameInput.style.borderColor = 'rgb(210, 45, 45)';
-          break;
+            nameInput.style.borderColor = 'rgb(210, 45, 45)';
+            break;
         case !commentTextArea.value:
-          commentTextArea.style.borderColor = 'rgb(210, 45, 45)';
-          break;
-      }
+            commentTextArea.style.borderColor = 'rgb(210, 45, 45)';
+            break;
+        }
     } else {
-      nameInput.setAttribute('style', '');
-      commentTextArea.setAttribute('style', '');
-      let unformatedDate = new Date(Date.now());
-      let userName = nameInput.value;
-      let comment = commentTextArea.value;
-      let avatar = userAvatar.src;
-      createComment(
-        `${unformatedDate}`,
-        `${userName}`,
-        `${comment}`,
-        `${avatar}`
-      );
-  
-      commentComposer();
-  
-      nameInput.setAttribute('style', '');
-      nameInput.value = '';
-  
-      commentTextArea.setAttribute('style', '');
-      commentTextArea.value = '';
-    }
+        const data = {}
+    
+        data.name = nameInput.value;
+        data.comment = commentTextArea.value;
+
+        postComment.postComment(data, commentComposer);
+
+        nameInput.setAttribute('style', '');
+        nameInput.value = '';
+
+        commentTextArea.setAttribute('style', '');
+        commentTextArea.value = '';
+    } 
+    
 });
-
-
