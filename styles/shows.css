@@ -1195,6 +1195,9 @@ body {
     padding-bottom: 0rem;
   }
 }
+.comments__posted-wrapper-delete-button {
+  border: none;
+}
 
 .footer {
   display: flex;

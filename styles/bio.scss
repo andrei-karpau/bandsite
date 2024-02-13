@@ -786,6 +786,31 @@ body {
                     }
                 }
             }
+            
+            &-delete-button {
+                border: none;
+                background-color: transparent;
+                @include to-rem('max-width', 21.5);
+
+                &:hover {
+                    filter: invert(100%) sepia(100%) saturate(9999%) hue-rotate(0deg) brightness(100%) contrast(100%)
+                }
+            }
+
+            &-like-button {
+                border: none;
+                background-color: transparent;
+                @include to-rem('max-width', 36);
+
+                &:hover {
+                    filter: invert(100%) sepia(100%) saturate(9999%) hue-rotate(180deg) brightness(100%) contrast(100%)
+                }
+
+                &--count{
+                    color: $silver;
+                    @include to-rem('max-width', 36);
+                }
+            }
         }
     }
 }

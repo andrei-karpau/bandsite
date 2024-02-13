@@ -37,78 +37,29 @@ addPageLayout(
     'shows'
 );
 
-const shows = [];
+let showFinder = async () => {
 
-let createShow = (date, venue, location, country) => {
-    const show = {};
+    
+    let getShows = new BandSiteApi(apiKey);
 
-    // ('yyyy-mm-ddThh:mm:ss')
-    const newStamp = new Date(date);
+    const shows = await getShows.getShows();
 
-    show.date = newStamp.toDateString();
-    show.venue = venue;
-    show.location = location;
-    show.country = country;
+    console.log(shows);
 
-    shows.push(show);
+    const showsHeader = [
+        'date',
+        'venue',
+        'location'
+    ]
 
-    return show;
-}
-
-createShow(
-    '2021-09-06T00:00:00',
-    'ronald lane',
-    'san francisco',
-    'CA'
-);
-
-createShow(
-    '2021-09-21T00:00:00',
-    'pier 3 east',
-    'san francisco',
-    'CA'
-);
-
-createShow(
-    '2021-10-15T00:00:00',
-    'view lounge',
-    'san francisco',
-    'CA'
-);
-
-createShow(
-    '2021-11-06T00:00:00',
-    'hyatt agency',
-    'san francisco',
-    'CA'
-);
-
-createShow(
-    '2021-11-26T00:00:00',
-    'moscow center',
-    'san francisco',
-    'CA'
-);
-
-createShow(
-    '2021-12-15T00:00:00',
-    'press club',
-    'san francisco',
-    'CA'
-);
-
-let showFinder = () => {
-
-    const propertyName = Object.getOwnPropertyNames(shows[1]);
-
-    for (let i = 0; i < propertyName.length - 1; i++) {
+    for (let i = 0; i < showsHeader.length; i++) {
 
         addPageLayout(
             'span',
             '.shows__section',
             `shows__section-container--heading-text`,
             false,
-            `${propertyName[i]}`
+            `${showsHeader[i]}`
         );
 
     }
@@ -134,15 +85,16 @@ let showFinder = () => {
             `.shows__section-container:nth-child(${i+5}) .shows__section-container-wrapper1`, 
             'shows__section-container-info--type', 
             false,
-            `${propertyName[0]}`
+            `${showsHeader[0]}`
         );
 
+        let date = new Date(shows[i].date);
         addPageLayout(
             'span',
             `.shows__section-container:nth-child(${i+5}) .shows__section-container-wrapper1`,
             'shows__section-container-info',
             false,
-            `${shows[i].date}`
+            `${date.toDateString()}`
         );
 
         addPageLayout(
@@ -150,7 +102,7 @@ let showFinder = () => {
             `.shows__section-container:nth-child(${i+5}) .shows__section-container-wrapper2`,
             'shows__section-container-info--type',
             false,
-            `${propertyName[1]}`
+            `${showsHeader[1]}`
         );
 
         addPageLayout(
@@ -158,7 +110,7 @@ let showFinder = () => {
             `.shows__section-container:nth-child(${i+5}) .shows__section-container-wrapper2`,
             'shows__section-container-info',
             false,
-            `${shows[i].venue}`
+            `${shows[i].place}`
         );
 
         addPageLayout(
@@ -166,7 +118,7 @@ let showFinder = () => {
             `.shows__section-container:nth-child(${i+5}) .shows__section-container-wrapper3`,
             'shows__section-container-info--type',
             false,
-            `${propertyName[2]}`
+            `${showsHeader[2]}`
         );
 
         addPageLayout(
@@ -174,7 +126,7 @@ let showFinder = () => {
             `.shows__section-container:nth-child(${i+5}) .shows__section-container-wrapper3`,
             'shows__section-container-info',
             false,
-            `${shows[i].location}, ${shows[i].country}`
+            `${shows[i].location}`
         );
     
         addPageLayout(
@@ -191,55 +143,56 @@ let showFinder = () => {
             'divider'
         )
     }
+
+    const dividers = document.querySelectorAll('.divider');
+    dividers.forEach(each => {
+        each.onclick = (e) => {
+            console.log(e.target);
+            dividers.forEach(removeColor => {
+                removeColor.classList.remove('shows__section-container--active');
+                removeColor.style.backgroundColor = '';
+            });
+            each.classList.add('shows__section-container--active');
+            each.style.backgroundColor = 'rgb(225, 225, 225)';
+        }
+
+        each.onmouseenter = () => {
+            if (!each.classList.contains('shows__section-container--active')) {
+
+                each.style.backgroundColor = 'rgb(250, 250, 250)';
+
+                each.onmouseleave = (event) => {
+                    each.style.backgroundColor = '';
+                }
+            } 
+        }
+    });
+
+    const buttons = document.querySelectorAll('.shows__section-container-info--button');
+    buttons.forEach(each => {
+        each.onclick = () => {
+            buttons.forEach(removeColor => {
+                removeColor.nextElementSibling.classList.remove('shows__section-container--active');
+                removeColor.nextElementSibling.style.backgroundColor = '';
+            });
+            each.nextElementSibling.classList.add('shows__section-container--active');
+            each.nextElementSibling.style.backgroundColor = 'rgb(225, 225, 225)';
+        }
+        
+        each.onmouseenter = () => {
+            if (!each.nextElementSibling.classList.contains('shows__section-container--active')) {
+
+                each.nextElementSibling.style.backgroundColor = 'rgb(250, 250, 250)';
+
+                each.onmouseleave = () => {
+                    each.nextElementSibling.style.backgroundColor = '';
+                }
+            } 
+        }
+    });
 }
 
 showFinder();
-
-const dividers = document.querySelectorAll('.divider');
-dividers.forEach(each => {
-    each.onclick = () => {
-        dividers.forEach(removeColor => {
-            removeColor.classList.remove('shows__section-container--active');
-            removeColor.style.backgroundColor = 'transparent';
-        });
-        each.classList.add('shows__section-container--active');
-        each.style.backgroundColor = 'rgb(225, 225, 225)';
-    }
-
-    each.onmouseenter = () => {
-        if (!each.classList.contains('shows__section-container--active')) {
-
-            each.style.backgroundColor = 'rgb(250, 250, 250)';
-
-            each.onmouseleave = (event) => {
-                each.style.backgroundColor = '';
-            }
-        } 
-    }
-});
-
-const buttons = document.querySelectorAll('.shows__section-container-info--button');
-buttons.forEach(each => {
-    each.onclick = () => {
-        buttons.forEach(removeColor => {
-            removeColor.nextElementSibling.classList.remove('shows__section-container--active');
-            removeColor.nextElementSibling.style.backgroundColor = 'transparent';
-        });
-        each.nextElementSibling.classList.add('shows__section-container--active');
-        each.nextElementSibling.style.backgroundColor = 'rgb(225, 225, 225)';
-    }
-    
-    each.onmouseenter = () => {
-        if (!each.nextElementSibling.classList.contains('shows__section-container--active')) {
-
-            each.nextElementSibling.style.backgroundColor = 'rgb(250, 250, 250)';
-
-            each.onmouseleave = () => {
-                each.nextElementSibling.style.backgroundColor = '';
-            }
-        } 
-    }
-});
 
 
 

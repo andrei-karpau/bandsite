@@ -156,6 +156,8 @@ const postedComments = document.querySelector('.comments__posted');
 
 let commentComposer = async () => {
 
+    let commentsJSON = new BandSiteApi(apiKey);
+
     postedComments.replaceChildren();
     
     const comments = await commentsJSON.getComments();
@@ -197,15 +199,6 @@ let commentComposer = async () => {
             `.comments__posted-wrapper:nth-child(${i+1})`,
             `comments__posted-wrapper-delete-button`
         );
-
-        // document.querySelector(
-        //     `.comments__posted-wrapper:nth-child(${i+1})
-        //     .comments__posted-wrapper-delete-button`)
-        //     .setAttribute(
-        //         'id', 
-        //         `${comments[i].id}`
-        //     )
-        // ;
         
         addPageLayout(
             'img',
@@ -215,9 +208,33 @@ let commentComposer = async () => {
 
         document.querySelector(
             `.comments__posted-wrapper:nth-child(${i+1})
-            .comments__posted-wrapper-delete-button--image`)
-            .src = '../assets/Icons/SVG/icon-delete.svg'
-        ;
+            .comments__posted-wrapper-delete-button--image`
+        ).src = '../assets/Icons/SVG/icon-delete.svg';
+
+        addPageLayout(
+            'button',
+            `.comments__posted-wrapper:nth-child(${i+1})`,
+            `comments__posted-wrapper-like-button`
+        );
+
+        addPageLayout(
+            'img',
+            `.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-like-button`,
+            `comments__posted-wrapper-like-button--image`
+        );
+
+        document.querySelector(
+            `.comments__posted-wrapper:nth-child(${i+1})
+            .comments__posted-wrapper-like-button--image`
+        ).src = '../assets/Icons/SVG/icon-like.svg';
+
+        addPageLayout(
+            'span',
+            `.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-like-button`,
+            `comments__posted-wrapper-like-button--count`,
+            false,
+            `${comments[i].likes}`
+        );
 
         addPageLayout(
             'div',
@@ -241,12 +258,13 @@ let commentComposer = async () => {
             `${timeDifference(Date.now(), comments[i].timestamp)}`
         );
         
+        let timestamp = new Date(comments[i].timestamp);
         addPageLayout(
             'span',
             `.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-container-name-n-date`,
             `comments__posted-wrapper-container-name-n-date--actual-date`,
             false,
-            `${comments[i].timestamp}`
+            `${timestamp.toDateString()}`
         );
 
         addPageLayout(
@@ -260,21 +278,35 @@ let commentComposer = async () => {
             `.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-container-text`,
             `comments__posted-wrapper-container-text--user-opinion`,
             false,
-            `${comments[i].comment} comment got ${comments[i].likes} likes`
+            `${comments[i].comment}`
         );
     
         addListenerToDates();
     }
 
     const deleteButton = document.querySelectorAll('.comments__posted-wrapper-delete-button');
+    const likeButton = document.querySelectorAll('.comments__posted-wrapper-like-button');
+
+    const deleteComment = new BandSiteApi(apiKey);
+    const likeComment = new BandSiteApi(apiKey);
 
     deleteButton.forEach(each => {
-        each.onclick = (e) => {
-            console.log(each.id);
+        each.onclick = () => {
+            // console.log(each.parentNode.id);
             deleteComment.deleteComment(each.parentNode.id, commentComposer);
-            // deleteComment.likeComment(each.id);
         }
     });
+
+    likeButton.forEach(each => {
+        each.addEventListener('click', (e) => {
+            likeComment.likeComment(each.parentNode.id);
+            each.lastChild.innerText = parseInt(each.lastChild.innerText) + 1;
+        })
+    });
+    
+
+    
+
 }
 
 
@@ -304,6 +336,8 @@ commentForm.addEventListener('submit', (e) => {
     
         data.name = nameInput.value;
         data.comment = commentTextArea.value;
+
+        let postComment = new BandSiteApi(apiKey);
 
         postComment.postComment(data, commentComposer);
 

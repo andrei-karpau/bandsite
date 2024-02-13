@@ -1195,6 +1195,26 @@ body {
     padding-bottom: 0rem;
   }
 }
+.comments__posted-wrapper-delete-button {
+  border: none;
+  background-color: transparent;
+  max-width: 1.34375rem;
+}
+.comments__posted-wrapper-delete-button:hover {
+  filter: invert(100%) sepia(100%) saturate(9999%) hue-rotate(0deg) brightness(100%) contrast(100%);
+}
+.comments__posted-wrapper-like-button {
+  border: none;
+  background-color: transparent;
+  max-width: 2.25rem;
+}
+.comments__posted-wrapper-like-button:hover {
+  filter: invert(100%) sepia(100%) saturate(9999%) hue-rotate(180deg) brightness(100%) contrast(100%);
+}
+.comments__posted-wrapper-like-button--count {
+  color: #AFAFAF;
+  max-width: 2.25rem;
+}
 
 .footer {
   display: flex;
