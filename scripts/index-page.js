@@ -156,11 +156,10 @@ const postedComments = document.querySelector('.comments__posted');
 
 let commentComposer = async () => {
 
-    let commentsJSON = new BandSiteApi(apiKey);
-
     postedComments.replaceChildren();
-    
-    const comments = await commentsJSON.getComments();
+
+    let getComments = new BandSiteApi(apiKey);
+    const comments = await getComments.getComments();
 
     for (i = 0; i < comments.length; i++) {
 
@@ -291,22 +290,17 @@ let commentComposer = async () => {
     const likeComment = new BandSiteApi(apiKey);
 
     deleteButton.forEach(each => {
-        each.onclick = () => {
-            // console.log(each.parentNode.id);
+        each.addEventListener('click', () => {
             deleteComment.deleteComment(each.parentNode.id, commentComposer);
-        }
+        });
     });
 
     likeButton.forEach(each => {
-        each.addEventListener('click', (e) => {
+        each.addEventListener('click', () => {
             likeComment.likeComment(each.parentNode.id);
             each.lastChild.innerText = parseInt(each.lastChild.innerText) + 1;
-        })
+        });
     });
-    
-
-    
-
 }
 
 
@@ -314,7 +308,6 @@ let commentComposer = async () => {
 commentComposer();
 
 commentForm.addEventListener('keyup', (e) => e.target.setAttribute('style', ''));
-
 commentForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -346,6 +339,5 @@ commentForm.addEventListener('submit', (e) => {
 
         commentTextArea.setAttribute('style', '');
         commentTextArea.value = '';
-    } 
-    
+    }  
 });

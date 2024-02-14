@@ -39,12 +39,8 @@ addPageLayout(
 
 let showFinder = async () => {
 
-    
     let getShows = new BandSiteApi(apiKey);
-
     const shows = await getShows.getShows();
-
-    console.log(shows);
 
     const showsHeader = [
         'date',
@@ -61,7 +57,6 @@ let showFinder = async () => {
             false,
             `${showsHeader[i]}`
         );
-
     }
 
     for (let i = 0; i < shows.length; i++) {
