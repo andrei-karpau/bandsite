@@ -1,4 +1,4 @@
-let  addPageLayout = (elementTag, parent = 'body', idOrClassName = null, id = false, text = null) => {
+const  addPageLayout = (elementTag, parent = 'body', idOrClassName = null, id = false, text = null) => {
     
     let newLayoutElement = document.createElement(elementTag);
 
@@ -37,9 +37,9 @@ addPageLayout(
     'shows'
 );
 
-let showFinder = async () => {
+const showFinder = async () => {
 
-    let getShows = new BandSiteApi(apiKey);
+    const getShows = new BandSiteApi(apiKey);
     const shows = await getShows.getShows();
 
     const showsHeader = [
@@ -142,7 +142,6 @@ let showFinder = async () => {
     const dividers = document.querySelectorAll('.divider');
     dividers.forEach(each => {
         each.onclick = (e) => {
-            console.log(e.target);
             dividers.forEach(removeColor => {
                 removeColor.classList.remove('shows__section-container--active');
                 removeColor.style.backgroundColor = '';

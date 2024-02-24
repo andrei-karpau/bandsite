@@ -9,61 +9,60 @@ class BandSiteApi {
 
     postComment(data, successCallback) {
         const request = async () => {
-            const response = await axios.post(`${this.url}/comments?api_key=${this.apiKey}`, data);
-            if (response.status === 200) {
+            try {
+                await axios.post(`${this.url}/comments?api_key=${this.apiKey}`, data);
                 successCallback();
+            } catch (error) {
+                console.error("Error:", error);
             }
         }
         return request();
-        // axios
-        //     .post(`${this.url}/comments?api_key=${this.apiKey}`, data)
-        //     .then((response) => {
-        //         if (response.status === 200) {                    
-        //             successCallback();
-        //         }
-        //     })
-        //     .catch((error) => console.error("Error:", error));
     }
-    
     
     getComments() {
         const request = async () => {
-            const response = await axios.get(`${this.url}/comments?api_key=${this.apiKey}`);
-            response.data.sort((a, b) => b.timestamp - a.timestamp);
-            return response.data;
+            try {
+                const response = await axios.get(`${this.url}/comments?api_key=${this.apiKey}`);
+                response.data.sort((a, b) => b.timestamp - a.timestamp);
+                return response.data;
+            } catch (error) {
+                console.error("Error:", error);
+            }
         } 
         return request();
     }
 
     deleteComment(id, successCallback) {
         const request = async () => {
-            const response = await axios.delete(`${this.url}/comments/${id}?api_key=${this.apiKey}`);
-            if (response.status === 200) {
+            try {
+                await axios.delete(`${this.url}/comments/${id}?api_key=${this.apiKey}`);
                 successCallback();
+            } catch (error) {
+                console.error("Error:", error);
             }
         }
         return request();
-        // axios
-        //     .delete(`${this.url}/comments/${id}?api_key=${this.apiKey}`)
-        //     .then((response) => {
-                // if (response.status === 200) {
-                //     successCallback();
-                // }
-        //     })
-        //      .catch((error) => console.error("Error:", error));
     }
 
     likeComment(id) {
         const request = async () => {
-            const response = await axios.put(`${this.url}/comments/${id}/like?api_key=${this.apiKey}`);
+            try {
+                await axios.put(`${this.url}/comments/${id}/like?api_key=${this.apiKey}`);
+            } catch (error) {
+                console.error("Error:", error);
+            }
         }
         return request();
     }
 
     getShows() {
         const request = async () => {
-            const response = await axios.get(`${this.url}/showdates?api_key=${this.apiKey}`)
-            return response.data;
+            try {
+                const response = await axios.get(`${this.url}/showdates?api_key=${this.apiKey}`)
+                return response.data;
+            } catch (error) {
+                console.error("Error:", error);
+            }
         }
         return request();
     }

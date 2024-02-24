@@ -45,9 +45,7 @@
             @each $size in map.keys($columns) {
                 @include media-query_($size) {
                     $gutter: map.get($default-gutter, $size);
-                    @if $size == mobile {
-                        // @include to-rem('min-height', 436);
-                    } @else if $size == tablet {
+                    @if $size == tablet {
                         height: fit-content;
                         @include to-rem('min-height', 436);
                     }
@@ -99,7 +97,6 @@
                         }
                     }
                 }
-                
             }
 
             &--delimiter {

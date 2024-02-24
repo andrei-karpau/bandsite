@@ -1,4 +1,4 @@
-let addListenerToDates = ()  => {
+const addListenerToDates = ()  => {
     const relativeDates = document.querySelectorAll('.comments__posted-wrapper-container-name-n-date--relative-date');
     relativeDates.forEach(each => {
 
@@ -15,37 +15,38 @@ let addListenerToDates = ()  => {
     });
 }
 
-let timeDifference = (current, previous) => {
-  let msPerMinute = 60 * 1000;
-  let msPerHour = msPerMinute * 60;
-  let msPerDay = msPerHour * 24;
-  let msPerMonth = msPerDay * 30;
-  let msPerYear = msPerDay * 365;
+const timeDifference = (current, previous) => {
+    let msPerMinute = 60 * 1000;
+    let msPerHour = msPerMinute * 60;
+    let msPerDay = msPerHour * 24;
+    let msPerMonth = msPerDay * 30;
+    let msPerYear = msPerDay * 365;
 
-  let elapsed = current - previous;
+    let elapsed = current - previous;
 
-  if (elapsed < msPerMinute) {
+    if (elapsed < msPerMinute) {
     return Math.round(elapsed / 1000) + ' seconds ago';
-  } else if (elapsed < msPerHour) {
+    } else if (elapsed < msPerHour) {
     return Math.round(elapsed / msPerMinute) + ' minutes ago';
-  } else if (elapsed < msPerDay) {
+    } else if (elapsed < msPerDay) {
     return Math.round(elapsed / msPerHour) + ' hours ago';
-  } else if (elapsed < msPerMonth) {
+    } else if (elapsed < msPerMonth) {
     return 'approximately ' + Math.round(elapsed / msPerDay) + ' days ago';
-  } else if (elapsed < msPerYear) {
+    } else if (elapsed < msPerYear) {
     return 'approximately ' + Math.round(elapsed / msPerMonth) + ' months ago';
-  } else {
+    } else {
     return 'approximately ' + Math.round(elapsed / msPerYear) + ' years ago';
-  }
+    }
 };
 
-let  addPageLayout = (
+const  addPageLayout = (
     elementTag,
     parent = 'body',
     idOrClassName = null,
     id = false,
     text = null
-) => {   
+    ) => {
+
     let newLayoutElement = document.createElement(elementTag);
 
     if (id) {
@@ -154,11 +155,11 @@ addPageLayout(
 
 const postedComments = document.querySelector('.comments__posted');
 
-let commentComposer = async () => {
+const commentComposer = async () => {
 
     postedComments.replaceChildren();
 
-    let getComments = new BandSiteApi(apiKey);
+    const getComments = new BandSiteApi(apiKey);
     const comments = await getComments.getComments();
 
     for (i = 0; i < comments.length; i++) {
@@ -303,10 +304,6 @@ let commentComposer = async () => {
     });
 }
 
-
-
-commentComposer();
-
 commentForm.addEventListener('keyup', (e) => e.target.setAttribute('style', ''));
 commentForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -325,12 +322,12 @@ commentForm.addEventListener('submit', (e) => {
             break;
         }
     } else {
-        const data = {}
+        const data = {};
     
         data.name = nameInput.value;
         data.comment = commentTextArea.value;
 
-        let postComment = new BandSiteApi(apiKey);
+        const postComment = new BandSiteApi(apiKey);
 
         postComment.postComment(data, commentComposer);
 
@@ -341,3 +338,5 @@ commentForm.addEventListener('submit', (e) => {
         commentTextArea.value = '';
     }  
 });
+
+commentComposer();

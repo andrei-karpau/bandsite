@@ -131,6 +131,7 @@ body {
         &--active {
             border-top: solid 3px transparent;
             border-bottom: solid 3px;
+            color: $white;
             @each $size in map.keys($columns) {
                 @include media-query_($size) {
                     @if $size == mobile {
@@ -141,7 +142,6 @@ body {
                     }
                 }
             }
-            color: $white;
         }
 
         &--inactive {
@@ -174,7 +174,6 @@ body {
                 transform: scaleX(1);
             }
         }
-
     }
 
     &__cell {
@@ -524,7 +523,6 @@ body {
             }
 
             transition: 1s;
-
             &:hover{
                 filter: grayscale(0);
                 transform: scale(1.14);
@@ -650,7 +648,6 @@ body {
                         outline: none;
                         border: solid 1px $bandsite-black;
                     }
-
                 }
             }
 
@@ -793,7 +790,7 @@ body {
                 @include to-rem('max-width', 21.5);
 
                 &:hover {
-                    filter: invert(100%) sepia(100%) saturate(9999%) hue-rotate(0deg) brightness(100%) contrast(100%)
+                    filter: invert(100%) sepia(100%) saturate(9999%) hue-rotate(0deg) brightness(100%) contrast(100%);
                 }
             }
 
@@ -803,7 +800,7 @@ body {
                 @include to-rem('max-width', 36);
 
                 &:hover {
-                    filter: invert(100%) sepia(100%) saturate(9999%) hue-rotate(180deg) brightness(100%) contrast(100%)
+                    filter: invert(100%) sepia(100%) saturate(9999%) hue-rotate(180deg) brightness(100%) contrast(100%);
                 }
 
                 &--count{
@@ -814,8 +811,6 @@ body {
         }
     }
 }
-
-
 
 .footer {
     display: flex;
@@ -919,6 +914,7 @@ body {
                     }
                 }
             }
+
             div:not(:first-child) {
                 @each $size in map.keys($columns) {
                     @include media-query_($size) {
@@ -930,6 +926,7 @@ body {
                     }
                 }    
             }
+
             div:first-child {
                 @each $size in map.keys($columns) {
                     @include media-query_($size) {
@@ -941,9 +938,11 @@ body {
                     }
                 }    
             }
+
             span {
                 display: block;
             }
+            
             a {
                 color: $white;
             }
