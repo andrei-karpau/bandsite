@@ -298,7 +298,7 @@ let commentComposer = async () => {
     likeButton.forEach(each => {
         each.addEventListener('click', () => {
             likeComment.likeComment(each.parentNode.id);
-            each.lastChild.innerText = parseInt(each.lastChild.innerText) + 1;
+            each.lastChild.innerText = Number(each.lastChild.innerText) + 1;
         });
     });
 }

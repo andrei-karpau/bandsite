@@ -22,7 +22,7 @@ class BandSiteApi {
         //             successCallback();
         //         }
         //     })
-        // .catch((error) => console.error("Error:", error));
+        //     .catch((error) => console.error("Error:", error));
     }
     
     
@@ -50,7 +50,7 @@ class BandSiteApi {
                 //     successCallback();
                 // }
         //     })
-        // .catch((error) => console.error("Error:", error));
+        //      .catch((error) => console.error("Error:", error));
     }
 
     likeComment(id) {
