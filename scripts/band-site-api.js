@@ -7,11 +7,13 @@ class BandSiteApi {
         this.url = url;
     }
 
-    postComment(data, successCallback) {
+    postComment(comment, successCallback) {
         const request = async () => {
             try {
-                await axios.post(`${this.url}/comments?api_key=${this.apiKey}`, data);
-                successCallback();
+                await axios.post(`${this.url}/comments?api_key=${this.apiKey}`, comment);
+                const reloadComments = await axios.get(`${this.url}/comments?api_key=${this.apiKey}`);
+                reloadComments.data.sort((a, b) => b.timestamp - a.timestamp);
+                successCallback(reloadComments.data);
             } catch (error) {
                 console.error("Error:", error);
             }
@@ -19,12 +21,12 @@ class BandSiteApi {
         return request();
     }
     
-    getComments() {
+    getComments(successCallback) {
         const request = async () => {
             try {
-                const response = await axios.get(`${this.url}/comments?api_key=${this.apiKey}`);
-                response.data.sort((a, b) => b.timestamp - a.timestamp);
-                return response.data;
+                const comments = await axios.get(`${this.url}/comments?api_key=${this.apiKey}`);
+                comments.data.sort((a, b) => b.timestamp - a.timestamp);
+                return successCallback(comments.data);
             } catch (error) {
                 console.error("Error:", error);
             }
@@ -36,7 +38,9 @@ class BandSiteApi {
         const request = async () => {
             try {
                 await axios.delete(`${this.url}/comments/${id}?api_key=${this.apiKey}`);
-                successCallback();
+                const reloadComments = await axios.get(`${this.url}/comments?api_key=${this.apiKey}`);
+                reloadComments.data.sort((a, b) => b.timestamp - a.timestamp);
+                successCallback(reloadComments.data);
             } catch (error) {
                 console.error("Error:", error);
             }
@@ -55,11 +59,11 @@ class BandSiteApi {
         return request();
     }
 
-    getShows() {
+    getShows(successCallback) {
         const request = async () => {
             try {
                 const response = await axios.get(`${this.url}/showdates?api_key=${this.apiKey}`)
-                return response.data;
+                return successCallback(response.data);
             } catch (error) {
                 console.error("Error:", error);
             }

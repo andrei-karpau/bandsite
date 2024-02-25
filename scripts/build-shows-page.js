@@ -37,10 +37,7 @@ addPageLayout(
     'shows'
 );
 
-const showFinder = async () => {
-
-    const getShows = new BandSiteApi(apiKey);
-    const shows = await getShows.getShows();
+const showFinder = (shows) => {
 
     const showsHeader = [
         'date',
@@ -186,7 +183,8 @@ const showFinder = async () => {
     });
 }
 
-showFinder();
+const getShows = new BandSiteApi(apiKey);
+const shows = getShows.getShows(showFinder);
 
 
 

@@ -154,13 +154,9 @@ addPageLayout(
 );
 
 const postedComments = document.querySelector('.comments__posted');
-
-const commentComposer = async () => {
+const commentComposer = (comments) => {
 
     postedComments.replaceChildren();
-
-    const getComments = new BandSiteApi(apiKey);
-    const comments = await getComments.getComments();
 
     for (i = 0; i < comments.length; i++) {
 
@@ -258,7 +254,7 @@ const commentComposer = async () => {
             `${timeDifference(Date.now(), comments[i].timestamp)}`
         );
         
-        let timestamp = new Date(comments[i].timestamp);
+        const timestamp = new Date(comments[i].timestamp);
         addPageLayout(
             'span',
             `.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-container-name-n-date`,
@@ -339,4 +335,5 @@ commentForm.addEventListener('submit', (e) => {
     }  
 });
 
-commentComposer();
+const getComments = new BandSiteApi(apiKey);
+const comments = getComments.getComments(commentComposer);
