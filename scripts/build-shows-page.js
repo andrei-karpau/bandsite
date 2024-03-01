@@ -98,9 +98,9 @@ const showsComposerFunction = (show) => {
 
                 each.addEventListener('mouseleave', (e) => {
                     e.target.classList.remove('divider--mouseenter');
-                }) 
+                }); 
             }
-        })
+        });
     });
 
     const buttons = document.querySelectorAll('.shows__section-container-info--button');
@@ -119,7 +119,7 @@ const showsComposerFunction = (show) => {
 
                 each.addEventListener('mouseleave', (e) => {
                     e.target.nextElementSibling.classList.remove('divider--mouseenter');
-                })
+                });
             }
         }); 
     });
@@ -127,9 +127,3 @@ const showsComposerFunction = (show) => {
 
 const getShows = new BandSiteApi(apiKey);
 getShows.getShows(showsComposerFunction);
-
-
-
-
-
-
