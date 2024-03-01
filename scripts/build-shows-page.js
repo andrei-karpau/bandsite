@@ -1,190 +1,132 @@
-const  addPageLayout = (elementTag, parent = 'body', idOrClassName = null, id = false, text = null) => {
-    
-    let newLayoutElement = document.createElement(elementTag);
+const showsMainSection = document.createElement('section');
+showsMainSection.classList.add('shows');
+document.body.insertBefore(showsMainSection, document.querySelector('.footer'));
 
-    if (id) {
-        newLayoutElement.setAttribute('id', idOrClassName);
-    } else if (idOrClassName) {
-        newLayoutElement.classList.add(idOrClassName);
-    }
+const showsSection = document.createElement('div');
+showsSection.classList.add('shows__section');
+showsMainSection.appendChild(showsSection);
 
-    if (text) {
-        newLayoutElement.innerText = text;
-    }
+const showsSectionHeader = document.createElement('span');
+showsSectionHeader.classList.add('shows__section-header');
+showsSectionHeader.innerText = 'shows';
 
-    let currentLayoutElement = document.querySelector(parent);
-    let result = currentLayoutElement.appendChild(newLayoutElement);
+const showsSectionContainerHeadingTextDate = document.createElement('span');
+showsSectionContainerHeadingTextDate.classList.add(`shows__section-container--heading-text`);
+showsSectionContainerHeadingTextDate.innerText = 'date';
 
-    return result;
-}
+const showsSectionContainerHeadingTextVenue = document.createElement('span');
+showsSectionContainerHeadingTextVenue.classList.add(`shows__section-container--heading-text`);
+showsSectionContainerHeadingTextVenue.innerText = 'venue';
 
-const showsSection = document.createElement('section');
-showsSection.classList.add('shows');
-document.body.insertBefore(showsSection, document.querySelector('.footer'));
+const showsSectionContainerHeadingTextLocation = document.createElement('span');
+showsSectionContainerHeadingTextLocation.classList.add(`shows__section-container--heading-text`);
+showsSectionContainerHeadingTextLocation.innerText = 'location';
 
+showsSection.append(showsSectionHeader, showsSectionContainerHeadingTextDate, showsSectionContainerHeadingTextVenue, showsSectionContainerHeadingTextLocation)
 
-addPageLayout(
-    'div',
-    '.shows',
-    'shows__section'
-);
+const showsComposerFunction = (show) => {
+    const showDate = new Date(show.date);
 
-addPageLayout(
-    'span',
-    '.shows__section',
-    'shows__section-header',
-    false,
-    'shows'
-);
+    const showsSectionContainer = document.createElement('div');
+    showsSectionContainer.classList.add('shows__section-container');
+    showsSection.appendChild(showsSectionContainer);
 
-const showFinder = (shows) => {
+    const showsSectionContainerWrapper1 = document.createElement('div');
+    showsSectionContainerWrapper1.classList.add('shows__section-container-wrapper1');
+    showsSectionContainer.appendChild(showsSectionContainerWrapper1);
 
-    const showsHeader = [
-        'date',
-        'venue',
-        'location'
-    ]
+    const showsSectionContainerInfoTypeDate = document.createElement('span');
+    showsSectionContainerInfoTypeDate.classList.add('shows__section-container-info--type');
+    showsSectionContainerInfoTypeDate.innerText = 'date';
+    showsSectionContainerWrapper1.appendChild(showsSectionContainerInfoTypeDate);
 
-    for (let i = 0; i < showsHeader.length; i++) {
+    const showsSectionContainerInfoDate = document.createElement('span');
+    showsSectionContainerInfoDate.classList.add('shows__section-container-info');
+    showsSectionContainerInfoDate.innerText = `${showDate.toDateString()}`;
+    showsSectionContainerWrapper1.appendChild(showsSectionContainerInfoDate);
 
-        addPageLayout(
-            'span',
-            '.shows__section',
-            `shows__section-container--heading-text`,
-            false,
-            `${showsHeader[i]}`
-        );
-    }
+    const showsSectionContainerWrapper2 = document.createElement('div');
+    showsSectionContainerWrapper2.classList.add('shows__section-container-wrapper2');
+    showsSectionContainer.appendChild(showsSectionContainerWrapper2);
 
-    for (let i = 0; i < shows.length; i++) {
+    const showsSectionContainerInfoTypeVenue = document.createElement('span');
+    showsSectionContainerInfoTypeVenue.classList.add('shows__section-container-info--type');
+    showsSectionContainerInfoTypeVenue.innerText = 'venue';
+    showsSectionContainerWrapper2.appendChild(showsSectionContainerInfoTypeVenue);
 
-        addPageLayout(
-            'div',
-            '.shows__section',
-            'shows__section-container'
-        );
+    const showsSectionContainerInfoVenue = document.createElement('span');
+    showsSectionContainerInfoVenue.classList.add('shows__section-container-info');
+    showsSectionContainerInfoVenue.innerText = `${show.place}`;
+    showsSectionContainerWrapper2.appendChild(showsSectionContainerInfoVenue);
 
-        for (j=0; j<3; j++) {
-            addPageLayout(
-                'div',
-                `.shows__section-container:nth-child(${i+5})`,
-                `shows__section-container-wrapper${j+1}`
-            );
-        }
+    const showsSectionContainerWrapper3 = document.createElement('div');
+    showsSectionContainerWrapper3.classList.add('shows__section-container-wrapper3');
+    showsSectionContainer.appendChild(showsSectionContainerWrapper3);
 
-        addPageLayout(
-            'span', 
-            `.shows__section-container:nth-child(${i+5}) .shows__section-container-wrapper1`, 
-            'shows__section-container-info--type', 
-            false,
-            `${showsHeader[0]}`
-        );
+    const showsSectionContainerInfoTypeLocation = document.createElement('span');
+    showsSectionContainerInfoTypeLocation.classList.add('shows__section-container-info--type');
+    showsSectionContainerInfoTypeLocation.innerText = 'location';
+    showsSectionContainerWrapper3.appendChild(showsSectionContainerInfoTypeLocation);
 
-        let date = new Date(shows[i].date);
-        addPageLayout(
-            'span',
-            `.shows__section-container:nth-child(${i+5}) .shows__section-container-wrapper1`,
-            'shows__section-container-info',
-            false,
-            `${date.toDateString()}`
-        );
+    const showsSectionContainerInfoLocation = document.createElement('span');
+    showsSectionContainerInfoLocation.classList.add('shows__section-container-info');
+    showsSectionContainerInfoLocation.innerText = `${show.location}`;
+    showsSectionContainerWrapper3.appendChild(showsSectionContainerInfoLocation);
 
-        addPageLayout(
-            'span',
-            `.shows__section-container:nth-child(${i+5}) .shows__section-container-wrapper2`,
-            'shows__section-container-info--type',
-            false,
-            `${showsHeader[1]}`
-        );
+    const showsSectionContainerInfoButton = document.createElement('button');
+    showsSectionContainerInfoButton.classList.add('shows__section-container-info--button');
+    showsSectionContainerInfoButton.innerText = 'buy tickets';
+    showsSectionContainer.appendChild(showsSectionContainerInfoButton);
 
-        addPageLayout(
-            'span',
-            `.shows__section-container:nth-child(${i+5}) .shows__section-container-wrapper2`,
-            'shows__section-container-info',
-            false,
-            `${shows[i].place}`
-        );
-
-        addPageLayout(
-            'span',
-            `.shows__section-container:nth-child(${i+5}) .shows__section-container-wrapper3`,
-            'shows__section-container-info--type',
-            false,
-            `${showsHeader[2]}`
-        );
-
-        addPageLayout(
-            'span',
-            `.shows__section-container:nth-child(${i+5}) .shows__section-container-wrapper3`,
-            'shows__section-container-info',
-            false,
-            `${shows[i].location}`
-        );
-    
-        addPageLayout(
-            'button',
-            `.shows__section-container:nth-child(${i+5})`,
-            'shows__section-container-info--button',
-            false,
-            'buy tickets'
-        );
-
-        addPageLayout(
-            'div',
-            `.shows__section-container:nth-child(${i+5})`,
-            'divider'
-        )
-    }
+    const divider = document.createElement('div');
+    divider.classList.add('divider');
+    showsSectionContainer.appendChild(divider);
 
     const dividers = document.querySelectorAll('.divider');
     dividers.forEach(each => {
-        each.onclick = (e) => {
+        each.addEventListener('click', (e) => {
             dividers.forEach(removeColor => {
-                removeColor.classList.remove('shows__section-container--active');
-                removeColor.style.backgroundColor = '';
+                removeColor.classList.remove('divider--active');
             });
-            each.classList.add('shows__section-container--active');
-            each.style.backgroundColor = 'rgb(225, 225, 225)';
-        }
+            e.target.classList.remove('divider--mouseenter');
+            e.target.classList.add('divider--active');
+        })
 
-        each.onmouseenter = () => {
-            if (!each.classList.contains('shows__section-container--active')) {
+        each.addEventListener('mouseenter', (e) => {
+            if(!e.target.classList.contains('divider--active')) {
+                e.target.classList.add('divider--mouseenter');
 
-                each.style.backgroundColor = 'rgb(250, 250, 250)';
-
-                each.onmouseleave = (event) => {
-                    each.style.backgroundColor = '';
-                }
-            } 
-        }
+                each.addEventListener('mouseleave', (e) => {
+                    e.target.classList.remove('divider--mouseenter');
+                }) 
+            }
+        })
     });
 
     const buttons = document.querySelectorAll('.shows__section-container-info--button');
     buttons.forEach(each => {
-        each.onclick = () => {
+        each.addEventListener('click', (e) => {
             buttons.forEach(removeColor => {
-                removeColor.nextElementSibling.classList.remove('shows__section-container--active');
-                removeColor.nextElementSibling.style.backgroundColor = '';
+                removeColor.nextElementSibling.classList.remove('divider--active');
             });
-            each.nextElementSibling.classList.add('shows__section-container--active');
-            each.nextElementSibling.style.backgroundColor = 'rgb(225, 225, 225)';
-        }
-        
-        each.onmouseenter = () => {
-            if (!each.nextElementSibling.classList.contains('shows__section-container--active')) {
+            e.target.nextElementSibling.classList.remove('divider--mouseenter');
+            e.target.nextElementSibling.classList.add('divider--active');
+        });
 
-                each.nextElementSibling.style.backgroundColor = 'rgb(250, 250, 250)';
+        each.addEventListener('mouseenter', (e) => {
+            if (!e.target.nextElementSibling.classList.contains('divider--active')) {
+                e.target.nextElementSibling.classList.add('divider--mouseenter');
 
-                each.onmouseleave = () => {
-                    each.nextElementSibling.style.backgroundColor = '';
-                }
-            } 
-        }
+                each.addEventListener('mouseleave', (e) => {
+                    e.target.nextElementSibling.classList.remove('divider--mouseenter');
+                })
+            }
+        }); 
     });
-}
+} 
 
 const getShows = new BandSiteApi(apiKey);
-const shows = getShows.getShows(showFinder);
+getShows.getShows(showsComposerFunction);
 
 
 

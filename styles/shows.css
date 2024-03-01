@@ -1004,6 +1004,9 @@ body {
     padding-bottom: 0.75rem;
   }
 }
+.comments__title-form-name-label-input--empty {
+  border-color: #D22D2D;
+}
 .comments__title-form-name-label-input:focus {
   outline: none;
   border: solid 1px #323232;
@@ -1062,6 +1065,9 @@ body {
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
   }
+}
+.comments__title-form-comment-label-input--empty {
+  border-color: #D22D2D;
 }
 .comments__title-form-comment-label-input:focus {
   outline: none;
@@ -1433,6 +1439,12 @@ body {
     height: 14.375rem;
   }
 }
+.divider--active {
+  background-color: #E1E1E1;
+}
+.divider--mouseenter {
+  background-color: #FAFAFA;
+}
 
 .hero__shows {
   overflow: hidden;
@@ -1729,9 +1741,6 @@ body {
     }
   }
 }
-.shows__section-container--active {
-  background-color: #E1E1E1;
-}
 .shows__section-container--heading {
   text-transform: uppercase;
   color: #AFAFAF;
@@ -1866,6 +1875,7 @@ body {
 }
 .shows__section-container-info--button {
   z-index: 10;
+  cursor: pointer;
   height: 2.5rem;
   min-width: 9.375rem;
   width: 100%;

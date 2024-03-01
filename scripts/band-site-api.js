@@ -72,7 +72,11 @@ class BandSiteApi {
         const request = async () => {
             try {
                 const response = await axios.get(`${this.url}/showdates?api_key=${this.apiKey}`)
-                return showsComposerFunction(response.data);
+                for (let i = 0; i < response.data.length; i++) {
+                    console.log(response.data[i]);
+                    const show = response.data[i];
+                    showsComposerFunction(show);
+                }
             } catch (error) {
                 console.error("Error:", error);
             }

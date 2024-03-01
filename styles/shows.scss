@@ -32,6 +32,14 @@
             }
         }
     }
+    
+    &--active {
+        background-color: $mercury;
+    }
+
+    &--mouseenter {
+        background-color: $alabaster;
+    }
 }
 
 
@@ -204,10 +212,6 @@
                 }
             }
 
-            &--active {
-                background-color: $mercury;
-            }
-
             &--heading {
                 @extend .shows__section-container;
                 text-transform: uppercase;
@@ -307,6 +311,7 @@
 
                 &--button {
                     z-index: 10;
+                    cursor: pointer;
                     @include to-rem('height', 40);
                     @include to-rem('min-width', 150);
                     width: 100%;
