@@ -1,19 +1,47 @@
-const addListenerToDates = ()  => {
-    const relativeDates = document.querySelectorAll('.comments__posted-wrapper-container-name-n-date--relative-date');
-    relativeDates.forEach(each => {
+const biorgaphyCommentsSection = document.createElement('section');
+const commentsTitle = document.createElement('div');
+const commentsTitleSectionHeader = document.createElement('span');
+const commentsTitleForm = document.createElement('form');
+const commentsTitleFormUserImage = document.createElement('img');
+const commentsTitleFormNameLabel = document.createElement('label');
+const commentsTitleFormNameLabelInput = document.createElement('input');
+const commentsTitleFormCommentLabel = document.createElement('label');
+const commentsTitleFormCommentLabelInput = document.createElement('textarea');
+const commentsTitleFormButton = document.createElement('button');
+const commentsPosted = document.createElement('div');
 
-        each.onpointerover = () => {
-            
-            each.style.display = 'none';
-            each.nextElementSibling.style.display = 'block';
+biorgaphyCommentsSection.classList.add('comments');
+commentsTitle.classList.add('comments__title');
+commentsTitleSectionHeader.classList.add('comments__title-section-header');
+commentsTitleForm.classList.add('comments__title-form');
+commentsTitleFormUserImage.classList.add('comments__title-form-user-image');
+commentsTitleFormNameLabel.classList.add('comments__title-form-name-label');
+commentsTitleFormNameLabelInput.classList.add('comments__title-form-name-label-input');
+commentsTitleFormCommentLabel.classList.add('comments__title-form-comment-label');
+commentsTitleFormCommentLabelInput.classList.add('comments__title-form-comment-label-input');
+commentsTitleFormButton.classList.add('comments__title-form-button');
+commentsPosted.classList.add('comments__posted');
 
-            setTimeout(() => {
-                each.style.display = 'block';
-                each.nextElementSibling.style.display = 'none';
-            }, 1000);
-        }
-    });
-}
+commentsTitleSectionHeader.innerText = 'join the conversation';
+commentsTitleForm.name = 'comment';
+commentsTitleForm.id = 'comment';
+commentsTitleFormUserImage.src = './assets/Images/Mohan-muruge.jpg';
+commentsTitleFormNameLabel.innerText = 'name';
+commentsTitleFormNameLabelInput.name = 'comment-name';
+commentsTitleFormNameLabelInput.type = 'text';
+commentsTitleFormNameLabelInput.placeholder = 'Enter your name';
+commentsTitleFormCommentLabel.innerText = 'comment';
+commentsTitleFormCommentLabelInput.name = 'comment-text';
+commentsTitleFormCommentLabelInput.placeholder = 'Add a new comment';
+commentsTitleFormButton.innerText = 'comment';
+
+document.body.insertBefore(biorgaphyCommentsSection, document.querySelector('.footer'));
+biorgaphyCommentsSection.append(commentsTitle, commentsPosted);
+commentsTitle.append(commentsTitleSectionHeader, commentsTitleForm);
+commentsTitleForm.append(commentsTitleFormUserImage, commentsTitleFormNameLabel, commentsTitleFormCommentLabel);
+commentsTitleFormNameLabel.appendChild(commentsTitleFormNameLabelInput);
+commentsTitleFormCommentLabel.appendChild(commentsTitleFormCommentLabelInput);
+commentsTitleForm.appendChild(commentsTitleFormButton);
 
 const timeDifference = (current, previous) => {
     let msPerMinute = 60 * 1000;
@@ -25,315 +53,123 @@ const timeDifference = (current, previous) => {
     let elapsed = current - previous;
 
     if (elapsed < msPerMinute) {
-    return Math.round(elapsed / 1000) + ' seconds ago';
+        return Math.round(elapsed / 1000) + ' seconds ago';
     } else if (elapsed < msPerHour) {
-    return Math.round(elapsed / msPerMinute) + ' minutes ago';
+        return Math.round(elapsed / msPerMinute) + ' minutes ago';
     } else if (elapsed < msPerDay) {
-    return Math.round(elapsed / msPerHour) + ' hours ago';
+        return Math.round(elapsed / msPerHour) + ' hours ago';
     } else if (elapsed < msPerMonth) {
-    return 'approximately ' + Math.round(elapsed / msPerDay) + ' days ago';
+        return 'approximately ' + Math.round(elapsed / msPerDay) + ' days ago';
     } else if (elapsed < msPerYear) {
-    return 'approximately ' + Math.round(elapsed / msPerMonth) + ' months ago';
+        return 'approximately ' + Math.round(elapsed / msPerMonth) + ' months ago';
     } else {
-    return 'approximately ' + Math.round(elapsed / msPerYear) + ' years ago';
+        return 'approximately ' + Math.round(elapsed / msPerYear) + ' years ago';
     }
 };
 
-const  addPageLayout = (
-    elementTag,
-    parent = 'body',
-    idOrClassName = null,
-    id = false,
-    text = null
-    ) => {
-
-    let newLayoutElement = document.createElement(elementTag);
-
-    if (id) {
-        newLayoutElement.setAttribute('id', idOrClassName);
-    } else if (idOrClassName) {
-        newLayoutElement.classList.add(idOrClassName);
-    }
-
-    if (text) {
-        newLayoutElement.innerText = text;
-    }
-
-    let currentLayoutElement = document.querySelector(parent);
-    let result = currentLayoutElement.appendChild(newLayoutElement);
-
-    return result;
-}
-
-const biorgaphyCommentsSection = document.createElement('section');
-biorgaphyCommentsSection.classList.add('comments');
-document.body.insertBefore(biorgaphyCommentsSection, document.querySelector('.footer'));
-
-addPageLayout(
-    'div',
-    '.comments',
-    'comments__title',
-);
-
-addPageLayout(
-    'span',
-    '.comments__title',
-    'comments__title-section-header',
-    false,
-    'join the conversation'
-)
-
-addPageLayout(
-    'form',
-    '.comments__title',
-    'comments__title-form'
-)
-
-const commentForm = document.querySelector('.comments__title-form');
-commentForm.name = 'comment';
-commentForm.id = 'comment';
-
-addPageLayout(
-    'img',
-    '.comments__title-form',
-    'comments__title-form-user-image'
-)
-
-const userAvatar = document.querySelector('.comments__title-form .comments__title-form-user-image');
-userAvatar.src = './assets/Images/Mohan-muruge.jpg';
-
-addPageLayout(
-    'label',
-    '.comments__title-form',
-    'comments__title-form-name-label',
-    false,
-    'name'
-)
-
-addPageLayout(
-    'input',
-    '.comments__title-form-name-label',
-    'comments__title-form-name-label-input',
-)
-
-nameInput = document.querySelector('.comments__title-form-name-label-input');
-nameInput.name = 'comment-name';
-nameInput.type = 'text';
-nameInput.placeholder = 'Enter your name';
-
-addPageLayout(
-    'label',
-    '.comments__title-form',
-    'comments__title-form-comment-label',
-    false,
-    'comment'
-)
-
-addPageLayout(
-    'textarea',
-    '.comments__title-form-comment-label',
-    'comments__title-form-comment-label-input',
-)
-
- commentTextArea = document.querySelector('.comments__title-form-comment-label-input');
- commentTextArea.name = 'comment-text'
- commentTextArea.placeholder = 'Add a new comment';
-
-addPageLayout(
-    'button',
-    '.comments__title-form',
-    'comments__title-form-button',
-    false,
-    'comment'
-)
-
-addPageLayout(
-    'div',
-    '.comments',
-    'comments__posted',
-);
-
-const postedComments = document.querySelector('.comments__posted');
-const commentComposer = (comments) => {
-
-    postedComments.replaceChildren();
-
-    for (i = 0; i < comments.length; i++) {
-
-        addPageLayout(
-            'div',
-            '.comments__posted',
-            'comments__posted-wrapper'
-        );
-
-        document.querySelector(`.comments__posted-wrapper:nth-child(${i+1})`).setAttribute('id', `${comments[i].id}`);
-
-        if (comments[i].avatar != null) {
-            addPageLayout(
-                'img',
-                `.comments__posted-wrapper:nth-child(${i+1})`,
-                `comments__posted-wrapper-avatar`
-            );
-            let avatar = document.querySelector(`.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-avatar`);
-            avatar.src = comments[i].avatar;
-        } else {
-            addPageLayout(
-                'div',
-                `.comments__posted-wrapper:nth-child(${i+1})`,
-                `comments__posted-wrapper-avatar`
-            );
-        };
-
-        addPageLayout(
-            'div',
-            `.comments__posted-wrapper:nth-child(${i+1})`,
-            `comments__posted-wrapper-container`
-        );
-
-        addPageLayout(
-            'button',
-            `.comments__posted-wrapper:nth-child(${i+1})`,
-            `comments__posted-wrapper-delete-button`
-        );
-        
-        addPageLayout(
-            'img',
-            `.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-delete-button`,
-            `comments__posted-wrapper-delete-button--image`
-        );
-
-        document.querySelector(
-            `.comments__posted-wrapper:nth-child(${i+1})
-            .comments__posted-wrapper-delete-button--image`
-        ).src = '../assets/Icons/SVG/icon-delete.svg';
-
-        addPageLayout(
-            'button',
-            `.comments__posted-wrapper:nth-child(${i+1})`,
-            `comments__posted-wrapper-like-button`
-        );
-
-        addPageLayout(
-            'img',
-            `.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-like-button`,
-            `comments__posted-wrapper-like-button--image`
-        );
-
-        document.querySelector(
-            `.comments__posted-wrapper:nth-child(${i+1})
-            .comments__posted-wrapper-like-button--image`
-        ).src = '../assets/Icons/SVG/icon-like.svg';
-
-        addPageLayout(
-            'span',
-            `.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-like-button`,
-            `comments__posted-wrapper-like-button--count`,
-            false,
-            `${comments[i].likes}`
-        );
-
-        addPageLayout(
-            'div',
-            `.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-container`,
-            `comments__posted-wrapper-container-name-n-date`
-        );
-        
-        addPageLayout(
-            'span',
-            `.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-container-name-n-date`,
-            `comments__posted-wrapper-container-name-n-date--user-name`,
-            false,
-            `${comments[i].name}`
-        );
-
-        addPageLayout(
-            'span',
-            `.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-container-name-n-date`,
-            `comments__posted-wrapper-container-name-n-date--relative-date`,
-            false,
-            `${timeDifference(Date.now(), comments[i].timestamp)}`
-        );
-        
-        const timestamp = new Date(comments[i].timestamp);
-        addPageLayout(
-            'span',
-            `.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-container-name-n-date`,
-            `comments__posted-wrapper-container-name-n-date--actual-date`,
-            false,
-            `${timestamp.toDateString()}`
-        );
-
-        addPageLayout(
-            'div',
-            `.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-container`,
-            `comments__posted-wrapper-container-text`,
-        );
-
-        addPageLayout(
-            'span',
-            `.comments__posted-wrapper:nth-child(${i+1}) .comments__posted-wrapper-container-text`,
-            `comments__posted-wrapper-container-text--user-opinion`,
-            false,
-            `${comments[i].comment}`
-        );
-    
-        addListenerToDates();
-    }
-
-    const deleteButton = document.querySelectorAll('.comments__posted-wrapper-delete-button');
-    const likeButton = document.querySelectorAll('.comments__posted-wrapper-like-button');
-
+const loadComments = (elementClass, commentObject) => {
+    const timestamp = new Date(commentObject.timestamp);
     const deleteComment = new BandSiteApi(apiKey);
     const likeComment = new BandSiteApi(apiKey);
 
-    deleteButton.forEach(each => {
-        each.addEventListener('click', () => {
-            deleteComment.deleteComment(each.parentNode.id, commentComposer);
-        });
+    const commentsPostedWrapper = document.createElement('div');
+    const commentsPostedWrapperAvatar = document.createElement('div');
+    const commentsPostedWrapperContainer = document.createElement('div');
+    const commentsPostedWrapperContainerNameAndDate = document.createElement('div');
+    const commentsPostedWrapperContainerNameAndDateUserName = document.createElement('span');
+    const commentsPostedWrapperContainerNameAndDateRelativeDate = document.createElement('span');
+    const commentsPostedWrapperContainerText = document.createElement('div');
+    const commentsPostedWrapperContainerTextUserOpinion = document.createElement('span');
+    const commentsPostedWrapperDeleteButton = document.createElement('button');
+    const commentsPostedWrapperDeleteButtonImage = document.createElement('img');
+    const commentsPostedWrapperLikeButton = document.createElement('button');
+    const commentsPostedWrapperLikeButtonImage = document.createElement('img');
+    const commentsPostedWrapperLikeButtonCount = document.createElement('span');
+    
+    commentsPostedWrapper.classList.add('comments__posted-wrapper');
+    commentsPostedWrapperAvatar.classList.add(`comments__posted-wrapper-avatar`);
+    commentsPostedWrapperContainer.classList.add(`comments__posted-wrapper-container`);
+    commentsPostedWrapperContainerNameAndDate.classList.add(`comments__posted-wrapper-container-name-n-date`);
+    commentsPostedWrapperContainerNameAndDateUserName.classList.add(`comments__posted-wrapper-container-name-n-date--user-name`);
+    commentsPostedWrapperContainerNameAndDateRelativeDate.classList.add(`comments__posted-wrapper-container-name-n-date--relative-date`);
+    commentsPostedWrapperContainerText.classList.add(`comments__posted-wrapper-container-text`);
+    commentsPostedWrapperContainerTextUserOpinion.classList.add(`comments__posted-wrapper-container-text--user-opinion`);
+    commentsPostedWrapperDeleteButton.classList.add(`comments__posted-wrapper-delete-button`);
+    commentsPostedWrapperDeleteButtonImage.classList.add(`comments__posted-wrapper-delete-button--image`);
+    commentsPostedWrapperLikeButton.classList.add(`comments__posted-wrapper-like-button`);
+    commentsPostedWrapperLikeButtonImage.classList.add(`comments__posted-wrapper-like-button--image`);
+    commentsPostedWrapperLikeButtonCount.classList.add(`comments__posted-wrapper-like-button--count`);
+    
+    commentsPostedWrapper.setAttribute('id', `${commentObject.id}`);
+    commentsPostedWrapperContainerNameAndDateUserName.innerText = `${commentObject.name}`;
+    commentsPostedWrapperContainerNameAndDateRelativeDate.innerText = `${timeDifference(Date.now(), commentObject.timestamp)}`;
+    commentsPostedWrapperContainerTextUserOpinion.innerText = `${commentObject.comment}`;
+    commentsPostedWrapperDeleteButtonImage.src = './assets/Icons/SVG/icon-delete.svg';
+    commentsPostedWrapperLikeButtonImage.src = './assets/Icons/SVG/icon-like.svg';
+    commentsPostedWrapperLikeButtonCount.innerText = `${commentObject.likes}`;
+
+    commentsPostedWrapperDeleteButton.addEventListener('click', () => {
+        deleteComment.deleteComment(commentsPostedWrapper.id, loadComments);
     });
 
-    likeButton.forEach(each => {
-        each.addEventListener('click', () => {
-            likeComment.likeComment(each.parentNode.id);
-            each.lastChild.innerText = Number(each.lastChild.innerText) + 1;
-        });
+    commentsPostedWrapperLikeButton.addEventListener('click', () => {
+        likeComment.likeComment(commentsPostedWrapper.id);
+        commentsPostedWrapperLikeButtonCount.innerText = Number(commentsPostedWrapperLikeButtonCount.innerText) + 1;
     });
+
+    commentsPostedWrapperContainerNameAndDateRelativeDate.addEventListener('mouseover', (event) => {
+        event.target.innerText = `${timestamp.toDateString()}`;
+        setTimeout(()=> {
+            event.target.innerText = `${timeDifference(Date.now(), commentObject.timestamp)}`;
+        }, 1000)
+    });
+    
+    elementClass.appendChild(commentsPostedWrapper);
+    commentsPostedWrapper.append(commentsPostedWrapperAvatar, commentsPostedWrapperContainer, commentsPostedWrapperDeleteButton, commentsPostedWrapperLikeButton);
+    commentsPostedWrapperContainer.append(commentsPostedWrapperContainerNameAndDate, commentsPostedWrapperContainerText);
+    commentsPostedWrapperContainerNameAndDate.append(commentsPostedWrapperContainerNameAndDateUserName, commentsPostedWrapperContainerNameAndDateRelativeDate);
+    commentsPostedWrapperContainerText.appendChild(commentsPostedWrapperContainerTextUserOpinion);
+    commentsPostedWrapperDeleteButton.appendChild(commentsPostedWrapperDeleteButtonImage);
+    commentsPostedWrapperLikeButton.append(commentsPostedWrapperLikeButtonImage, commentsPostedWrapperLikeButtonCount);
 }
 
-commentForm.addEventListener('keyup', (e) => e.target.setAttribute('style', ''));
-commentForm.addEventListener('submit', (e) => {
+commentsTitleForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    if (!nameInput.value || !commentTextArea.value) {
+    if (!commentsTitleFormNameLabelInput.value || !commentsTitleFormCommentLabelInput.value) {
         switch (true) {
-        case !nameInput.value && !commentTextArea.value:
-            nameInput.style.borderColor = 'rgb(210, 45, 45)';
-            commentTextArea.style.borderColor = 'rgb(210, 45, 45)';
+        case !commentsTitleFormNameLabelInput.value && !commentsTitleFormCommentLabelInput.value:
+            commentsTitleFormNameLabelInput.classList.add('comments__title-form-name-label-input--empty');
+            commentsTitleFormCommentLabelInput.classList.add('comments__title-form-comment-label-input--empty');
             break;
-        case !nameInput.value:
-            nameInput.style.borderColor = 'rgb(210, 45, 45)';
+        case !commentsTitleFormNameLabelInput.value:
+            commentsTitleFormNameLabelInput.classList.add('comments__title-form-name-label-input--empty');
             break;
-        case !commentTextArea.value:
-            commentTextArea.style.borderColor = 'rgb(210, 45, 45)';
+        case !commentsTitleFormCommentLabelInput.value:
+            commentsTitleFormCommentLabelInput.classList.add('comments__title-form-comment-label-input--empty');
             break;
         }
     } else {
-        const data = {};
+        const comment = {};
     
-        data.name = nameInput.value;
-        data.comment = commentTextArea.value;
+        comment.name = commentsTitleFormNameLabelInput.value;
+        comment.comment = commentsTitleFormCommentLabelInput.value;
 
         const postComment = new BandSiteApi(apiKey);
+        postComment.postComment(comment, loadComments);
 
-        postComment.postComment(data, commentComposer);
+        commentsTitleFormNameLabelInput.classList.remove('comments__title-form-name-label-input--empty');
+        commentsTitleFormNameLabelInput.value = '';
 
-        nameInput.setAttribute('style', '');
-        nameInput.value = '';
-
-        commentTextArea.setAttribute('style', '');
-        commentTextArea.value = '';
+        commentsTitleFormCommentLabelInput.classList.remove('comments__title-form-comment-label-input--empty');
+        commentsTitleFormCommentLabelInput.value = '';
     }  
 });
 
+commentsTitleForm.addEventListener('keyup', (e) => {
+    e.target.classList.remove('comments__title-form-name-label-input--empty');
+    e.target.classList.remove('comments__title-form-comment-label-input--empty');
+});
+
 const getComments = new BandSiteApi(apiKey);
-const comments = getComments.getComments(commentComposer);
+getComments.getComments(loadComments);

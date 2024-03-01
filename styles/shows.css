@@ -1030,6 +1030,7 @@ body {
   background-color: #FAFAFA;
   border: solid 1px #E1E1E1;
   border-radius: 4px;
+  resize: none;
   height: 6rem;
 }
 @media (min-width: 1280px) {
@@ -1067,6 +1068,7 @@ body {
   border: solid 1px #323232;
 }
 .comments__title-form-button {
+  cursor: pointer;
   height: 2.5rem;
   min-width: 9.375rem;
   padding-left: 2rem;

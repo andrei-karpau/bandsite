@@ -644,6 +644,10 @@ body {
                         }
                     }
 
+                    &--empty {
+                        border-color: $red;
+                    }
+
                     &:focus {
                         outline: none;
                         border: solid 1px $bandsite-black;
@@ -668,6 +672,7 @@ body {
                     background-color: $alabaster;
                     border: solid 1px $mercury;
                     border-radius: 4px;
+                    resize: none;
                     @include to-rem('height', 96);
                     @each $size in map.keys($columns) {
                         @include media-query_($size) {
@@ -681,6 +686,10 @@ body {
                         }
                     }
 
+                    &--empty {
+                        border-color: $red;
+                    }
+
                     &:focus {
                         outline: none;
                         border: solid 1px $bandsite-black;
@@ -689,6 +698,7 @@ body {
             }
 
             &-button {
+                cursor: pointer;
                 @include to-rem('height', 40);
                 @include to-rem('min-width', 150);
                 @include to-rem('padding-left', 32);

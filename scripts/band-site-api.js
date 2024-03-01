@@ -5,28 +5,23 @@ class BandSiteApi {
     constructor(apiKey) {
         this.apiKey = apiKey;
         this.url = url;
-    }
-
-    postComment(comment, successCallback) {
-        const request = async () => {
-            try {
-                await axios.post(`${this.url}/comments?api_key=${this.apiKey}`, comment);
-                const reloadComments = await axios.get(`${this.url}/comments?api_key=${this.apiKey}`);
-                reloadComments.data.sort((a, b) => b.timestamp - a.timestamp);
-                successCallback(reloadComments.data);
-            } catch (error) {
-                console.error("Error:", error);
+        this.loadComments = (commentsArrayFromAPI, commentsComposerFunction) => {
+            const commentsPosted = document.querySelector('.comments__posted');
+            commentsPosted.replaceChildren();
+            for (let i = 0; i < commentsArrayFromAPI.length; i ++) {
+                let comment = commentsArrayFromAPI[i];
+                commentsComposerFunction(commentsPosted, comment);
             }
         }
-        return request();
     }
-    
-    getComments(successCallback) {
+
+    getComments(commentsComposerFunction) {
         const request = async () => {
             try {
-                const comments = await axios.get(`${this.url}/comments?api_key=${this.apiKey}`);
-                comments.data.sort((a, b) => b.timestamp - a.timestamp);
-                return successCallback(comments.data);
+                const commentsDataFromAPI = await axios.get(`${this.url}/comments?api_key=${this.apiKey}`);
+                const commentsArray = commentsDataFromAPI.data
+                commentsArray.sort((a, b) => b.timestamp - a.timestamp);
+                this.loadComments(commentsArray, commentsComposerFunction);
             } catch (error) {
                 console.error("Error:", error);
             }
@@ -34,13 +29,27 @@ class BandSiteApi {
         return request();
     }
 
-    deleteComment(id, successCallback) {
+    postComment(comment, commentsComposerFunction) {
+        const request = async () => {
+            try {
+                await axios.post(`${this.url}/comments?api_key=${this.apiKey}`, comment);
+                const reloadComments = await axios.get(`${this.url}/comments?api_key=${this.apiKey}`);
+                reloadComments.data.sort((a, b) => b.timestamp - a.timestamp);
+                this.loadComments(reloadComments.data, commentsComposerFunction);
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        }
+        return request();
+    }
+
+    deleteComment(id, commentsComposerFunction) {
         const request = async () => {
             try {
                 await axios.delete(`${this.url}/comments/${id}?api_key=${this.apiKey}`);
                 const reloadComments = await axios.get(`${this.url}/comments?api_key=${this.apiKey}`);
                 reloadComments.data.sort((a, b) => b.timestamp - a.timestamp);
-                successCallback(reloadComments.data);
+                this.loadComments(reloadComments.data, commentsComposerFunction);
             } catch (error) {
                 console.error("Error:", error);
             }
@@ -59,11 +68,11 @@ class BandSiteApi {
         return request();
     }
 
-    getShows(successCallback) {
+    getShows(showsComposerFunction) {
         const request = async () => {
             try {
                 const response = await axios.get(`${this.url}/showdates?api_key=${this.apiKey}`)
-                return successCallback(response.data);
+                return showsComposerFunction(response.data);
             } catch (error) {
                 console.error("Error:", error);
             }
