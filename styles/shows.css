@@ -1774,12 +1774,12 @@ body {
 .shows__section-container--heading-text:nth-child(2) {
   grid-column-end: span 3;
 }
-.shows__section-container-wrapper1 {
+.shows__section-container-wrapper-date {
   z-index: 10;
   pointer-events: none;
 }
 @media (min-width: 1280px) {
-  .shows__section-container-wrapper1 {
+  .shows__section-container-wrapper-date {
     grid-column-end: span 3;
     grid-column-start: 4;
     text-transform: capitalize;
@@ -1791,7 +1791,7 @@ body {
   }
 }
 @media (min-width: 768px) and (max-width: 1279px) {
-  .shows__section-container-wrapper1 {
+  .shows__section-container-wrapper-date {
     grid-column-end: span 3;
     text-transform: capitalize;
     font-size: 0.8125rem;
@@ -1802,7 +1802,7 @@ body {
   }
 }
 @media (max-width: 767px) {
-  .shows__section-container-wrapper1 {
+  .shows__section-container-wrapper-date {
     grid-column-end: span 6;
     text-transform: capitalize;
     font-size: 0.8125rem;
@@ -1812,12 +1812,12 @@ body {
     padding-bottom: 0rem;
   }
 }
-.shows__section-container-wrapper2, .shows__section-container-wrapper3 {
+.shows__section-container-wrapper-venue, .shows__section-container-wrapper-location {
   z-index: 10;
   pointer-events: none;
 }
 @media (min-width: 1280px) {
-  .shows__section-container-wrapper2, .shows__section-container-wrapper3 {
+  .shows__section-container-wrapper-venue, .shows__section-container-wrapper-location {
     grid-column-end: span 2;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -1828,7 +1828,7 @@ body {
   }
 }
 @media (min-width: 768px) and (max-width: 1279px) {
-  .shows__section-container-wrapper2, .shows__section-container-wrapper3 {
+  .shows__section-container-wrapper-venue, .shows__section-container-wrapper-location {
     grid-column-end: span 3;
     font-size: 0.8125rem;
     line-height: 1.125rem;
@@ -1839,7 +1839,7 @@ body {
   }
 }
 @media (max-width: 767px) {
-  .shows__section-container-wrapper2, .shows__section-container-wrapper3 {
+  .shows__section-container-wrapper-venue, .shows__section-container-wrapper-location {
     grid-column-end: span 6;
     text-transform: capitalize;
     font-size: 0.8125rem;

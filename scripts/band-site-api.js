@@ -8,10 +8,10 @@ class BandSiteApi {
         this.loadComments = (commentsArrayFromAPI, commentsComposerFunction) => {
             const commentsPosted = document.querySelector('.comments__posted');
             commentsPosted.replaceChildren();
-            for (let i = 0; i < commentsArrayFromAPI.length; i ++) {
-                let comment = commentsArrayFromAPI[i];
+            commentsArrayFromAPI.sort((a, b) => b.timestamp - a.timestamp);
+            commentsArrayFromAPI.forEach(comment => {
                 commentsComposerFunction(commentsPosted, comment);
-            }
+            });
         }
     }
 
@@ -19,11 +19,9 @@ class BandSiteApi {
         const request = async () => {
             try {
                 const commentsDataFromAPI = await axios.get(`${this.url}/comments?api_key=${this.apiKey}`);
-                const commentsArray = commentsDataFromAPI.data
-                commentsArray.sort((a, b) => b.timestamp - a.timestamp);
-                this.loadComments(commentsArray, commentsComposerFunction);
+                this.loadComments(commentsDataFromAPI.data, commentsComposerFunction);
             } catch (error) {
-                console.error("Error:", error);
+                console.error('Error:', error);
             }
         } 
         return request();
@@ -34,10 +32,9 @@ class BandSiteApi {
             try {
                 await axios.post(`${this.url}/comments?api_key=${this.apiKey}`, comment);
                 const reloadComments = await axios.get(`${this.url}/comments?api_key=${this.apiKey}`);
-                reloadComments.data.sort((a, b) => b.timestamp - a.timestamp);
                 this.loadComments(reloadComments.data, commentsComposerFunction);
             } catch (error) {
-                console.error("Error:", error);
+                console.error('Error:', error);
             }
         }
         return request();
@@ -48,10 +45,9 @@ class BandSiteApi {
             try {
                 await axios.delete(`${this.url}/comments/${id}?api_key=${this.apiKey}`);
                 const reloadComments = await axios.get(`${this.url}/comments?api_key=${this.apiKey}`);
-                reloadComments.data.sort((a, b) => b.timestamp - a.timestamp);
                 this.loadComments(reloadComments.data, commentsComposerFunction);
             } catch (error) {
-                console.error("Error:", error);
+                console.error('Error:', error);
             }
         }
         return request();
@@ -62,7 +58,7 @@ class BandSiteApi {
             try {
                 await axios.put(`${this.url}/comments/${id}/like?api_key=${this.apiKey}`);
             } catch (error) {
-                console.error("Error:", error);
+                console.error('Error:', error);
             }
         }
         return request();
@@ -71,14 +67,12 @@ class BandSiteApi {
     getShows(showsComposerFunction) {
         const request = async () => {
             try {
-                const response = await axios.get(`${this.url}/showdates?api_key=${this.apiKey}`)
-                for (let i = 0; i < response.data.length; i++) {
-                    console.log(response.data[i]);
-                    const show = response.data[i];
+                const shows = await axios.get(`${this.url}/showdates?api_key=${this.apiKey}`)
+                shows.data.forEach(show => {
                     showsComposerFunction(show);
-                }
+                });
             } catch (error) {
-                console.error("Error:", error);
+                console.error('Error:', error);
             }
         }
         return request();

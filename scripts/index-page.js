@@ -67,11 +67,12 @@ const timeDifference = (current, previous) => {
     }
 };
 
-const loadComments = (elementClass, commentObject) => {
-    const timestamp = new Date(commentObject.timestamp);
+const commentsComposer = (parentElementClass, commentObject) => {
+    const {comment, id, likes, name, timestamp} = commentObject
+    const date = new Date(timestamp);
     const deleteComment = new BandSiteApi(apiKey);
     const likeComment = new BandSiteApi(apiKey);
-
+    
     const commentsPostedWrapper = document.createElement('div');
     const commentsPostedWrapperAvatar = document.createElement('div');
     const commentsPostedWrapperContainer = document.createElement('div');
@@ -100,16 +101,16 @@ const loadComments = (elementClass, commentObject) => {
     commentsPostedWrapperLikeButtonImage.classList.add(`comments__posted-wrapper-like-button--image`);
     commentsPostedWrapperLikeButtonCount.classList.add(`comments__posted-wrapper-like-button--count`);
     
-    commentsPostedWrapper.setAttribute('id', `${commentObject.id}`);
-    commentsPostedWrapperContainerNameAndDateUserName.innerText = `${commentObject.name}`;
-    commentsPostedWrapperContainerNameAndDateRelativeDate.innerText = `${timeDifference(Date.now(), commentObject.timestamp)}`;
-    commentsPostedWrapperContainerTextUserOpinion.innerText = `${commentObject.comment}`;
+    commentsPostedWrapper.setAttribute('id', `${id}`);
+    commentsPostedWrapperContainerNameAndDateUserName.innerText = `${name}`;
+    commentsPostedWrapperContainerNameAndDateRelativeDate.innerText = `${timeDifference(Date.now(), timestamp)}`;
+    commentsPostedWrapperContainerTextUserOpinion.innerText = `${comment}`;
     commentsPostedWrapperDeleteButtonImage.src = './assets/Icons/SVG/icon-delete.svg';
     commentsPostedWrapperLikeButtonImage.src = './assets/Icons/SVG/icon-like.svg';
-    commentsPostedWrapperLikeButtonCount.innerText = `${commentObject.likes}`;
+    commentsPostedWrapperLikeButtonCount.innerText = `${likes}`;
 
     commentsPostedWrapperDeleteButton.addEventListener('click', () => {
-        deleteComment.deleteComment(commentsPostedWrapper.id, loadComments);
+        deleteComment.deleteComment(commentsPostedWrapper.id, commentsComposer);
     });
 
     commentsPostedWrapperLikeButton.addEventListener('click', () => {
@@ -117,14 +118,14 @@ const loadComments = (elementClass, commentObject) => {
         commentsPostedWrapperLikeButtonCount.innerText = Number(commentsPostedWrapperLikeButtonCount.innerText) + 1;
     });
 
-    commentsPostedWrapperContainerNameAndDateRelativeDate.addEventListener('mouseover', (event) => {
-        event.target.innerText = `${timestamp.toDateString()}`;
+    commentsPostedWrapperContainerNameAndDateRelativeDate.addEventListener('mouseover', (e) => {
+        e.target.innerText = `${date.toDateString()}`;
         setTimeout(()=> {
-            event.target.innerText = `${timeDifference(Date.now(), commentObject.timestamp)}`;
+            e.target.innerText = `${timeDifference(Date.now(), commentObject.timestamp)}`;
         }, 1000)
     });
     
-    elementClass.appendChild(commentsPostedWrapper);
+    parentElementClass.appendChild(commentsPostedWrapper);
     commentsPostedWrapper.append(commentsPostedWrapperAvatar, commentsPostedWrapperContainer, commentsPostedWrapperDeleteButton, commentsPostedWrapperLikeButton);
     commentsPostedWrapperContainer.append(commentsPostedWrapperContainerNameAndDate, commentsPostedWrapperContainerText);
     commentsPostedWrapperContainerNameAndDate.append(commentsPostedWrapperContainerNameAndDateUserName, commentsPostedWrapperContainerNameAndDateRelativeDate);
@@ -156,7 +157,7 @@ commentsTitleForm.addEventListener('submit', (e) => {
         comment.comment = commentsTitleFormCommentLabelInput.value;
 
         const postComment = new BandSiteApi(apiKey);
-        postComment.postComment(comment, loadComments);
+        postComment.postComment(comment, commentsComposer);
 
         commentsTitleFormNameLabelInput.classList.remove('comments__title-form-name-label-input--empty');
         commentsTitleFormNameLabelInput.value = '';
@@ -172,4 +173,4 @@ commentsTitleForm.addEventListener('keyup', (e) => {
 });
 
 const getComments = new BandSiteApi(apiKey);
-getComments.getComments(loadComments);
+getComments.getComments(commentsComposer);

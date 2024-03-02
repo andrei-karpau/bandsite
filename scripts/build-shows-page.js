@@ -24,54 +24,54 @@ showsSectionContainerHeadingTextLocation.innerText = 'location';
 
 showsSection.append(showsSectionHeader, showsSectionContainerHeadingTextDate, showsSectionContainerHeadingTextVenue, showsSectionContainerHeadingTextLocation)
 
-const showsComposerFunction = (show) => {
+const showsComposer = (show) => {
     const showDate = new Date(show.date);
 
     const showsSectionContainer = document.createElement('div');
     showsSectionContainer.classList.add('shows__section-container');
     showsSection.appendChild(showsSectionContainer);
 
-    const showsSectionContainerWrapper1 = document.createElement('div');
-    showsSectionContainerWrapper1.classList.add('shows__section-container-wrapper1');
-    showsSectionContainer.appendChild(showsSectionContainerWrapper1);
+    const showsSectionContainerWrapperDate = document.createElement('div');
+    showsSectionContainerWrapperDate.classList.add('shows__section-container-wrapper-date');
+    showsSectionContainer.appendChild(showsSectionContainerWrapperDate);
 
     const showsSectionContainerInfoTypeDate = document.createElement('span');
     showsSectionContainerInfoTypeDate.classList.add('shows__section-container-info--type');
     showsSectionContainerInfoTypeDate.innerText = 'date';
-    showsSectionContainerWrapper1.appendChild(showsSectionContainerInfoTypeDate);
+    showsSectionContainerWrapperDate.appendChild(showsSectionContainerInfoTypeDate);
 
     const showsSectionContainerInfoDate = document.createElement('span');
     showsSectionContainerInfoDate.classList.add('shows__section-container-info');
     showsSectionContainerInfoDate.innerText = `${showDate.toDateString()}`;
-    showsSectionContainerWrapper1.appendChild(showsSectionContainerInfoDate);
+    showsSectionContainerWrapperDate.appendChild(showsSectionContainerInfoDate);
 
-    const showsSectionContainerWrapper2 = document.createElement('div');
-    showsSectionContainerWrapper2.classList.add('shows__section-container-wrapper2');
-    showsSectionContainer.appendChild(showsSectionContainerWrapper2);
+    const showsSectionContainerWrapperVenue = document.createElement('div');
+    showsSectionContainerWrapperVenue.classList.add('shows__section-container-wrapper-venue');
+    showsSectionContainer.appendChild(showsSectionContainerWrapperVenue);
 
     const showsSectionContainerInfoTypeVenue = document.createElement('span');
     showsSectionContainerInfoTypeVenue.classList.add('shows__section-container-info--type');
     showsSectionContainerInfoTypeVenue.innerText = 'venue';
-    showsSectionContainerWrapper2.appendChild(showsSectionContainerInfoTypeVenue);
+    showsSectionContainerWrapperVenue.appendChild(showsSectionContainerInfoTypeVenue);
 
     const showsSectionContainerInfoVenue = document.createElement('span');
     showsSectionContainerInfoVenue.classList.add('shows__section-container-info');
     showsSectionContainerInfoVenue.innerText = `${show.place}`;
-    showsSectionContainerWrapper2.appendChild(showsSectionContainerInfoVenue);
+    showsSectionContainerWrapperVenue.appendChild(showsSectionContainerInfoVenue);
 
-    const showsSectionContainerWrapper3 = document.createElement('div');
-    showsSectionContainerWrapper3.classList.add('shows__section-container-wrapper3');
-    showsSectionContainer.appendChild(showsSectionContainerWrapper3);
+    const showsSectionContainerWrapperLocation = document.createElement('div');
+    showsSectionContainerWrapperLocation.classList.add('shows__section-container-wrapper-location');
+    showsSectionContainer.appendChild(showsSectionContainerWrapperLocation);
 
     const showsSectionContainerInfoTypeLocation = document.createElement('span');
     showsSectionContainerInfoTypeLocation.classList.add('shows__section-container-info--type');
     showsSectionContainerInfoTypeLocation.innerText = 'location';
-    showsSectionContainerWrapper3.appendChild(showsSectionContainerInfoTypeLocation);
+    showsSectionContainerWrapperLocation.appendChild(showsSectionContainerInfoTypeLocation);
 
     const showsSectionContainerInfoLocation = document.createElement('span');
     showsSectionContainerInfoLocation.classList.add('shows__section-container-info');
     showsSectionContainerInfoLocation.innerText = `${show.location}`;
-    showsSectionContainerWrapper3.appendChild(showsSectionContainerInfoLocation);
+    showsSectionContainerWrapperLocation.appendChild(showsSectionContainerInfoLocation);
 
     const showsSectionContainerInfoButton = document.createElement('button');
     showsSectionContainerInfoButton.classList.add('shows__section-container-info--button');
@@ -126,4 +126,4 @@ const showsComposerFunction = (show) => {
 } 
 
 const getShows = new BandSiteApi(apiKey);
-getShows.getShows(showsComposerFunction);
+getShows.getShows(showsComposer);

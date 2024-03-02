@@ -241,7 +241,7 @@
                 }
             }
 
-            &-wrapper1 {
+            &-wrapper-date {
                 z-index: 10;
                 pointer-events:none;
                 @each $size in map.keys($columns) {
@@ -265,7 +265,7 @@
                 }   
             }
 
-            &-wrapper2 {
+            &-wrapper-venue {
                 z-index: 10;
                 pointer-events:none;
                 @each $size in map.keys($columns) {
@@ -288,8 +288,8 @@
                 }   
             }
 
-            &-wrapper3 {
-                @extend .shows__section-container-wrapper2;
+            &-wrapper-location {
+                @extend .shows__section-container-wrapper-venue;
             }
             
             &-info {
