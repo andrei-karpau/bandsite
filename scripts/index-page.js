@@ -154,14 +154,9 @@ commentsTitleForm.addEventListener('submit', (e) => {
         const comment = {};
         comment.name = commentsTitleFormNameLabelInput.value;
         comment.comment = commentsTitleFormCommentLabelInput.value;
-
         const postComment = new BandSiteApi(apiKey);
         postComment.postComment(comment, commentsComposer);
-
-        commentsTitleFormNameLabelInput.classList.remove('comments__title-form-name-label-input--empty');
         commentsTitleFormNameLabelInput.value = '';
-
-        commentsTitleFormCommentLabelInput.classList.remove('comments__title-form-comment-label-input--empty');
         commentsTitleFormCommentLabelInput.value = '';
     }  
 });
