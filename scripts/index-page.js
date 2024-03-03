@@ -69,7 +69,7 @@ const timeDifference = (current, previous) => {
 
 const commentsComposer = (parentElementClass, commentObject) => {
     const {comment, id, likes, name, timestamp} = commentObject
-    const date = new Date(timestamp);
+    const commentDate = new Date(timestamp);
     const deleteComment = new BandSiteApi(apiKey);
     const likeComment = new BandSiteApi(apiKey);
     
@@ -119,9 +119,9 @@ const commentsComposer = (parentElementClass, commentObject) => {
     });
 
     commentsPostedWrapperContainerNameAndDateRelativeDate.addEventListener('mouseover', (e) => {
-        e.target.innerText = `${date.toDateString()}`;
+        e.target.innerText = `${commentDate.toDateString()}`;
         setTimeout(()=> {
-            e.target.innerText = `${timeDifference(Date.now(), commentObject.timestamp)}`;
+            e.target.innerText = `${timeDifference(Date.now(), timestamp)}`;
         }, 1000)
     });
     
@@ -152,7 +152,6 @@ commentsTitleForm.addEventListener('submit', (e) => {
         }
     } else {
         const comment = {};
-    
         comment.name = commentsTitleFormNameLabelInput.value;
         comment.comment = commentsTitleFormCommentLabelInput.value;
 

@@ -4,6 +4,10 @@
 @use './partials/variables' as *;
 @use './partials/mixin' as *;
 
+@function rem($a:0, $b:0, $c:0){
+    @return math.div($a+$b+$c, 16) + rem;
+}
+
 :root {
     @each $size in map.keys($columns) {
       --layout-grid-margin-#{$size}: #{map.get(
@@ -50,9 +54,8 @@
 }
 
 #logo {
-    @include to-rem('max-height', 20);
-    @include to-rem('max-width', 120);
-    
+    max-height: rem(20);
+    max-width: rem(120);
 }
 
 a {
@@ -80,7 +83,7 @@ body {
             }
             @if $size == mobile {
                 @include text-styles('body-copy', true);
-                @include to-rem('padding', 0);
+                padding: rem(0);
             }
         }
     }
@@ -96,14 +99,14 @@ body {
                     width: 100%;
                     $gutter: 0;
                     @include inner($size, $margin, $gutter);
-                    @include to-rem(height, 30, 20, 30);
+                    height: rem(30, 20, 30);
                 } @else if $size == tablet {
                     width: 100%;
                     @include inner($size, $margin, $gutter);
-                    @include to-rem(height, 24, 20, 24);
+                    height: rem(24, 20, 24);
                 } @else if $size == desktop {
                     @include inner($size, $margin, $gutter);
-                    @include to-rem(height, 24, 36, 24);
+                    height: rem(24, 36, 24);
                 }
             }
         }
@@ -261,7 +264,7 @@ body {
                         width: 100%;
                         @include inner($size, $margin, $gutter);
                         @include text-styles('page-header', true);
-                        @include to-rem('padding-top', 0);
+                        padding-top: rem(0);
                     } @else if $size == tablet{
                         width: 100%;
                         align-self: start;
@@ -374,7 +377,7 @@ body {
                     @include media-query_($size) {
                         @if $size == mobile {
                             @include text-styles('subheader', true);
-                            @include to-rem('padding-top', 8);
+                            padding-top: rem(8);
                         } @else {
                             @include text-styles('body-copy--quotes');
                             font-family: 'AvenirNextDemi';
@@ -396,16 +399,16 @@ body {
                 @include layout-grid($size, $margin, $max-width);
                 @if $size == mobile {
                     @include inner($size, $margin, $gutter);
-                    @include to-rem('padding-top', 16);
-                    @include to-rem('padding-bottom', 16);
+                    padding-top: rem(16);
+                    padding-bottom: rem(16);
                 } @else if $size == tablet{
                     @include inner($size, $margin, $gutter);
-                    @include to-rem('padding-top', 36);
-                    @include to-rem('padding-bottom', 36);
+                    padding-top: rem(36);
+                    padding-bottom: rem(36);
                 } @else {
                     @include inner($size, $margin, $gutter);
-                    @include to-rem('padding-top', 36);
-                    @include to-rem('padding-bottom', 36);
+                    padding-top: rem(36);
+                    padding-bottom: rem(36);
                 }
             }
         }
@@ -419,7 +422,7 @@ body {
                 @include media-query_($size) {
                     @if $size == mobile {
                         @include text-styles('subheader', true);
-                        @include to-rem('padding-top', 8);
+                        padding-top: rem(8);
                     } @else {
                         grid-column-start: 2;
                     }
@@ -469,9 +472,9 @@ body {
         @each $size in map.keys($columns) {
             @include media-query_($size) {
                 @if $size == mobile {
-                    @include to-rem('padding-bottom', 16);
+                    padding-bottom: rem(16);
                 } @else {
-                    @include to-rem('padding-bottom', 36);
+                    padding-bottom: rem(16);
                 }
             }
         }
@@ -484,7 +487,7 @@ body {
             display: inline-grid;
             text-transform: capitalize;
             @include text-styles('section-header');
-            @include to-rem('padding-bottom', 12);
+            padding-bottom: rem(12);
             grid-column-end: span 12;
             @each $size in map.keys($columns) {
                 @include media-query_($size) {
@@ -537,9 +540,9 @@ body {
     @each $size in map.keys($columns) {
         @include media-query_($size) {
             @if $size == mobile {
-                @include to-rem('padding-bottom', 8);
+                padding-bottom: rem(8);
             } @else {
-                @include to-rem('padding-bottom', 16);
+                padding-bottom: rem(16);
             }
         }
     }
@@ -551,12 +554,12 @@ body {
             @include media-query_($size) {
                 @if $size == mobile {
                     width: 100%;
-                    @include to-rem('padding-bottom', 16);
+                    padding-bottom: rem(16);
                 } @else if $size == tablet {
                     width: 100%;
-                    @include to-rem('padding-bottom', 24);
+                    padding-bottom: rem(24);
                 } @else {
-                    @include to-rem('padding-bottom', 24);
+                    padding-bottom: rem(24);
                 }
             }
         }
@@ -570,24 +573,24 @@ body {
             flex-wrap: wrap;
             align-items: flex-end;
             justify-content: flex-end;
-            @include to-rem('column-gap', 12);
+            column-gap: rem(12);
             border-bottom: 1px solid $mercury;
             @each $size in map.keys($columns) {
                 @include media-query_($size) {
                     @if $size == mobile {
                         grid-column-end: span 6;
-                        @include to-rem('row-gap', 16);
-                        @include to-rem('padding-bottom', 16);
+                        row-gap: rem(16);
+                        padding-bottom: rem(16);
                     } @else if $size == tablet {
                         grid-column-end: span 10;
                         grid-column-start: 2;
-                        @include to-rem('row-gap', 24);
-                        @include to-rem('padding-bottom', 24);
+                        row-gap: rem(24);
+                        padding-bottom: rem(24);
                     } @else {
                         grid-column-end: span 6;
                         grid-column-start: 4;
-                        @include to-rem('row-gap', 24);
-                        @include to-rem('padding-bottom', 24);
+                        row-gap: rem(24);
+                        padding-bottom: rem(24);
                     }
                 }
             }
@@ -596,20 +599,20 @@ body {
             &-user-image {
                 border-radius: 50%;
                 object-fit: cover;
-                @include to-rem('object-position', -3);
+                object-position: rem(-3);
                 background-color: $mercury;
                 @each $size in map.keys($columns) {
                     @include media-query_($size) {
                         @if $size == mobile {
                             width: 100%;
                             height: 100%;
-                            @include to-rem('max-height', 36);
-                            @include to-rem('max-width', 36);
+                            max-height: rem(36);
+                            max-width: rem(36);
                         } @else {
                             width: 100%;
                             height: 100%;
-                            @include to-rem('max-height', 48);
-                            @include to-rem('max-width', 48);
+                            max-height: rem(48);
+                            max-width: rem(48);
                         }
                     }
                 }
@@ -633,12 +636,12 @@ body {
                     @each $size in map.keys($columns) {
                         @include media-query_($size) {
                             @if $size == mobile {
-                                @include to-rem('height', 36);
-                                @include to-rem('padding', 12);
+                                height: rem(36);
+                                padding: rem(12);
                                 @include text-styles-config(12, 18, 'AvenirNextRegular', 12, 12);
                             } @else {
-                                @include to-rem('height', 48);
-                                @include to-rem('padding', 16);
+                                height: rem(48);
+                                padding: rem(16);
                                 @include text-styles-config(14, 20, 'AvenirNextRegular', 16, 16);
                             }
                         }
@@ -661,9 +664,9 @@ body {
                     @each $size in map.keys($columns) {
                         @include media-query_($size) {
                             @if $size == mobile {
-                                @include to-rem('padding-left', 36, 12);
+                                padding-left: rem(36, 12);
                             } @else {
-                                @include to-rem('padding-left', 48, 12);
+                                padding-left: rem(48, 12);
                             }
                         }
                     }
@@ -673,14 +676,14 @@ body {
                     border: solid 1px $mercury;
                     border-radius: 4px;
                     resize: none;
-                    @include to-rem('height', 96);
+                    height: rem(96);
                     @each $size in map.keys($columns) {
                         @include media-query_($size) {
                             @if $size == mobile {
-                                @include to-rem('padding', 12);
+                                padding: rem(12);
                                 @include text-styles-config(12, 18, 'AvenirNextRegular', 12, 12);
                             } @else {
-                                @include to-rem('padding', 16);
+                                padding: rem(16);
                                 @include text-styles-config(14, 20, 'AvenirNextRegular', 16, 16);
                             }
                         }
@@ -699,10 +702,10 @@ body {
 
             &-button {
                 cursor: pointer;
-                @include to-rem('height', 40);
-                @include to-rem('min-width', 150);
-                @include to-rem('padding-left', 32);
-                @include to-rem('padding-right', 32);
+                height: rem(40);
+                min-width: rem(150);
+                padding-left: rem(32);
+                padding-right: rem(32);
                 @include text-styles-config(14, 22, 'AvenirNextDemi');
                 text-transform: uppercase;
                 color: $white;
@@ -713,7 +716,7 @@ body {
                     @include media-query_($size) {
                         @if $size == mobile {
                             width: 100%;
-                            @include to-rem('margin-left', 36, 12);
+                            margin-left: rem(36, 12);
                         }
                     }
                 }
@@ -742,7 +745,7 @@ body {
                 display: flex;
                 flex-wrap: wrap;
                 width: 100%;
-                @include to-rem('row-gap', 12);
+                row-gap: rem(12);
 
                 &-name-n-date {
                     display: flex;
@@ -797,7 +800,7 @@ body {
             &-delete-button {
                 border: none;
                 background-color: transparent;
-                @include to-rem('max-width', 21.5);
+                max-width: rem(21.5);
 
                 &:hover {
                     filter: invert(100%) sepia(100%) saturate(9999%) hue-rotate(0deg) brightness(100%) contrast(100%);
@@ -807,7 +810,7 @@ body {
             &-like-button {
                 border: none;
                 background-color: transparent;
-                @include to-rem('max-width', 36);
+                width: rem(36);
 
                 &:hover {
                     filter: invert(100%) sepia(100%) saturate(9999%) hue-rotate(180deg) brightness(100%) contrast(100%);
@@ -815,7 +818,6 @@ body {
 
                 &--count{
                     color: $silver;
-                    @include to-rem('max-width', 36);
                 }
             }
         }
@@ -831,11 +833,11 @@ body {
     @each $size in map.keys($columns) {
         @include media-query_($size) {
             @if $size == mobile {
-                @include to-rem('padding-top', 24);
-                @include to-rem('padding-bottom', 16);
+                padding-top: rem(24);
+                padding-bottom: rem(16);
             } @else {
-                @include to-rem('padding-top', 48);
-                @include to-rem('padding-bottom', 36);
+                padding-top: rem(48);
+                padding-bottom: rem(36);
             }
         }
     }
@@ -858,13 +860,13 @@ body {
             align-items: center;
             grid-column-end: span 3;
             @include text-styles('section-header');
-            @include to-rem('padding', 0);
+            padding: rem(0);
             @each $size in map.keys($columns) {
                 @include media-query_($size) {
                     @if $size == mobile {
                         grid-column-end: span 6;
                         @include text-styles('section-header', true);
-                        @include to-rem('padding-top', 0);
+                        padding-top: rem(0);
                     } @else if $size == tablet {
                         grid-column-end: span 4;
                     }
@@ -876,8 +878,8 @@ body {
             @extend .footer__menu-section-header;
             display: flex;
             align-items: center;
-            @include to-rem('gap', 30);
-            @include to-rem('padding', 0);
+            gap: rem(30);
+            padding: rem(0);
             &-icon {
                 width: 110%;
             }
@@ -898,8 +900,8 @@ body {
                         display: grid;
                         justify-items: start;
                         grid-row-start: 6;
-                        @include to-rem('padding-top',48);
-                        @include to-rem('padding-bottom', 0);
+                        padding-top: rem(48);
+                        padding-bottom: rem(0);
                     }
                 }
             }
@@ -929,9 +931,9 @@ body {
                 @each $size in map.keys($columns) {
                     @include media-query_($size) {
                         @if $size == mobile {
-                            @include to-rem('padding-top', 16);
+                            padding-top: rem(16);
                         } @else {
-                            @include to-rem('padding-top', 24);
+                            padding-top: rem(24);
                         }
                     }
                 }    
@@ -941,9 +943,9 @@ body {
                 @each $size in map.keys($columns) {
                     @include media-query_($size) {
                         @if $size == mobile {
-                            @include to-rem('padding-top', 0);
+                            padding-top: rem(0);
                         } @else {
-                            @include to-rem('padding-top', 16);
+                            padding-top: rem(16);
                         }
                     }
                 }    
@@ -963,10 +965,10 @@ body {
             @each $size in map.keys($columns) {
                 @include media-query_($size) {
                     @if $size == mobile {
-                        @include to-rem('padding', 0);
+                        padding: rem(0);
                         grid-column-end: span 6;
                     } @else {
-                        @include to-rem('padding-top', 24);
+                        padding-top: rem(24);
                         grid-column-end: span 12;
                     }
                 }    

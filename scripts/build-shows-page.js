@@ -25,7 +25,8 @@ showsSectionContainerHeadingTextLocation.innerText = 'location';
 showsSection.append(showsSectionHeader, showsSectionContainerHeadingTextDate, showsSectionContainerHeadingTextVenue, showsSectionContainerHeadingTextLocation)
 
 const showsComposer = (show) => {
-    const showDate = new Date(show.date);
+    const {date, location, place} = show;
+    const showDate = new Date(date);
 
     const showsSectionContainer = document.createElement('div');
     showsSectionContainer.classList.add('shows__section-container');
@@ -56,7 +57,7 @@ const showsComposer = (show) => {
 
     const showsSectionContainerInfoVenue = document.createElement('span');
     showsSectionContainerInfoVenue.classList.add('shows__section-container-info');
-    showsSectionContainerInfoVenue.innerText = `${show.place}`;
+    showsSectionContainerInfoVenue.innerText = `${place}`;
     showsSectionContainerWrapperVenue.appendChild(showsSectionContainerInfoVenue);
 
     const showsSectionContainerWrapperLocation = document.createElement('div');
@@ -70,7 +71,7 @@ const showsComposer = (show) => {
 
     const showsSectionContainerInfoLocation = document.createElement('span');
     showsSectionContainerInfoLocation.classList.add('shows__section-container-info');
-    showsSectionContainerInfoLocation.innerText = `${show.location}`;
+    showsSectionContainerInfoLocation.innerText = `${location}`;
     showsSectionContainerWrapperLocation.appendChild(showsSectionContainerInfoLocation);
 
     const showsSectionContainerInfoButton = document.createElement('button');

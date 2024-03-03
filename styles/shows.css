@@ -779,12 +779,12 @@ body {
 }
 @media (min-width: 1280px) {
   .biography__article--photo-gallery {
-    padding-bottom: 2.25rem;
+    padding-bottom: 1rem;
   }
 }
 @media (min-width: 768px) and (max-width: 1279px) {
   .biography__article--photo-gallery {
-    padding-bottom: 2.25rem;
+    padding-bottom: 1rem;
   }
 }
 @media (max-width: 767px) {
@@ -1214,14 +1214,13 @@ body {
 .comments__posted-wrapper-like-button {
   border: none;
   background-color: transparent;
-  max-width: 2.25rem;
+  width: 2.25rem;
 }
 .comments__posted-wrapper-like-button:hover {
   filter: invert(100%) sepia(100%) saturate(9999%) hue-rotate(180deg) brightness(100%) contrast(100%);
 }
 .comments__posted-wrapper-like-button--count {
   color: #AFAFAF;
-  max-width: 2.25rem;
 }
 
 .footer {
@@ -1512,7 +1511,7 @@ body {
     padding-bottom: 0rem;
     letter-spacing: 0.12rem;
     padding: 0rem;
-    gap: 0.75rem;
+    gap: 0.375rem;
     grid-column-end: span 10;
   }
 }

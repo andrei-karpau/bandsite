@@ -47,10 +47,6 @@
     }
   }
 
-@mixin to-rem($property, $a:0, $b:0, $c:0){
-  #{$property}: math.div($a+$b+$c, 16) + rem;
-}
-
 // returns the lower grid boundary or null if the smallest grid is selected
 @function breakpoint-min($size) {
   $min: map.get($breakpoints, $size);

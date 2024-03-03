@@ -68,6 +68,7 @@ class BandSiteApi {
         const request = async () => {
             try {
                 const shows = await axios.get(`${this.url}/showdates?api_key=${this.apiKey}`)
+                console.log(shows);
                 shows.data.forEach(show => {
                     showsComposerFunction(show);
                 });
